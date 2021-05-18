@@ -1,0 +1,407 @@
+﻿<process name="Auftragsliste Erstellen" version="1.0" bpversion="6.10.1.35171" narrative="Erstellung der Auftragsliste auf Basis der in der CSV enthaltenenen Einträge." byrefcollection="true" preferredid="e6c0a04c-3ddf-4119-b065-a3e1781caeff">
+  <view>
+    <camerax>0</camerax>
+    <cameray>42</cameray>
+    <zoom version="2">1.25</zoom>
+  </view>
+  <preconditions />
+  <endpoint narrative="" />
+  <subsheet subsheetid="af0dfef4-7831-476b-b35e-3a00f1cb8260" type="Normal" published="False">
+    <name>Crawl Telefonbuch</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5" type="Normal" published="False">
+    <name>Read from CSV</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>169</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="42d03f80-8c69-4e62-92fb-f1903ca84b32" type="Normal" published="False">
+    <name>Query input</name>
+    <view>
+      <camerax>1</camerax>
+      <cameray>71</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <stage stageid="169239b7-e8c7-409c-a554-37c694385675" name="Start" type="Start">
+    <display x="15" y="-105" />
+    <onsuccess>e996ca1d-cc88-4ffb-9346-e36c567c86c6</onsuccess>
+  </stage>
+  <stage stageid="9b8c37d2-8d8f-401e-84d7-93af25d53291" name="End" type="End">
+    <display x="15" y="150" />
+  </stage>
+  <stage stageid="95dfc342-920d-4500-bbfe-cb214580192a" name="Stage1" type="ProcessInfo">
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="4335bfca-231b-417f-891f-b492e39bfd84" name="Job Input" type="Collection">
+    <display x="-195" y="-15" w="90" h="30" />
+    <datatype>collection</datatype>
+    <alwaysinit />
+  </stage>
+  <stage stageid="2c1af8ca-1d9f-4be1-b316-18903f573e7d" name="Read from CSV" type="SubSheetInfo">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <narrative>Open CSV and save content to global Collection "Auftrag Input".</narrative>
+    <display x="-300" y="-105" w="120" h="90" />
+  </stage>
+  <stage stageid="ff6ca5fb-9db3-49e6-9d1e-b192f42cecb9" name="Start" type="Start">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <preconditions>
+      <condition narrative="First row of CSV needs to be Header." />
+    </preconditions>
+    <postconditions>
+      <condition narrative="Content of CSV is stored in global Collection &quot;Auftrag Input&quot;." />
+    </postconditions>
+    <display x="-60" y="-120" />
+    <onsuccess>875aa591-0891-47fd-9dde-dbea6168b85e</onsuccess>
+  </stage>
+  <stage stageid="c8c7b4fe-eafc-49de-a11a-e7bf981e3c40" name="End" type="End">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <display x="-60" y="435" />
+  </stage>
+  <stage stageid="20c79e1f-1f95-463d-828f-e7acde65867e" name="Read from CSV" type="SubSheet">
+    <loginhibit onsuccess="true" />
+    <display x="15" y="30" />
+    <onsuccess>81d054f6-3554-47d9-98ea-6e37f71722f1</onsuccess>
+    <processid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</processid>
+  </stage>
+  <stage stageid="0de0ff0e-3885-463d-a214-47d3f642937a" name="File Exists?" type="Action">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-60" y="195" />
+    <inputs>
+      <input type="text" name="File Name" friendlyname="File Name" narrative="The name of the file to check" expr="[Files.Path]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Exists" friendlyname="Exists" narrative="True if the file exists" stage="Exists" />
+    </outputs>
+    <onsuccess>818e38a6-323c-4bcf-a578-2404c7c1dfff</onsuccess>
+    <resource object="Utility - File Management" action="File Exists" />
+  </stage>
+  <stage stageid="818e38a6-323c-4bcf-a578-2404c7c1dfff" name="Decision1" type="Decision">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <display x="-60" y="255" />
+    <decision expression="[Exists]" />
+    <ontrue>9c58df49-84c0-4c04-8e13-464e45edb3f2</ontrue>
+    <onfalse>e5851008-2ddf-43f1-bd80-232ede48c6ac</onfalse>
+  </stage>
+  <stage stageid="68b983f5-9ce3-40b1-943a-b5596b2efbb8" name="Exists" type="Data">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="30" y="195" />
+    <datatype>flag</datatype>
+    <initialvalue>False</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="e5851008-2ddf-43f1-bd80-232ede48c6ac" name="Exception1" type="Exception">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <display x="30" y="255" />
+    <exception localized="yes" type="File Not Found" detail="&quot;File not found&quot;" />
+  </stage>
+  <stage stageid="9c58df49-84c0-4c04-8e13-464e45edb3f2" name="Utility - File Management::Get CSV Text As Collection" type="Action">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-60" y="315" />
+    <inputs>
+      <input type="text" name="CSV File Path" friendlyname="CSV File Path" narrative="The full path to the CSV file" expr="[Files.Path]" />
+      <input type="flag" name="First Line Is Header" friendlyname="First Line Is Header" narrative="Set True if you want to treat the first line as a header" expr="True" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="CSV Values" friendlyname="CSV Values" narrative="The collection populated with the values of the CSV file" stage="Job Input" />
+    </outputs>
+    <onsuccess>77d3f155-6849-4eb8-8827-bda9182c8421</onsuccess>
+    <resource object="Utility - File Management" action="Get CSV Text As Collection" />
+  </stage>
+  <stage stageid="265aaace-cd10-447b-bc7e-0eb0bce4b748" name="Crawl Telefonbuch" type="SubSheetInfo">
+    <subsheetid>af0dfef4-7831-476b-b35e-3a00f1cb8260</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="a1483feb-8e05-4012-af9d-a3c014f39864" name="Start" type="Start">
+    <subsheetid>af0dfef4-7831-476b-b35e-3a00f1cb8260</subsheetid>
+    <display x="15" y="-105" />
+    <onsuccess>8816cf96-49fc-4df6-92ae-ee909ea582c1</onsuccess>
+  </stage>
+  <stage stageid="8816cf96-49fc-4df6-92ae-ee909ea582c1" name="End" type="End">
+    <subsheetid>af0dfef4-7831-476b-b35e-3a00f1cb8260</subsheetid>
+    <display x="15" y="90" />
+  </stage>
+  <stage stageid="81d054f6-3554-47d9-98ea-6e37f71722f1" name="Crawl Telefonbuch" type="SubSheet">
+    <loginhibit onsuccess="true" />
+    <display x="15" y="90" />
+    <onsuccess>9b8c37d2-8d8f-401e-84d7-93af25d53291</onsuccess>
+    <processid>af0dfef4-7831-476b-b35e-3a00f1cb8260</processid>
+  </stage>
+  <stage stageid="6230fbc6-e409-4fb5-b0cf-697501de481d" name="Query input" type="SubSheetInfo">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="fd4578d1-6341-43ae-8305-a0ad1bad43a6" name="Start" type="Start">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <display x="15" y="-105" />
+    <onsuccess>840268ba-6e2f-4eb9-bd6e-33c3b955d349</onsuccess>
+  </stage>
+  <stage stageid="c0127342-c9dd-48aa-ae24-3723abd77f69" name="End" type="End">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <display x="15" y="345" />
+  </stage>
+  <stage stageid="840268ba-6e2f-4eb9-bd6e-33c3b955d349" name="Email - POP3/SMTP::Configure" type="Action">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="-45" />
+    <inputs>
+      <input type="text" name="Username" friendlyname="Username" narrative="The POP3 and SMTP Username" expr="[Username]" />
+      <input type="password" name="Password" friendlyname="Password" narrative="The POP3 and SMTP Password" expr="[Password]" />
+      <input type="text" name="POP3 Server" friendlyname="POP3 Server" narrative="The POP3 Server address e.g. pop.domain.com" expr="[POP3 Server]" />
+      <input type="text" name="SMTP Server" friendlyname="SMTP Server" narrative="The SMTP Server address e.g. smtp.domain.com" expr="[SMTP Server]" />
+      <input type="number" name="POP3 Port" friendlyname="POP3 Port" narrative="The POP3 Port, e.g. 110 or 995" expr="[POP3 Port]" />
+      <input type="number" name="SMTP Port" friendlyname="SMTP Port" narrative="The SMTP Port, e.g 25 or 465" expr="[SMTP Port]" />
+      <input type="flag" name="POP3 UseSSL" friendlyname="POP3 UseSSL" narrative="Whether to use SSL for POP3" expr="[Use SSL?]" />
+      <input type="flag" name="SMTP UseSSL" friendlyname="SMTP UseSSL" narrative="Whether to use SSL for SMTP" expr="[Use SSL?]" />
+    </inputs>
+    <onsuccess>dcf99a43-fbd3-41b7-b8d0-ef8b88345b62</onsuccess>
+    <resource object="Email - POP3/SMTP" action="Configure" />
+  </stage>
+  <stage stageid="0d74ee7e-3f0e-42bd-bb58-075fd4767a63" name="Username" type="Data">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="195" y="-90" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">blueprism.cobitest</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="ceb8ff0f-297e-47c9-8a03-17e62db553a0" name="Password" type="Data">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="270" y="-90" />
+    <datatype>password</datatype>
+    <initialvalueenc>50,26,7,85,95,4,70,84</initialvalueenc>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="7e25d469-86f5-4352-9e40-c6a7f8d06e2e" name="POP3 Server" type="Data">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="195" y="-45" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">pop.gmail.com</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="05730999-9441-43a3-85d0-bf346c305bbf" name="SMTP Server" type="Data">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="270" y="-45" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">smtp.gmail.com</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="cb6a467c-ee7b-427c-9997-1560e6f31913" name="POP3 Port" type="Data">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="195" y="0" />
+    <datatype>number</datatype>
+    <initialvalue>995</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="ac89e48a-9001-4b4e-a156-aac6cbb70efe" name="SMTP Port" type="Data">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="255" y="0" />
+    <datatype>number</datatype>
+    <initialvalue>587</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="dd7d8bf0-15f2-44ce-9524-9d01abb72caf" name="Use SSL?" type="Data">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="195" y="45" />
+    <datatype>flag</datatype>
+    <initialvalue>True</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="e996ca1d-cc88-4ffb-9346-e36c567c86c6" name="Query input" type="SubSheet">
+    <loginhibit onsuccess="true" />
+    <display x="15" y="-30" />
+    <onsuccess>20c79e1f-1f95-463d-828f-e7acde65867e</onsuccess>
+    <processid>42d03f80-8c69-4e62-92fb-f1903ca84b32</processid>
+  </stage>
+  <stage stageid="dcf99a43-fbd3-41b7-b8d0-ef8b88345b62" name="Email - POP3/SMTP::List Messages" type="Action">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="15" />
+    <outputs>
+      <output type="collection" name="Emails" friendlyname="Emails" stage="Messages" />
+    </outputs>
+    <onsuccess>fc3fb869-d55d-4be3-aab2-602c3d96aacf</onsuccess>
+    <resource object="Email - POP3/SMTP" action="List Messages" />
+  </stage>
+  <stage stageid="2fc3384c-0679-487c-8ed0-9f9c82f3e559" name="Messages" type="Collection">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <display x="-165" y="-15" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Subject" type="text" description="The subject of the email." />
+      <field name="From Name" type="text" description="The name of the sender." />
+      <field name="From Address" type="text" description="The email address of the sender." />
+      <field name="Date Sent" type="datetime" description="The date and time at which the email was sent." />
+      <field name="MessageID" type="text" description="The ID of the email message." />
+    </collectioninfo>
+  </stage>
+  <stage stageid="fc3fb869-d55d-4be3-aab2-602c3d96aacf" name="Get Message Attachements" type="LoopStart">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="90" />
+    <onsuccess>263f9dde-ee33-4351-b081-1139f4455f4c</onsuccess>
+    <groupid>12b25eaf-d90f-477e-9a8c-945e8992b2a1</groupid>
+    <looptype>ForEach</looptype>
+    <loopdata>Messages</loopdata>
+  </stage>
+  <stage stageid="e56ef98f-a3d3-4b5a-be7c-f097958b9812" name="Get Message Attachements" type="LoopEnd">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="285" />
+    <onsuccess>c0127342-c9dd-48aa-ae24-3723abd77f69</onsuccess>
+    <groupid>12b25eaf-d90f-477e-9a8c-945e8992b2a1</groupid>
+  </stage>
+  <stage stageid="263f9dde-ee33-4351-b081-1139f4455f4c" name="Email - POP3/SMTP::Save Attachments" type="Action">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="165" />
+    <inputs>
+      <input type="text" name="MessageID" friendlyname="MessageID" narrative="The ID of the email message." expr="[Messages.MessageID]" />
+      <input type="text" name="Folder" friendlyname="Folder" narrative="A Folder in which to save all the attachments." expr="[CSV Path]" />
+    </inputs>
+    <onsuccess>e56ef98f-a3d3-4b5a-be7c-f097958b9812</onsuccess>
+    <resource object="Email - POP3/SMTP" action="Save Attachments" />
+  </stage>
+  <stage stageid="953a3229-cf63-40c7-947b-a03a5c6abd63" name="CSV Path" type="Data">
+    <loginhibit onsuccess="true" />
+    <display x="240" y="-75" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\BluePrism\attachements</initialvalue>
+    <alwaysinit />
+  </stage>
+  <stage stageid="549d2ec1-07b9-4160-bc31-f8777687cb43" name="Global Vars" type="Note">
+    <display x="285" y="-30" w="180" h="150" />
+  </stage>
+  <stage stageid="b8bb3868-15df-4eee-afbe-c80ffdf8a788" name="Email - POP3/SMTP::Delete Message" type="Action">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="180" y="270" />
+    <inputs>
+      <input type="text" name="MessageID" friendlyname="MessageID" narrative="The ID of the message to delete." expr="&quot;ixSRJKHfWUrogXY4T03mhA@notifications.google.com&quot;" />
+    </inputs>
+    <resource object="Email - POP3/SMTP" action="Delete Message" />
+  </stage>
+  <stage stageid="ab920826-bf07-43ca-9297-79d2b8870002" name="Note3" type="Note">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <narrative>Liste:
+
+[mailid: path]
+[mailId: [path]]</narrative>
+    <display x="-195" y="150" w="90" h="60" />
+  </stage>
+  <stage stageid="875aa591-0891-47fd-9dde-dbea6168b85e" name="Utility - File Management::Get Files" type="Action">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-60" y="-30" />
+    <inputs>
+      <input type="text" name="Folder" friendlyname="Folder" narrative="The folder in which to look for files" expr="[CSV Path]" />
+      <input type="text" name="Patterns CSV" friendlyname="Patterns CSV" narrative="The comma seperated list of wildcard patterns" expr="&quot;*.csv&quot;" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" friendlyname="Success" narrative="True if successful" stage="Success" />
+      <output type="text" name="Message" friendlyname="Message" narrative="A message if unsuccessful" stage="Message" />
+      <output type="collection" name="Files" friendlyname="Files" narrative="The collection of files found" stage="Files" />
+    </outputs>
+    <onsuccess>71b6749e-5482-473d-82c7-d985c3b7ffc2</onsuccess>
+    <resource object="Utility - File Management" action="Get Files" />
+  </stage>
+  <stage stageid="d075919e-7c17-40c9-a12c-47c2616fbd45" name="Success" type="Data">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <display x="165" y="-30" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="ff218ff4-2022-4acd-b5c5-efcd95406046" name="Message" type="Data">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <display x="90" y="-30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="60928cdc-fed9-43b6-97e4-2fe2a157fe6f" name="Files" type="Collection">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <display x="15" y="-30" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="7d294629-b385-4193-a7f6-aa28829cf831" name="Exception2" type="Exception">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <display x="30" y="45" />
+    <exception localized="yes" type="System Exception" detail="&quot;No Attachements Found&quot;" />
+  </stage>
+  <stage stageid="71b6749e-5482-473d-82c7-d985c3b7ffc2" name="Files in Path?" type="Decision">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <display x="-60" y="45" />
+    <decision expression="[Success]" />
+    <ontrue>7dc1dc85-ac73-4714-bffd-7a7687c4ebf8</ontrue>
+    <onfalse>7d294629-b385-4193-a7f6-aa28829cf831</onfalse>
+  </stage>
+  <stage stageid="7dc1dc85-ac73-4714-bffd-7a7687c4ebf8" name="For each File" type="LoopStart">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-60" y="120" />
+    <onsuccess>0de0ff0e-3885-463d-a214-47d3f642937a</onsuccess>
+    <groupid>eabeb54c-ab90-44e5-959d-8bf8b89e2eb7</groupid>
+    <looptype>ForEach</looptype>
+    <loopdata>Files</loopdata>
+  </stage>
+  <stage stageid="77d3f155-6849-4eb8-8827-bda9182c8421" name="For each File" type="LoopEnd">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-60" y="375" />
+    <onsuccess>c8c7b4fe-eafc-49de-a11a-e7bf981e3c40</onsuccess>
+    <groupid>eabeb54c-ab90-44e5-959d-8bf8b89e2eb7</groupid>
+  </stage>
+  <stage stageid="4e3b5c23-670e-4ee8-a5e7-5be0efcd7d41" name="Note1" type="Note">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <narrative>TODO:
+
+- wenn keine emails verfügbar sind -&gt; prozess ende
+- wann wird die email gelöscht</narrative>
+    <display x="150" y="165" w="120" h="120" />
+  </stage>
+  <stage stageid="d269e9db-5eac-48df-a48a-f3712875fca0" name="Note2" type="Note">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <narrative>TODO
+
+- check ob Anhang korrektes Format hat
+--- .csv
+--- inhalt korrekt formatioert
+</narrative>
+    <display x="-255" y="120" w="150" h="120" />
+  </stage>
+  <stage stageid="b65c21ff-1ceb-44f7-b276-6168bf22c60a" name="Email-Configuration" type="Note">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <display x="240" y="-30" w="180" h="210" />
+  </stage>
+</process>
