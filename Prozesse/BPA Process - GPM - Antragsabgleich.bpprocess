@@ -1,0 +1,253 @@
+﻿<process name="GPM - Antragsabgleich" version="1.0" bpversion="6.10.1.35171" narrative="Potenzielle Unternehmen werden mit einer bereits vorliegenden Antragsliste abgeglichen, um Unternehmen, die bereits einen Antrag gestellt haben, nicht erneut anzuschreiben." byrefcollection="true" preferredid="dd2807f6-9126-4428-8363-0f77b2a1ad6c" published="true">
+  <view>
+    <camerax>27</camerax>
+    <cameray>-21</cameray>
+    <zoom version="2">2.8125</zoom>
+  </view>
+  <preconditions />
+  <endpoint narrative="" />
+  <subsheet subsheetid="0d20e369-5e7a-49e1-9eff-774905f7943f" type="Normal" published="False">
+    <name>CheckList</name>
+    <view>
+      <camerax>164</camerax>
+      <cameray>63</cameray>
+      <zoom version="2">1.875</zoom>
+    </view>
+  </subsheet>
+  <stage stageid="4c579205-37d9-4762-b373-705845ae8cf5" name="Start" type="Start">
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="collection" name="CompanysWithRequest" narrative="Unternehmen, die bereits einen Antrag eingereicht haben" stage="CompanysWithRequest" />
+    </inputs>
+    <onsuccess>3d873a77-97b4-4993-80fe-e38a98d6fcfe</onsuccess>
+  </stage>
+  <stage stageid="74707f24-531f-444c-a800-6cba2a4f8acd" name="End" type="End">
+    <display x="15" y="90" />
+  </stage>
+  <stage stageid="73bc15e6-ce5d-4e09-a656-4a83ae0b3626" name="Stage1" type="ProcessInfo">
+    <display x="-165" y="-45" w="180" h="150" />
+  </stage>
+  <stage stageid="723cf450-8492-4e6a-9c6d-e7368983f8ba" name="CheckList" type="SubSheetInfo">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <narrative>Prüfe vorhandene Elemente, ob diese in der Liste der Antragssteller vorkommen.</narrative>
+    <display x="-255" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="28f0f4b8-faa3-4fc1-b81e-72018aca1d16" name="Start" type="Start">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <display x="15" y="-105" />
+    <onsuccess>7c85acf7-0e63-4203-a5a5-2791cbe14551</onsuccess>
+  </stage>
+  <stage stageid="3d873a77-97b4-4993-80fe-e38a98d6fcfe" name="CheckList" type="SubSheet">
+    <loginhibit onsuccess="true" />
+    <display x="15" y="-15" />
+    <onsuccess>74707f24-531f-444c-a800-6cba2a4f8acd</onsuccess>
+    <processid>0d20e369-5e7a-49e1-9eff-774905f7943f</processid>
+  </stage>
+  <stage stageid="7c85acf7-0e63-4203-a5a5-2791cbe14551" name="GetNextCompany" type="Action">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <narrative>This action gets the next item to be worked from the queue, returning its details and locking it so no other case can work it.
+
+Items with higher priorities (lower numerical value) are processed first. Where the priority is the same, the next item is the one that has been in the queue the longest,  is not already locked, and is not already completed.
+
+The Item ID returned is used to make further calls to update the work status for that item. It may be empty, in which case there are no items available. This can mean either a) the queue is empty, or b) the queue is not running. This mechanism can be used to cleanly stop all processes working a particular queue at the end of the next case. Items that have a 'deferred' time set will not be returned unless that time has been reached.</narrative>
+    <display x="15" y="-45" />
+    <inputs>
+      <input type="text" name="Queue Name" friendlyname="Queue Name" narrative="The name of the queue" expr="&quot;PotentialCompanys&quot;" />
+      <input type="text" name="Key Filter" friendlyname="Key Filter" narrative="Optionally, a key value to filter by. Only items with this key value will be considered." expr="" />
+      <input type="text" name="Tag Filter" friendlyname="Tag Filter" narrative="Optionally, a tag mask to filter by. This can consist of any number of tag searches - each term can be separated by a semi-colon and they are all applied to the search (ie. they are AND'ed terms not OR'ed terms). For example, &quot;Account: Joint; -Balance: Overdrawn; Card: *Visa*&quot; will include any items which match all the terms, ie. every item must have an 'Account: Joint' tag applied, no item can have a 'Balance: Overdrawn' tag applied, every item must have a tag applied which starts with 'Card: ' and then contains the text 'Visa'." expr="" />
+    </inputs>
+    <outputs>
+      <output type="text" name="Item ID" friendlyname="Item ID" narrative="The ID of the item retrieved - empty if there are none available." stage="Company ID" />
+      <output type="collection" name="Data" friendlyname="Data" narrative="The data associated with the item - a single collection row." stage="Data" />
+      <output type="text" name="Status" friendlyname="Status" narrative="The status of the item." stage="" />
+      <output type="number" name="Attempts" friendlyname="Attempts" narrative="The number of attempts already made to work this item." stage="" />
+    </outputs>
+    <onsuccess>29c9c161-83e6-4f45-b912-7175d617be25</onsuccess>
+    <resource object="Blueprism.Automate.clsWorkQueuesActions" action="Get Next Item" />
+  </stage>
+  <stage stageid="29c9c161-83e6-4f45-b912-7175d617be25" name="Got Item?" type="Decision">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <narrative>War noch ein Unternehmen in der Liste verfügbar?</narrative>
+    <display x="15" y="15" />
+    <decision expression="[Company ID]&lt;&gt;&quot;&quot;" />
+    <ontrue>14bd1da3-a060-42b9-88c5-78b9a85b5d10</ontrue>
+    <onfalse>2e4ebb4c-575d-467b-aea6-994611d5a232</onfalse>
+  </stage>
+  <stage stageid="c0480169-c81a-4e61-ac09-b414c4faf0a0" name="Company ID" type="Data">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-180" y="-15" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="c4e2da37-7647-4a82-accb-729276120c31" name="Data" type="Collection">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <narrative>Daten des aktuellen Unternehmens</narrative>
+    <display x="-180" y="15" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="2e4ebb4c-575d-467b-aea6-994611d5a232" name="End1" type="End">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="120" y="15" />
+  </stage>
+  <stage stageid="14bd1da3-a060-42b9-88c5-78b9a85b5d10" name="CheckIfAlreadyRequested" type="Action">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <narrative>Überprüft, ob das Unternehmen bereits in der Liste der Antragssteller enthalten ist.</narrative>
+    <display x="15" y="75" />
+    <inputs>
+      <input type="collection" name="Collection" friendlyname="Collection" narrative="Required : The collection to search" expr="[CompanysWithRequest]" />
+      <input type="text" name="Column Name" friendlyname="Column Name" narrative="Required : The name of the column to search" expr="&quot;Company ID&quot;" />
+      <input type="text" name="Exact Value" friendlyname="Exact Value" narrative="Optional : The exact value to search for - this is case insensitive" expr="[Data.Company ID]" />
+      <input type="text" name="Regex" friendlyname="Regex" narrative="Optional : The regular expression to search for - this is case sensitive unless specified otherwise in the regular expression using &quot;(?i)&quot;" expr="" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Contains Search Term" friendlyname="Contains Search Term" narrative="Flag indicating if the collection found the given search term or not" stage="Requested" />
+      <output type="collection" name="Groups" friendlyname="Groups" narrative="The groups defined in the regular expression when it is applied to the found term" stage="" />
+    </outputs>
+    <onsuccess>338b291b-4470-446f-997f-130b9ebecd72</onsuccess>
+    <resource object="Utility - Collection Manipulation" action="Collection Contains Value" />
+  </stage>
+  <stage stageid="53d5d4bf-c09b-4687-a907-ceaaa8a950a5" name="Requested" type="Data">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <display x="90" y="75" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="338b291b-4470-446f-997f-130b9ebecd72" name="AlreadyRequested?" type="Decision">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <narrative>Hat das aktuelle Unternehmen bereits einen Antrag gestellt?</narrative>
+    <display x="15" y="135" />
+    <decision expression="[Requested]=True" />
+    <ontrue>1a27341d-4596-4603-b308-ef1c136bbec8</ontrue>
+    <onfalse>8486a0bf-e417-43c6-ac78-e1a00a2a12ea</onfalse>
+  </stage>
+  <stage stageid="1a27341d-4596-4603-b308-ef1c136bbec8" name="Exception" type="Action">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <narrative>Marks the item as an exception, optionally retrying it by cloning the item and returning the ID of the clone. The item must be 'owned' by the calling process - i.e. it must have been retrieved using Get Next Item.</narrative>
+    <display x="105" y="135" />
+    <inputs>
+      <input type="text" name="Item ID" friendlyname="Item ID" narrative="The ID of the item to mark" expr="[Company ID]" />
+      <input type="text" name="Exception Reason" friendlyname="Exception Reason" narrative="A description of the reason for the exception" expr="&quot;Unternehmen hat bereits einen Antrag gestellt!&quot;" />
+      <input type="flag" name="Retry" friendlyname="Retry" narrative="Whether or not to retry the item, up to the maximum number of attempts specified for the queue. Optional - if not specified, the item will be retried" expr="" />
+      <input type="flag" name="Keep Locked" friendlyname="Keep Locked" narrative="Whether or not the clone of the item should remain locked after the exception has been registered and the item is retried. Optional - default is False" expr="" />
+    </inputs>
+    <outputs>
+      <output type="text" name="New Item ID" friendlyname="New Item ID" narrative="The Item ID of the newly cloned item. This item will be locked if 'Keep Locked' is True. This will be empty if no item was cloned (ie. the item was not retried." stage="" />
+    </outputs>
+    <onsuccess>9cbb4ec5-1522-4b98-8626-042283ecefbe</onsuccess>
+    <resource object="Blueprism.Automate.clsWorkQueuesActions" action="Mark Exception" />
+  </stage>
+  <stage stageid="ff97e3ab-a784-4c6d-846c-a9a3123081c2" name="AddToInformationQueue" type="Action">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <narrative>The Data collection contains the items to be added to the queue. The collection may contain single or multiple rows, with each representing an item to be added.
+
+If there is a failure during the process, the queue will be unchanged - i.e. no rows will be loaded even if the error occurred on the last one.
+
+If Defer Until is specified, the items will not be available to be worked until then. Otherwise, they are available immediately.
+
+If the queue has a key field defined, an item added has key data longer than the maximum permitted 255 characters, an error will occur</narrative>
+    <display x="105" y="195" />
+    <inputs>
+      <input type="text" name="Queue Name" friendlyname="Queue Name" narrative="The name of the queue to add items to" expr="&quot;CompanysWithoutRequest&quot;" />
+      <input type="collection" name="Data" friendlyname="Data" narrative="A collection containing the data, one row for each item to be added" expr="[Data]" />
+      <input type="datetime" name="Defer Until" friendlyname="Defer Until" narrative="Optionally, the date/time the new item(s) should be deferred until" expr="" />
+      <input type="number" name="Priority" friendlyname="Priority" narrative="Optionally, the priority for the new item(s). Lower numbers represent higher priorities. The default is 0." expr="" />
+      <input type="text" name="Tags" friendlyname="Tags" narrative="Optionally, a semi-colon-separated set of tags to apply to the queue item(s)" expr="" />
+      <input type="text" name="Status" friendlyname="Status" narrative="Optionally, the initial status required of the work queue item(s) " expr="" />
+      <input type="number" name="Batch Size" friendlyname="Batch Size" narrative="Optionally, the batch size to use when adding many items to the queue.  A Value of 0 will process all items in one batch.  An empty field will use the default batch size of 1000." expr="">
+        <validator type="BluePrism.AutomateProcessCore.RangeParameterValidation" parameter="0:25000" />
+      </input>
+    </inputs>
+    <outputs>
+      <output type="collection" name="Item IDs" friendlyname="Item IDs" narrative="The IDs of the items which have been added to the queue, in the order of the collection of data passed that was input" stage="" />
+    </outputs>
+    <onsuccess>22b7273e-619f-47a5-834e-d27e774d46c2</onsuccess>
+    <resource object="Blueprism.Automate.clsWorkQueuesActions" action="Add To Queue" />
+  </stage>
+  <stage stageid="f9ef9b2f-a6a3-4e5c-8ae4-7b8230efa94a" name="Anchor3" type="Anchor">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="270" y="-45" w="10" h="10" />
+    <onsuccess>7c85acf7-0e63-4203-a5a5-2791cbe14551</onsuccess>
+  </stage>
+  <stage stageid="9cbb4ec5-1522-4b98-8626-042283ecefbe" name="Anchor4" type="Anchor">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="270" y="135" w="10" h="10" />
+    <onsuccess>f9ef9b2f-a6a3-4e5c-8ae4-7b8230efa94a</onsuccess>
+  </stage>
+  <stage stageid="fb68676d-96be-4881-bc1a-57a26702b00c" name="CompanysWithRequest" type="Collection">
+    <narrative>Unternehmen, die bereits einen Antrag gestellt haben</narrative>
+    <display x="-105" y="60" />
+    <datatype>collection</datatype>
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Company ID" type="text" />
+      <field name="Name" type="text" />
+      <field name="StreetAndNumber" type="text" />
+      <field name="PLZ" type="text" />
+      <field name="City" type="text" />
+      <field name="Branche" type="text" />
+    </collectioninfo>
+    <initialvalue>
+      <row>
+        <field name="Company ID" type="text" value="11111" />
+        <field name="Name" type="text" value="Photoland" />
+        <field name="StreetAndNumber" type="text" value="Kleine Straße 1" />
+        <field name="PLZ" type="text" value="54321" />
+        <field name="City" type="text" value="Unterhausen" />
+        <field name="Branche" type="text" value="Photostudio" />
+      </row>
+    </initialvalue>
+  </stage>
+  <stage stageid="8486a0bf-e417-43c6-ac78-e1a00a2a12ea" name="Anchor5" type="Anchor">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="195" w="10" h="10" />
+    <onsuccess>ff97e3ab-a784-4c6d-846c-a9a3123081c2</onsuccess>
+  </stage>
+  <stage stageid="31d7975c-6827-4594-ad39-65d5da00cfdb" name="Anchor6" type="Anchor">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="270" y="195" w="10" h="10" />
+    <onsuccess>9cbb4ec5-1522-4b98-8626-042283ecefbe</onsuccess>
+  </stage>
+  <stage stageid="22b7273e-619f-47a5-834e-d27e774d46c2" name="Completed" type="Action">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <narrative>Marks the item as completed, by updating the Completed timestamp and setting Locked to null. The item must be 'owned' by the calling process - i.e. it must have been retrieved using Get Next Item.</narrative>
+    <display x="195" y="195" />
+    <inputs>
+      <input type="text" name="Item ID" friendlyname="Item ID" narrative="The ID of the item to mark" expr="[Company ID]" />
+    </inputs>
+    <onsuccess>31d7975c-6827-4594-ad39-65d5da00cfdb</onsuccess>
+    <resource object="Blueprism.Automate.clsWorkQueuesActions" action="Mark Completed" />
+  </stage>
+  <stage stageid="6eb1186d-9ea1-42a9-9791-8ee1040d7e76" name="Get Elements Note" type="Note">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <narrative>Beziehen des nächsten Elements der zu verarbeitenden Queue.
+Falls kein Element (mehr) vorhanden --&gt; Ende</narrative>
+    <display x="-60" y="-15" w="90" h="90" />
+  </stage>
+  <stage stageid="fa5d6a5b-b88e-4d91-8632-dad13addd990" name="Check Company Noite" type="Note">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <narrative>Prüfung, ob das Unternehmen in der Liste der Antragssteller vorkommt. Ergebnis wird im Data item "Requested" gespeichert.</narrative>
+    <display x="-60" y="75" w="90" h="60" />
+  </stage>
+  <stage stageid="98caa589-46f0-42c4-bf11-1cf64333fdd5" name="Requested Question Note" type="Note">
+    <subsheetid>0d20e369-5e7a-49e1-9eff-774905f7943f</subsheetid>
+    <narrative>Ist das Unternehmen vorgekommen, ist keine weitere Bearbeitung notwendig --&gt; Exception mit entsprechendem Hinweis
+Ist das Unternehmen NICHT vorgekommen, wird es in die nächste Queue kopiert zur weiteren Verarbeitung und als abgeschlossen markiert.</narrative>
+    <display x="-75" y="180" w="120" h="120" />
+  </stage>
+</process>
