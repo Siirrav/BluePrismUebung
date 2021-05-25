@@ -18,7 +18,7 @@
     <name>Read from CSV</name>
     <view>
       <camerax>0</camerax>
-      <cameray>169</cameray>
+      <cameray>127</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -26,7 +26,15 @@
     <name>Query input</name>
     <view>
       <camerax>1</camerax>
-      <cameray>71</cameray>
+      <cameray>155</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="d7090e43-7c8b-40b4-8712-e4540ba4fcbf" type="Normal" published="False">
+    <name>process messages</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -59,17 +67,20 @@
       <condition narrative="Content of CSV is stored in global Collection &quot;Auftrag Input&quot;." />
     </postconditions>
     <display x="-60" y="-120" />
+    <inputs>
+      <input type="unknown" name="CSV path" stage="CSV path" />
+    </inputs>
     <onsuccess>875aa591-0891-47fd-9dde-dbea6168b85e</onsuccess>
   </stage>
   <stage stageid="c8c7b4fe-eafc-49de-a11a-e7bf981e3c40" name="End" type="End">
     <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
     <display x="-60" y="435" />
   </stage>
-  <stage stageid="20c79e1f-1f95-463d-828f-e7acde65867e" name="Read from CSV" type="SubSheet">
+  <stage stageid="20c79e1f-1f95-463d-828f-e7acde65867e" name="process messages" type="SubSheet">
     <loginhibit onsuccess="true" />
     <display x="15" y="30" />
     <onsuccess>81d054f6-3554-47d9-98ea-6e37f71722f1</onsuccess>
-    <processid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</processid>
+    <processid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</processid>
   </stage>
   <stage stageid="0de0ff0e-3885-463d-a214-47d3f642937a" name="File Exists?" type="Action">
     <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
@@ -149,7 +160,7 @@
   </stage>
   <stage stageid="c0127342-c9dd-48aa-ae24-3723abd77f69" name="End" type="End">
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
-    <display x="15" y="345" />
+    <display x="15" y="435" />
   </stage>
   <stage stageid="840268ba-6e2f-4eb9-bd6e-33c3b955d349" name="Email - POP3/SMTP::Configure" type="Action">
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
@@ -265,7 +276,7 @@
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
     <loginhibit onsuccess="true" />
     <display x="15" y="90" />
-    <onsuccess>263f9dde-ee33-4351-b081-1139f4455f4c</onsuccess>
+    <onsuccess>bcec8477-9fb9-4827-bfcb-a3d045eeda66</onsuccess>
     <groupid>12b25eaf-d90f-477e-9a8c-945e8992b2a1</groupid>
     <looptype>ForEach</looptype>
     <loopdata>Messages</loopdata>
@@ -273,26 +284,26 @@
   <stage stageid="e56ef98f-a3d3-4b5a-be7c-f097958b9812" name="Get Message Attachements" type="LoopEnd">
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="15" y="285" />
+    <display x="15" y="390" />
     <onsuccess>c0127342-c9dd-48aa-ae24-3723abd77f69</onsuccess>
     <groupid>12b25eaf-d90f-477e-9a8c-945e8992b2a1</groupid>
   </stage>
   <stage stageid="263f9dde-ee33-4351-b081-1139f4455f4c" name="Email - POP3/SMTP::Save Attachments" type="Action">
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="15" y="165" />
+    <display x="15" y="345" />
     <inputs>
       <input type="text" name="MessageID" friendlyname="MessageID" narrative="The ID of the email message." expr="[Messages.MessageID]" />
-      <input type="text" name="Folder" friendlyname="Folder" narrative="A Folder in which to save all the attachments." expr="[CSV Path]" />
+      <input type="text" name="Folder" friendlyname="Folder" narrative="A Folder in which to save all the attachments." expr="[messagePaths.path]" />
     </inputs>
     <onsuccess>e56ef98f-a3d3-4b5a-be7c-f097958b9812</onsuccess>
     <resource object="Email - POP3/SMTP" action="Save Attachments" />
   </stage>
-  <stage stageid="953a3229-cf63-40c7-947b-a03a5c6abd63" name="CSV Path" type="Data">
+  <stage stageid="953a3229-cf63-40c7-947b-a03a5c6abd63" name="attachment path" type="Data">
     <loginhibit onsuccess="true" />
     <display x="240" y="-75" />
     <datatype>text</datatype>
-    <initialvalue xml:space="preserve">C:\BluePrism\attachements</initialvalue>
+    <initialvalue xml:space="preserve">C:\Users\Felix\Desktop\attachments</initialvalue>
     <alwaysinit />
   </stage>
   <stage stageid="549d2ec1-07b9-4160-bc31-f8777687cb43" name="Global Vars" type="Note">
@@ -320,7 +331,7 @@
     <loginhibit onsuccess="true" />
     <display x="-60" y="-30" />
     <inputs>
-      <input type="text" name="Folder" friendlyname="Folder" narrative="The folder in which to look for files" expr="[CSV Path]" />
+      <input type="text" name="Folder" friendlyname="Folder" narrative="The folder in which to look for files" expr="[CSV path]" />
       <input type="text" name="Patterns CSV" friendlyname="Patterns CSV" narrative="The comma seperated list of wildcard patterns" expr="&quot;*.csv&quot;" />
     </inputs>
     <outputs>
@@ -403,5 +414,126 @@
   <stage stageid="b65c21ff-1ceb-44f7-b276-6168bf22c60a" name="Email-Configuration" type="Note">
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
     <display x="240" y="-30" w="180" h="210" />
+  </stage>
+  <stage stageid="578aa144-8283-4305-a888-9dfa53c5895d" name="generate folder name" type="Calculation">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="180" />
+    <onsuccess>8e8eba74-8c70-4a24-a6b7-12b3027dfcbb</onsuccess>
+    <calculation expression="[attachment path] &amp; Left([Messages.MessageID], 25)" stage="messagePaths.path" />
+  </stage>
+  <stage stageid="b8c2af5e-fe20-4b3a-ade2-20e2fd3ef094" name="subfolder_name" type="Data">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-105" y="150" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="90bbc199-1faa-498a-a9a8-a2a72f5e50ce" name="create subfolder" type="Action">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="285" />
+    <inputs>
+      <input type="text" name="Directory Path" friendlyname="Directory Path" narrative="The path in which to create the directory" expr="[messagePaths.path]" />
+      <input type="flag" name="Error If Already Exists" friendlyname="Error If Already Exists" narrative="True to generate an error if the directory already exists" expr="False" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" friendlyname="Success" narrative="True if successful" stage="Success" />
+      <output type="text" name="Message" friendlyname="Message" narrative="An error message if unsuccessful" stage="Message" />
+    </outputs>
+    <onsuccess>263f9dde-ee33-4351-b081-1139f4455f4c</onsuccess>
+    <resource object="Utility - File Management" action="Create Directory" />
+  </stage>
+  <stage stageid="beecbad9-0554-4952-9ff4-2a4929825a3b" name="Success" type="Data">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <display x="-135" y="210" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="a3109d99-124b-4658-aea0-96cda121df05" name="Message" type="Data">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <display x="-60" y="210" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="670cde37-122d-4910-8e1c-326f559607b7" name="process messages" type="SubSheetInfo">
+    <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="efc0953a-7a63-4908-8698-f8c9559e491d" name="Start" type="Start">
+    <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
+    <display x="15" y="-195" />
+    <onsuccess>ba7bc2d1-02d4-4ab6-93d6-f0b79ab269fe</onsuccess>
+  </stage>
+  <stage stageid="6325bc4a-d460-488c-8b06-12c6e4c2f7d1" name="End" type="End">
+    <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
+    <display x="15" y="120" />
+  </stage>
+  <stage stageid="ba7bc2d1-02d4-4ab6-93d6-f0b79ab269fe" name="loop attachment folders" type="LoopStart">
+    <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="-135" />
+    <onsuccess>47f48465-ba64-4d83-a37d-0ccea7c3a1f6</onsuccess>
+    <groupid>5c75b793-fbde-4108-b44c-01492978ac97</groupid>
+    <looptype>ForEach</looptype>
+    <loopdata>messagePaths</loopdata>
+  </stage>
+  <stage stageid="8177c301-4cba-4274-add5-5999228fa8ad" name="loop attachment folders" type="LoopEnd">
+    <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="60" />
+    <onsuccess>6325bc4a-d460-488c-8b06-12c6e4c2f7d1</onsuccess>
+    <groupid>5c75b793-fbde-4108-b44c-01492978ac97</groupid>
+  </stage>
+  <stage stageid="06667a16-e250-4071-87b6-6c2affe6a2eb" name="CSV path" type="Data">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <display x="15" y="-120" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="47f48465-ba64-4d83-a37d-0ccea7c3a1f6" name="Read from CSV" type="SubSheet">
+    <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="-45" />
+    <inputs>
+      <input type="text" name="CSV path" friendlyname="CSV path" expr="[messagePaths.path]" />
+    </inputs>
+    <onsuccess>8177c301-4cba-4274-add5-5999228fa8ad</onsuccess>
+    <processid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</processid>
+  </stage>
+  <stage stageid="9343ac3f-2c15-49f9-8f5d-3fdebcb80908" name="messagePaths" type="Collection">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <display x="-165" y="45" />
+    <datatype>collection</datatype>
+    <alwaysinit />
+    <collectioninfo>
+      <field name="messageID" type="text" />
+      <field name="path" type="text" />
+    </collectioninfo>
+  </stage>
+  <stage stageid="bcec8477-9fb9-4827-bfcb-a3d045eeda66" name="Collections::Add Row" type="Action">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="135" />
+    <inputs>
+      <input type="text" name="Collection Name" friendlyname="Collection Name" narrative="The name of the collection to act upon" expr="&quot;messagePaths&quot;" />
+    </inputs>
+    <onsuccess>578aa144-8283-4305-a888-9dfa53c5895d</onsuccess>
+    <resource object="Blueprism.AutomateProcessCore.clsCollectionActions" action="Add Row" />
+  </stage>
+  <stage stageid="8e8eba74-8c70-4a24-a6b7-12b3027dfcbb" name="generate messageID" type="Calculation">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="240" />
+    <onsuccess>90bbc199-1faa-498a-a9a8-a2a72f5e50ce</onsuccess>
+    <calculation expression="[Messages.MessageID]" stage="messagePaths.messageID" />
   </stage>
 </process>
