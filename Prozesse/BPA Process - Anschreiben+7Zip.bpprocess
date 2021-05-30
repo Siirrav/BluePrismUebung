@@ -1,4 +1,4 @@
-﻿<process name="Letter + 7Zip" version="1.0" bpversion="6.10.1.35171" narrative="Create personalized letters and 7zip them to send within an e-mail." byrefcollection="true" preferredid="9034042e-7131-4a79-946d-d9e79127d946">
+﻿<process name="Anschreiben + 7Zip" version="1.0" bpversion="6.10.1.35171" narrative="Create personalized letters and 7zip them to send within an e-mail." byrefcollection="true" preferredid="9034042e-7131-4a79-946d-d9e79127d946">
   <view>
     <camerax>-31</camerax>
     <cameray>-93</cameray>
@@ -9,9 +9,9 @@
   <subsheet subsheetid="f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2" type="Normal" published="False">
     <name>Create letters</name>
     <view>
-      <camerax>-170</camerax>
-      <cameray>252</cameray>
-      <zoom version="2">1.5625</zoom>
+      <camerax>8</camerax>
+      <cameray>480</cameray>
+      <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
   <subsheet subsheetid="c1dc1014-f7a1-483d-974b-40de167bca79" type="Normal" published="False">
@@ -26,7 +26,7 @@
     <name>7Zip</name>
     <view>
       <camerax>173</camerax>
-      <cameray>0</cameray>
+      <cameray>-21</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -298,7 +298,7 @@ Please note; this Process Solution is uniquely identifiable and cannot be submit
   </stage>
   <stage stageid="d78850c4-b8da-4f97-95c1-188e06dedc7d" name="End" type="End">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
-    <display x="-90" y="420" />
+    <display x="15" y="585" />
   </stage>
   <stage stageid="b72c96fc-df0a-4ba3-8df6-72acbd359a5d" name="2. Create Instance" type="Action">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
@@ -320,7 +320,7 @@ Please note; this Process Solution is uniquely identifiable and cannot be submit
   <stage stageid="75658e2b-e108-4049-83f8-6ecac12e3237" name="4. Open Word File" type="Action">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="15" y="270" w="90" h="30" />
+    <display x="15" y="255" w="90" h="30" />
     <inputs>
       <input type="number" name="handle" friendlyname="handle" expr="[handle]" />
       <input type="text" name="File Name" friendlyname="File Name" expr="[Sample File Path]" />
@@ -328,7 +328,7 @@ Please note; this Process Solution is uniquely identifiable and cannot be submit
     <outputs>
       <output type="text" name="Document Name" friendlyname="Document Name" stage="doc" />
     </outputs>
-    <onsuccess>21ebdcd5-fb6a-4b23-8e3b-a85615aaa81e</onsuccess>
+    <onsuccess>e3bce291-69c6-4531-87c3-1e7ca5aa4617</onsuccess>
     <resource object="MS Word VBO" action="Open" />
   </stage>
   <stage stageid="e625cb95-a835-42ac-8d25-45fb1e485d6e" name="Sample File Path" type="Data">
@@ -388,20 +388,15 @@ Please note; this Process Solution is uniquely identifiable and cannot be submit
     <ontrue>d101f458-43e5-4e2d-88d1-6f23a23aaf45</ontrue>
     <onfalse>36a15e5a-fa53-4fa5-8e84-d9529b02d068</onfalse>
   </stage>
-  <stage stageid="a3c6588c-97a2-4462-9a8d-0282ab8c2fc4" name="Anchor2" type="Anchor">
-    <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
-    <display x="-60" y="270" w="10" h="10" />
-    <onsuccess>75658e2b-e108-4049-83f8-6ecac12e3237</onsuccess>
-  </stage>
   <stage stageid="1a285536-6b77-4f1c-b947-5aec43597176" name="7. Close File" type="Action">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="120" y="480" w="90" h="30" />
+    <display x="15" y="420" w="90" h="30" />
     <inputs>
       <input type="number" name="handle" friendlyname="handle" expr="[handle]" />
       <input type="text" name="documentname" friendlyname="documentname" expr="[doc]" />
     </inputs>
-    <onsuccess>953ae45a-24c2-4fcb-b1a7-6287e27085d9</onsuccess>
+    <onsuccess>9b7a8f4b-9ee2-4d1e-8484-92ef1f205c90</onsuccess>
     <resource object="MS Word VBO" action="Close" />
   </stage>
   <stage stageid="a844d363-f7fb-4bc9-b618-370769d638e4" name="Note1" type="Note">
@@ -409,45 +404,45 @@ Please note; this Process Solution is uniquely identifiable and cannot be submit
     <narrative>1. Check the Orders file exists.
 
 If not, we throw an Exception which will terminate the process.</narrative>
-    <display x="300" y="-30" w="210" h="60" />
+    <display x="330" y="-30" w="210" h="60" />
     <font family="Segoe UI" size="10" style="Bold" color="0000FF" />
   </stage>
   <stage stageid="55e53715-07a6-4fa6-bed3-5515bdac1980" name="Note1" type="Note">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <narrative>2. Create an instance of Word. This will be visible in your Task Manager.</narrative>
-    <display x="300" y="75" w="210" h="60" />
+    <display x="330" y="75" w="210" h="60" />
     <font family="Segoe UI" size="10" style="Bold" color="000080" />
   </stage>
   <stage stageid="d101f458-43e5-4e2d-88d1-6f23a23aaf45" name="Anchor6" type="Anchor">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
-    <display x="-60" y="150" w="10" h="10" />
+    <display x="120" y="150" w="10" h="10" />
     <font family="Segoe UI" size="10" style="Regular" color="FF0000" />
-    <onsuccess>a3c6588c-97a2-4462-9a8d-0282ab8c2fc4</onsuccess>
+    <onsuccess>21ebdcd5-fb6a-4b23-8e3b-a85615aaa81e</onsuccess>
   </stage>
   <stage stageid="1ef3a865-5ceb-4788-9d9c-f340e2791a18" name="Note1" type="Note">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <narrative>3. If the process is a live process, then we don't need to make the Word instance visible.
 
 Showing Word can affect the performance of your process, so once you have completed your process debug and test, you should disable the show stage.</narrative>
-    <display x="300" y="180" w="210" h="90" />
+    <display x="330" y="165" w="210" h="90" />
     <font family="Segoe UI" size="10" style="Bold" color="0000FF" />
   </stage>
   <stage stageid="5d53038b-2fcf-46e4-8a1d-40309c0ce203" name="Note1" type="Note">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <narrative>4. Open the Word template.</narrative>
-    <display x="300" y="270" w="210" h="30" />
+    <display x="330" y="255" w="210" h="30" />
     <font family="Segoe UI" size="10" style="Bold" color="000080" />
   </stage>
   <stage stageid="aa0a3adf-55cc-4d86-81c9-0939bf43e5b3" name="Note1" type="Note">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <narrative>5. Change address lines (Subprocess)</narrative>
-    <display x="300" y="375" w="210" h="30" />
+    <display x="330" y="315" w="210" h="30" />
     <font family="Segoe UI" size="10" style="Bold" color="0000FF" />
   </stage>
   <stage stageid="42dad464-c8cc-4460-ab13-f0830000b64e" name="6. Export PDF" type="Action">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="120" y="435" />
+    <display x="15" y="375" />
     <inputs>
       <input type="text" name="documentname" friendlyname="documentname" expr="[doc]" />
       <input type="number" name="handle" friendlyname="handle" expr="[handle]" />
@@ -475,19 +470,19 @@ Showing Word can affect the performance of your process, so once you have comple
   <stage stageid="1f853224-e931-4388-abc3-a896ebf6861f" name="Note1" type="Note">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <narrative>6. Save the personalized letter as PDF.</narrative>
-    <display x="300" y="435" w="210" h="30" />
+    <display x="330" y="375" w="210" h="30" />
     <font family="Segoe UI" size="10" style="Bold" color="000080" />
   </stage>
   <stage stageid="bd02962d-8466-4a93-8d9d-73eac1657b62" name="Note1" type="Note">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <narrative>7. Close the word template without saving.</narrative>
-    <display x="300" y="480" w="210" h="30" />
+    <display x="330" y="420" w="210" h="30" />
     <font family="Segoe UI" size="10" style="Bold" color="000080" />
   </stage>
   <stage stageid="3de9d885-a70f-4853-a592-eba452ed9bf6" name="Exit Word" type="Action">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="-90" y="375" />
+    <display x="15" y="540" />
     <inputs>
       <input type="number" name="handle" friendlyname="handle" expr="[handle]" />
     </inputs>
@@ -538,7 +533,7 @@ Showing Word can affect the performance of your process, so once you have comple
   <stage stageid="e3bce291-69c6-4531-87c3-1e7ca5aa4617" name="5. Change address" type="SubSheet">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="120" y="375" w="90" h="60" />
+    <display x="15" y="315" w="90" h="60" />
     <font family="Segoe UI" size="10" style="Regular" color="0000FF" />
     <onsuccess>42dad464-c8cc-4460-ab13-f0830000b64e</onsuccess>
     <processid>c1dc1014-f7a1-483d-974b-40de167bca79</processid>
@@ -556,7 +551,7 @@ Showing Word can affect the performance of your process, so once you have comple
 Items with higher priorities (lower numerical value) are processed first. Where the priority is the same, the next item is the one that has been in the queue the longest,  is not already locked, and is not already completed.
 
 The Item ID returned is used to make further calls to update the work status for that item. It may be empty, in which case there are no items available. This can mean either a) the queue is empty, or b) the queue is not running. This mechanism can be used to cleanly stop all processes working a particular queue at the end of the next case. Items that have a 'deferred' time set will not be returned unless that time has been reached.</narrative>
-    <display x="15" y="315" />
+    <display x="120" y="195" />
     <inputs>
       <input type="text" name="Queue Name" friendlyname="Queue Name" narrative="The name of the queue" expr="[input_queue]" />
       <input type="text" name="Key Filter" friendlyname="Key Filter" narrative="Optionally, a key value to filter by. Only items with this key value will be considered." expr="" />
@@ -581,7 +576,7 @@ The Item ID returned is used to make further calls to update the work status for
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <loginhibit onsuccess="true" />
     <narrative>Marks the item as completed, by updating the Completed timestamp and setting Locked to null. The item must be 'owned' by the calling process - i.e. it must have been retrieved using Get Next Item.</narrative>
-    <display x="120" y="525" />
+    <display x="180" y="480" />
     <inputs>
       <input type="text" name="Item ID" friendlyname="Item ID" narrative="The ID of the item to mark" expr="[Company ID]" />
     </inputs>
@@ -591,29 +586,29 @@ The Item ID returned is used to make further calls to update the work status for
   <stage stageid="fcb60bdc-feb4-4521-9a7e-bbf85824338b" name="Got Item?" type="Decision">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <narrative>War noch ein Unternehmen in der Liste verfügbar?</narrative>
-    <display x="15" y="375" />
+    <display x="120" y="255" />
     <decision expression="[Company ID]&lt;&gt;&quot;&quot;" />
-    <ontrue>e3bce291-69c6-4531-87c3-1e7ca5aa4617</ontrue>
-    <onfalse>3de9d885-a70f-4853-a592-eba452ed9bf6</onfalse>
+    <ontrue>75658e2b-e108-4049-83f8-6ecac12e3237</ontrue>
+    <onfalse>334d1848-3179-4af8-b5f4-0f8c3585debe</onfalse>
   </stage>
   <stage stageid="3e479598-c741-4d81-862f-16eb856b9263" name="Anchor1" type="Anchor">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="180" y="525" w="10" h="10" />
+    <display x="180" y="405" w="10" h="10" />
     <font family="Segoe UI" size="10" style="Regular" color="0000FF" />
     <onsuccess>2bdb404d-b26d-489f-8197-e6363e6cd04c</onsuccess>
   </stage>
   <stage stageid="2bdb404d-b26d-489f-8197-e6363e6cd04c" name="Anchor3" type="Anchor">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="180" y="270" w="10" h="10" />
+    <display x="180" y="195" w="10" h="10" />
     <font family="Segoe UI" size="10" style="Regular" color="0000FF" />
-    <onsuccess>75658e2b-e108-4049-83f8-6ecac12e3237</onsuccess>
+    <onsuccess>21ebdcd5-fb6a-4b23-8e3b-a85615aaa81e</onsuccess>
   </stage>
   <stage stageid="21e02f7b-7941-4ccf-9526-2fdccf9e3dd3" name="Note1" type="Note">
     <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
-    <narrative>8. Mark the queue item a completed and procceed with the next one.</narrative>
-    <display x="300" y="525" w="210" h="30" />
+    <narrative>8. If the process is part of a queue, mark the queue item as completed and procceed with the next one.</narrative>
+    <display x="330" y="480" w="210" h="30" />
     <font family="Segoe UI" size="10" style="Bold" color="000080" />
   </stage>
   <stage stageid="d158e40b-b756-452d-843d-207f517d5a72" name="7Zip" type="SubSheetInfo">
@@ -712,5 +707,18 @@ The Item ID returned is used to make further calls to update the work status for
     <initialvalue />
     <private />
     <alwaysinit />
+  </stage>
+  <stage stageid="9b7a8f4b-9ee2-4d1e-8484-92ef1f205c90" name="Is this a Live process?" type="Decision">
+    <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
+    <display x="15" y="480" w="90" h="60" />
+    <decision expression="[Live Process]" />
+    <ontrue>953ae45a-24c2-4fcb-b1a7-6287e27085d9</ontrue>
+    <onfalse>3de9d885-a70f-4853-a592-eba452ed9bf6</onfalse>
+  </stage>
+  <stage stageid="334d1848-3179-4af8-b5f4-0f8c3585debe" name="Anchor2" type="Anchor">
+    <subsheetid>f3a8754b-d65d-4ea3-a92e-2c6e44b0abb2</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="120" y="540" w="10" h="10" />
+    <onsuccess>3de9d885-a70f-4853-a592-eba452ed9bf6</onsuccess>
   </stage>
 </process>
