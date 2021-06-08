@@ -1,7 +1,7 @@
 ﻿<process name="Auftragsliste Erstellen" version="1.0" bpversion="6.10.1.35171" narrative="Erstellung der Auftragsliste auf Basis der in der CSV enthaltenenen Einträge." byrefcollection="true" preferredid="e6c0a04c-3ddf-4119-b065-a3e1781caeff">
   <view>
     <camerax>0</camerax>
-    <cameray>270</cameray>
+    <cameray>123</cameray>
     <zoom version="2">1.25</zoom>
   </view>
   <preconditions />
@@ -10,15 +10,23 @@
     <name>Crawl Telefonbuch</name>
     <view>
       <camerax>0</camerax>
-      <cameray>0</cameray>
+      <cameray>-63</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
   <subsheet subsheetid="9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5" type="Normal" published="False">
     <name>Read from CSV</name>
     <view>
-      <camerax>0</camerax>
-      <cameray>150</cameray>
+      <camerax>-59</camerax>
+      <cameray>255</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="90b7fe47-1747-4219-949a-19aa05a3ea33" type="Normal" published="False">
+    <name>Check PLZ</name>
+    <view>
+      <camerax>6</camerax>
+      <cameray>0</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -26,7 +34,7 @@
     <name>Query input</name>
     <view>
       <camerax>1</camerax>
-      <cameray>297</cameray>
+      <cameray>525</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -77,9 +85,9 @@
   </stage>
   <stage stageid="c8c7b4fe-eafc-49de-a11a-e7bf981e3c40" name="End" type="End">
     <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
-    <display x="-60" y="435" />
+    <display x="-60" y="570" />
     <outputs>
-      <output type="collection" name="Job Input" stage="Job Input" />
+      <output type="collection" name="Job Input" stage="Jobs" />
     </outputs>
   </stage>
   <stage stageid="20c79e1f-1f95-463d-828f-e7acde65867e" name="Process message" type="SubSheet">
@@ -135,9 +143,9 @@
       <input type="flag" name="First Line Is Header" friendlyname="First Line Is Header" narrative="Set True if you want to treat the first line as a header" expr="True" />
     </inputs>
     <outputs>
-      <output type="collection" name="CSV Values" friendlyname="CSV Values" narrative="The collection populated with the values of the CSV file" stage="Job Input" />
+      <output type="collection" name="CSV Values" friendlyname="CSV Values" narrative="The collection populated with the values of the CSV file" stage="Input Data" />
     </outputs>
-    <onsuccess>77d3f155-6849-4eb8-8827-bda9182c8421</onsuccess>
+    <onsuccess>4446a783-ff08-4298-9c3f-ec3981119456</onsuccess>
     <resource object="Utility - File Management" action="Get CSV Text As Collection" />
   </stage>
   <stage stageid="265aaace-cd10-447b-bc7e-0eb0bce4b748" name="Crawl Telefonbuch" type="SubSheetInfo">
@@ -391,7 +399,7 @@
   <stage stageid="77d3f155-6849-4eb8-8827-bda9182c8421" name="For each File" type="LoopEnd">
     <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="-60" y="375" />
+    <display x="-60" y="495" />
     <onsuccess>c8c7b4fe-eafc-49de-a11a-e7bf981e3c40</onsuccess>
     <groupid>eabeb54c-ab90-44e5-959d-8bf8b89e2eb7</groupid>
   </stage>
@@ -411,7 +419,7 @@
 --- .csv
 --- inhalt korrekt formatioert
 </narrative>
-    <display x="-255" y="120" w="150" h="120" />
+    <display x="-270" y="165" w="150" h="120" />
   </stage>
   <stage stageid="b65c21ff-1ceb-44f7-b276-6168bf22c60a" name="Email-Configuration" type="Note">
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
@@ -470,7 +478,7 @@
   </stage>
   <stage stageid="6325bc4a-d460-488c-8b06-12c6e4c2f7d1" name="End" type="End">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
-    <display x="-15" y="255" />
+    <display x="-15" y="285" />
   </stage>
   <stage stageid="06667a16-e250-4071-87b6-6c2affe6a2eb" name="CSV path" type="Data">
     <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
@@ -554,7 +562,7 @@
     <private />
     <alwaysinit />
   </stage>
-  <stage stageid="20ba7814-5bd2-485f-905a-682d49fdcec8" name="Job Input" type="Collection">
+  <stage stageid="20ba7814-5bd2-485f-905a-682d49fdcec8" name="Input Data" type="Collection">
     <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
     <display x="30" y="315" />
     <datatype>collection</datatype>
@@ -588,13 +596,13 @@
   <stage stageid="480a2b49-054a-4fcb-a1ce-47de0e56239e" name="For each query job" type="LoopEnd">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="30" y="120" />
+    <display x="30" y="150" />
     <onsuccess>5806a351-8a1c-4370-9f4c-62ea8180f682</onsuccess>
     <groupid>6141c4fe-ff84-4411-8b3c-0d0fbf584e98</groupid>
   </stage>
   <stage stageid="11f21c51-ab7d-4831-8622-5698147e2619" name="ResultSet" type="Collection">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
-    <display x="-195" y="150" />
+    <display x="105" y="60" />
     <datatype>collection</datatype>
     <private />
     <alwaysinit />
@@ -645,7 +653,7 @@
     <outputs>
       <output type="collection" name="ResultSet" friendlyname="ResultSet" stage="ResultSet" />
     </outputs>
-    <onsuccess>480a2b49-054a-4fcb-a1ce-47de0e56239e</onsuccess>
+    <onsuccess>954bcdd9-0022-4b0f-b7f0-764ad18adcb0</onsuccess>
     <processid>af0dfef4-7831-476b-b35e-3a00f1cb8260</processid>
   </stage>
   <stage stageid="8b75993b-af98-4020-ae9a-6575e96c4168" name="Branche" type="Data">
@@ -670,14 +678,14 @@
   </stage>
   <stage stageid="0b6b9c4f-2f0d-4ed1-9449-2b6b68d9d1e8" name="End" type="End">
     <subsheetid>b8e2f3f5-7789-4671-aa91-4f95d4b6e254</subsheetid>
-    <display x="15" y="90" />
+    <display x="15" y="270" />
   </stage>
   <stage stageid="5806a351-8a1c-4370-9f4c-62ea8180f682" name="Results to Queue" type="SubSheet">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="-15" y="195" />
+    <display x="-15" y="225" />
     <inputs>
-      <input type="collection" name="Data" friendlyname="Data" expr="[ResultSet]" />
+      <input type="collection" name="Data" friendlyname="Data" expr="[ResultsTotal]" />
     </inputs>
     <onsuccess>6325bc4a-d460-488c-8b06-12c6e4c2f7d1</onsuccess>
     <processid>b8e2f3f5-7789-4671-aa91-4f95d4b6e254</processid>
@@ -737,23 +745,6 @@
     <onsuccess>8816cf96-49fc-4df6-92ae-ee909ea582c1</onsuccess>
     <resource object="GPM - DasTelefonbuch.de" action="Close" />
   </stage>
-  <stage stageid="fff91e69-2403-452b-8052-0fcf86a3af13" name="Note5" type="Note">
-    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
-    <narrative>FEHLER:
-
-überschreibt bei mehreren input files
--&gt; wie hängt man an collection an
-</narrative>
-    <display x="150" y="315" w="120" h="90" />
-  </stage>
-  <stage stageid="b9d83ffa-e83d-441f-b7b3-976f4e8cf075" name="Note6" type="Note">
-    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
-    <narrative>FEHLER:
-
-PLZ haben keine 0 am anfang
-Im CSV noch korrekt, geht aso im Get CSV Text as collection verloren</narrative>
-    <display x="300" y="315" w="120" h="90" />
-  </stage>
   <stage stageid="43d7a88b-b219-4aee-99f4-8ae586aa6bd9" name="Note7" type="Note">
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
     <narrative>OPTIMIERUNG:
@@ -761,5 +752,140 @@ Im CSV noch korrekt, geht aso im Get CSV Text as collection verloren</narrative>
 jede E-Mail die keinen Anhang hat kann theoretisch sofort gelöscht werden und auch die messageId &amp; pfad müssen nicht weiter gegeben werden
 </narrative>
     <display x="195" y="405" w="180" h="120" />
+  </stage>
+  <stage stageid="5172e3c4-9e7d-4474-ae19-80eeb5e651e0" name="Check PLZ" type="SubSheetInfo">
+    <subsheetid>90b7fe47-1747-4219-949a-19aa05a3ea33</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="dd8c7a7a-4ab3-466a-b98d-3d53d08199a0" name="Start" type="Start">
+    <subsheetid>90b7fe47-1747-4219-949a-19aa05a3ea33</subsheetid>
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="collection" name="Input" stage="Input" />
+    </inputs>
+    <onsuccess>ca65f59b-3bf8-415f-97f6-9c01c63a7d9c</onsuccess>
+  </stage>
+  <stage stageid="502a41aa-4f4e-4ca8-8087-4e925dfdeb20" name="End" type="End">
+    <subsheetid>90b7fe47-1747-4219-949a-19aa05a3ea33</subsheetid>
+    <display x="15" y="165" />
+    <outputs>
+      <output type="collection" name="Jobs" stage="Input" />
+    </outputs>
+  </stage>
+  <stage stageid="ca65f59b-3bf8-415f-97f6-9c01c63a7d9c" name="For Each Job Input" type="LoopStart">
+    <subsheetid>90b7fe47-1747-4219-949a-19aa05a3ea33</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="-30" />
+    <onsuccess>ac30145d-3095-4ad6-a05c-9759c2fd6db1</onsuccess>
+    <groupid>e8ca0451-9ec4-4ecc-9f80-f297db32ad0f</groupid>
+    <looptype>ForEach</looptype>
+    <loopdata>Input</loopdata>
+  </stage>
+  <stage stageid="4f076879-a715-4d91-9c71-dc5c62ab42c2" name="For Each Job Input" type="LoopEnd">
+    <subsheetid>90b7fe47-1747-4219-949a-19aa05a3ea33</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="90" />
+    <onsuccess>502a41aa-4f4e-4ca8-8087-4e925dfdeb20</onsuccess>
+    <groupid>e8ca0451-9ec4-4ecc-9f80-f297db32ad0f</groupid>
+  </stage>
+  <stage stageid="ac30145d-3095-4ad6-a05c-9759c2fd6db1" name="PLZ has 5 digits?" type="Decision">
+    <subsheetid>90b7fe47-1747-4219-949a-19aa05a3ea33</subsheetid>
+    <display x="15" y="30" />
+    <decision expression="Len([Input.PLZ]) = 5" />
+    <ontrue>4f076879-a715-4d91-9c71-dc5c62ab42c2</ontrue>
+    <onfalse>90a306b5-3aaf-4a6f-bdc1-922f2e5a6975</onfalse>
+  </stage>
+  <stage stageid="2cfb94e3-3710-40c4-96b7-fc0f6f856faa" name="Note8" type="Note">
+    <subsheetid>90b7fe47-1747-4219-949a-19aa05a3ea33</subsheetid>
+    <narrative>Wrong formatting of the input csv can cause leading 0s to be omitted. </narrative>
+    <display x="-210" y="45" w="180" h="90" />
+  </stage>
+  <stage stageid="03802bd3-7ca3-43cf-b94d-4f22107ff08b" name="Anchor3" type="Anchor">
+    <subsheetid>90b7fe47-1747-4219-949a-19aa05a3ea33</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="135" y="-30" w="10" h="10" />
+    <onsuccess>ac30145d-3095-4ad6-a05c-9759c2fd6db1</onsuccess>
+  </stage>
+  <stage stageid="90a306b5-3aaf-4a6f-bdc1-922f2e5a6975" name="Add leading 0" type="Calculation">
+    <subsheetid>90b7fe47-1747-4219-949a-19aa05a3ea33</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="135" y="30" />
+    <onsuccess>03802bd3-7ca3-43cf-b94d-4f22107ff08b</onsuccess>
+    <calculation expression="&quot;0&quot; &amp; [Input.PLZ]" stage="Input.PLZ" />
+  </stage>
+  <stage stageid="fb9cec1f-e04d-4f90-afd2-0d84db77ac77" name="Input" type="Collection">
+    <subsheetid>90b7fe47-1747-4219-949a-19aa05a3ea33</subsheetid>
+    <display x="90" y="-105" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Branche" type="text" />
+      <field name="PLZ" type="text" />
+    </collectioninfo>
+  </stage>
+  <stage stageid="de766e46-09e4-4c89-97b5-36615eda037e" name="Note6" type="Note">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <narrative>Global</narrative>
+    <display x="-285" y="30" w="60" h="120" />
+  </stage>
+  <stage stageid="4446a783-ff08-4298-9c3f-ec3981119456" name="Check PLZ" type="SubSheet">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-60" y="375" />
+    <inputs>
+      <input type="collection" name="Input" friendlyname="Input" expr="[Input Data]" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="Jobs" friendlyname="Jobs" stage="Input Data" />
+    </outputs>
+    <onsuccess>a3962f59-c071-4c57-a765-8ccc2e62ef91</onsuccess>
+    <processid>90b7fe47-1747-4219-949a-19aa05a3ea33</processid>
+  </stage>
+  <stage stageid="a3962f59-c071-4c57-a765-8ccc2e62ef91" name="Append Input to Jobs" type="Action">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-60" y="435" />
+    <inputs>
+      <input type="collection" name="Main Collection" friendlyname="Main Collection" narrative="The collection to append to." expr="[Jobs]" />
+      <input type="collection" name="Collection to Append" friendlyname="Collection to Append" narrative="The collection to append." expr="[Input Data]" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="Combined Collection" friendlyname="Combined Collection" narrative="The combined collection." stage="Jobs" />
+    </outputs>
+    <onsuccess>77d3f155-6849-4eb8-8827-bda9182c8421</onsuccess>
+    <resource object="Utility - Collection Manipulation" action="Append Rows to Collection" />
+  </stage>
+  <stage stageid="d238bd9a-c187-413e-8db4-250620289a2d" name="Jobs" type="Collection">
+    <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
+    <display x="-150" y="435" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Branche" type="text" />
+      <field name="PLZ" type="text" />
+    </collectioninfo>
+  </stage>
+  <stage stageid="ea05de5b-0b2a-43b9-ae01-b7aa52f0450b" name="ResultsTotal" type="Collection">
+    <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
+    <display x="-195" y="150" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="954bcdd9-0022-4b0f-b7f0-764ad18adcb0" name="Append Results to Total" type="Action">
+    <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="30" y="105" />
+    <inputs>
+      <input type="collection" name="Main Collection" friendlyname="Main Collection" narrative="The collection to append to." expr="[ResultsTotal]" />
+      <input type="collection" name="Collection to Append" friendlyname="Collection to Append" narrative="The collection to append." expr="[ResultSet]" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="Combined Collection" friendlyname="Combined Collection" narrative="The combined collection." stage="ResultsTotal" />
+    </outputs>
+    <onsuccess>480a2b49-054a-4fcb-a1ce-47de0e56239e</onsuccess>
+    <resource object="Utility - Collection Manipulation" action="Append Rows to Collection" />
   </stage>
 </process>
