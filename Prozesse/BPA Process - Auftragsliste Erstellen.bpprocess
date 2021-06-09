@@ -1,7 +1,7 @@
 ﻿<process name="Auftragsliste Erstellen" version="1.0" bpversion="6.10.1.35171" narrative="Erstellung der Auftragsliste auf Basis der in der CSV enthaltenenen Einträge." byrefcollection="true" preferredid="e6c0a04c-3ddf-4119-b065-a3e1781caeff">
   <view>
     <camerax>0</camerax>
-    <cameray>123</cameray>
+    <cameray>87</cameray>
     <zoom version="2">1.25</zoom>
   </view>
   <preconditions />
@@ -10,7 +10,7 @@
     <name>Crawl Telefonbuch</name>
     <view>
       <camerax>0</camerax>
-      <cameray>-63</cameray>
+      <cameray>48</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -34,7 +34,7 @@
     <name>Query input</name>
     <view>
       <camerax>1</camerax>
-      <cameray>525</cameray>
+      <cameray>255</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -42,7 +42,7 @@
     <name>Process message</name>
     <view>
       <camerax>0</camerax>
-      <cameray>105</cameray>
+      <cameray>123</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -50,7 +50,7 @@
     <name>Results to Queue</name>
     <view>
       <camerax>0</camerax>
-      <cameray>0</cameray>
+      <cameray>270</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -380,7 +380,7 @@
     <display x="30" y="45" />
     <exception localized="yes" type="System Exception" detail="&quot;No Attachements Found&quot;" />
   </stage>
-  <stage stageid="71b6749e-5482-473d-82c7-d985c3b7ffc2" name="Files in Path?" type="Decision">
+  <stage stageid="71b6749e-5482-473d-82c7-d985c3b7ffc2" name="Success getting files?" type="Decision">
     <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
     <display x="-60" y="45" />
     <decision expression="[Success]" />
@@ -390,7 +390,7 @@
   <stage stageid="7dc1dc85-ac73-4714-bffd-7a7687c4ebf8" name="For each File" type="LoopStart">
     <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="-60" y="120" />
+    <display x="-60" y="135" />
     <onsuccess>0de0ff0e-3885-463d-a214-47d3f642937a</onsuccess>
     <groupid>eabeb54c-ab90-44e5-959d-8bf8b89e2eb7</groupid>
     <looptype>ForEach</looptype>
@@ -491,7 +491,7 @@
   <stage stageid="47f48465-ba64-4d83-a37d-0ccea7c3a1f6" name="Read from CSV" type="SubSheet">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="-15" y="-60" />
+    <display x="-15" y="-90" />
     <inputs>
       <input type="unknown" name="CSV path" friendlyname="CSV path" expr="[MessagePath]" />
     </inputs>
@@ -587,7 +587,7 @@
   <stage stageid="f922a7a6-b212-485d-8477-ee03b5a5d49c" name="For each query job" type="LoopStart">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="30" y="0" />
+    <display x="30" y="-15" />
     <onsuccess>11a44665-984e-4922-8089-1b1878d963e7</onsuccess>
     <groupid>6141c4fe-ff84-4411-8b3c-0d0fbf584e98</groupid>
     <looptype>ForEach</looptype>
@@ -602,7 +602,7 @@
   </stage>
   <stage stageid="11f21c51-ab7d-4831-8622-5698147e2619" name="ResultSet" type="Collection">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
-    <display x="105" y="60" />
+    <display x="105" y="45" />
     <datatype>collection</datatype>
     <private />
     <alwaysinit />
@@ -645,7 +645,7 @@
   <stage stageid="11a44665-984e-4922-8089-1b1878d963e7" name="Crawl Telefonbuch" type="SubSheet">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="30" y="60" />
+    <display x="30" y="45" />
     <inputs>
       <input type="text" name="Branche" friendlyname="Branche" expr="[QueryJobs.Branche]" />
       <input type="text" name="PLZ" friendlyname="PLZ" expr="[QueryJobs.PLZ]" />
@@ -683,7 +683,7 @@
   <stage stageid="5806a351-8a1c-4370-9f4c-62ea8180f682" name="Results to Queue" type="SubSheet">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="-15" y="225" />
+    <display x="-15" y="210" />
     <inputs>
       <input type="collection" name="Data" friendlyname="Data" expr="[ResultsTotal]" />
     </inputs>
@@ -701,7 +701,7 @@
     <loginhibit onsuccess="true" />
     <display x="-180" y="105" />
     <datatype>flag</datatype>
-    <initialvalue>False</initialvalue>
+    <initialvalue>True</initialvalue>
     <private />
     <alwaysinit />
   </stage>
@@ -877,7 +877,7 @@ jede E-Mail die keinen Anhang hat kann theoretisch sofort gelöscht werden und a
   <stage stageid="954bcdd9-0022-4b0f-b7f0-764ad18adcb0" name="Append Results to Total" type="Action">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="30" y="105" />
+    <display x="30" y="90" />
     <inputs>
       <input type="collection" name="Main Collection" friendlyname="Main Collection" narrative="The collection to append to." expr="[ResultsTotal]" />
       <input type="collection" name="Collection to Append" friendlyname="Collection to Append" narrative="The collection to append." expr="[ResultSet]" />
