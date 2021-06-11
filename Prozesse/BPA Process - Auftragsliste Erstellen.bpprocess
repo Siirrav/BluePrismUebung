@@ -50,7 +50,7 @@
     <name>Results to Queue</name>
     <view>
       <camerax>0</camerax>
-      <cameray>270</cameray>
+      <cameray>60</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -674,7 +674,7 @@
     <inputs>
       <input type="collection" name="Data" stage="Data" />
     </inputs>
-    <onsuccess>0b6b9c4f-2f0d-4ed1-9449-2b6b68d9d1e8</onsuccess>
+    <onsuccess>3e2f7868-970d-4743-a3ea-c107e0501213</onsuccess>
   </stage>
   <stage stageid="0b6b9c4f-2f0d-4ed1-9449-2b6b68d9d1e8" name="End" type="End">
     <subsheetid>b8e2f3f5-7789-4671-aa91-4f95d4b6e254</subsheetid>
@@ -871,7 +871,6 @@ jede E-Mail die keinen Anhang hat kann theoretisch sofort gelöscht werden und a
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
     <display x="-195" y="150" />
     <datatype>collection</datatype>
-    <private />
     <alwaysinit />
   </stage>
   <stage stageid="954bcdd9-0022-4b0f-b7f0-764ad18adcb0" name="Append Results to Total" type="Action">
@@ -887,5 +886,33 @@ jede E-Mail die keinen Anhang hat kann theoretisch sofort gelöscht werden und a
     </outputs>
     <onsuccess>480a2b49-054a-4fcb-a1ce-47de0e56239e</onsuccess>
     <resource object="Utility - Collection Manipulation" action="Append Rows to Collection" />
+  </stage>
+  <stage stageid="3e2f7868-970d-4743-a3ea-c107e0501213" name="Add ResultsTotal to queue" type="Action">
+    <subsheetid>b8e2f3f5-7789-4671-aa91-4f95d4b6e254</subsheetid>
+    <loginhibit onsuccess="true" />
+    <narrative>The Data collection contains the items to be added to the queue. The collection may contain single or multiple rows, with each representing an item to be added.
+
+If there is a failure during the process, the queue will be unchanged - i.e. no rows will be loaded even if the error occurred on the last one.
+
+If Defer Until is specified, the items will not be available to be worked until then. Otherwise, they are available immediately.
+
+If the queue has a key field defined, an item added has key data longer than the maximum permitted 255 characters, an error will occur</narrative>
+    <display x="15" y="75" />
+    <inputs>
+      <input type="text" name="Queue Name" friendlyname="Queue Name" narrative="The name of the queue to add items to" expr="&quot;Queue1&quot;" />
+      <input type="collection" name="Data" friendlyname="Data" narrative="A collection containing the data, one row for each item to be added" expr="[ResultsTotal]" />
+      <input type="datetime" name="Defer Until" friendlyname="Defer Until" narrative="Optionally, the date/time the new item(s) should be deferred until" expr="" />
+      <input type="number" name="Priority" friendlyname="Priority" narrative="Optionally, the priority for the new item(s). Lower numbers represent higher priorities. The default is 0." expr="" />
+      <input type="text" name="Tags" friendlyname="Tags" narrative="Optionally, a semi-colon-separated set of tags to apply to the queue item(s)" expr="" />
+      <input type="text" name="Status" friendlyname="Status" narrative="Optionally, the initial status required of the work queue item(s) " expr="" />
+      <input type="number" name="Batch Size" friendlyname="Batch Size" narrative="Optionally, the batch size to use when adding many items to the queue.  A Value of 0 will process all items in one batch.  An empty field will use the default batch size of 1000." expr="">
+        <validator type="BluePrism.AutomateProcessCore.RangeParameterValidation" parameter="0:25000" />
+      </input>
+    </inputs>
+    <outputs>
+      <output type="collection" name="Item IDs" friendlyname="Item IDs" narrative="The IDs of the items which have been added to the queue, in the order of the collection of data passed that was input" stage="" />
+    </outputs>
+    <onsuccess>0b6b9c4f-2f0d-4ed1-9449-2b6b68d9d1e8</onsuccess>
+    <resource object="Blueprism.Automate.clsWorkQueuesActions" action="Add To Queue" />
   </stage>
 </process>
