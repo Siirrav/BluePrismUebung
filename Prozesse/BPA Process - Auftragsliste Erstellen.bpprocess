@@ -1,7 +1,7 @@
-﻿<process name="Auftragsliste Erstellen" version="1.0" bpversion="6.10.1.35171" narrative="Erstellung der Auftragsliste auf Basis der in der CSV enthaltenenen Einträge." byrefcollection="true" preferredid="e6c0a04c-3ddf-4119-b065-a3e1781caeff">
+﻿<process name="Auftragsliste Erstellen" version="1.0" bpversion="6.10.1.35171" narrative="Erstellung der Auftragsliste auf Basis der in der CSV enthaltenenen Einträge." byrefcollection="true" preferredid="e6c0a04c-3ddf-4119-b065-a3e1781caeff" published="true">
   <view>
     <camerax>0</camerax>
-    <cameray>87</cameray>
+    <cameray>-39</cameray>
     <zoom version="2">1.25</zoom>
   </view>
   <preconditions />
