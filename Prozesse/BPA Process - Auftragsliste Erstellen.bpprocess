@@ -1,7 +1,7 @@
 ﻿<process name="Auftragsliste Erstellen" version="1.0" bpversion="6.10.1.35171" narrative="Erstellung der Auftragsliste auf Basis der in der CSV enthaltenenen Einträge." byrefcollection="true" preferredid="e6c0a04c-3ddf-4119-b065-a3e1781caeff" published="true">
   <view>
     <camerax>0</camerax>
-    <cameray>-39</cameray>
+    <cameray>213</cameray>
     <zoom version="2">1.25</zoom>
   </view>
   <preconditions />
@@ -18,7 +18,7 @@
     <name>Read from CSV</name>
     <view>
       <camerax>-59</camerax>
-      <cameray>255</cameray>
+      <cameray>87</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -34,7 +34,7 @@
     <name>Query input</name>
     <view>
       <camerax>1</camerax>
-      <cameray>255</cameray>
+      <cameray>210</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -59,7 +59,7 @@
     <onsuccess>e996ca1d-cc88-4ffb-9346-e36c567c86c6</onsuccess>
   </stage>
   <stage stageid="9b8c37d2-8d8f-401e-84d7-93af25d53291" name="End" type="End">
-    <display x="15" y="345" />
+    <display x="15" y="225" />
   </stage>
   <stage stageid="95dfc342-920d-4500-bbfe-cb214580192a" name="Stage1" type="ProcessInfo">
     <display x="-195" y="-105" w="150" h="90" />
@@ -97,7 +97,7 @@
       <input type="text" name="MessagePath" friendlyname="MessagePath" expr="[messagePaths.path]" />
       <input type="text" name="MessageId" friendlyname="MessageId" expr="[messagePaths.messageID]" />
     </inputs>
-    <onsuccess>f99ae6f1-ee52-44e0-af9a-40a2fac91626</onsuccess>
+    <onsuccess>f5388e7f-d0ff-4488-8017-1c81bfb9897c</onsuccess>
     <processid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</processid>
   </stage>
   <stage stageid="0de0ff0e-3885-463d-a214-47d3f642937a" name="Check if File Exists" type="Action">
@@ -179,7 +179,7 @@
   </stage>
   <stage stageid="c0127342-c9dd-48aa-ae24-3723abd77f69" name="End" type="End">
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
-    <display x="15" y="525" />
+    <display x="15" y="570" />
   </stage>
   <stage stageid="840268ba-6e2f-4eb9-bd6e-33c3b955d349" name="Email - POP3/SMTP::Configure" type="Action">
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
@@ -303,19 +303,19 @@
   <stage stageid="e56ef98f-a3d3-4b5a-be7c-f097958b9812" name="For each message ID" type="LoopEnd">
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="15" y="450" />
+    <display x="15" y="495" />
     <onsuccess>c0127342-c9dd-48aa-ae24-3723abd77f69</onsuccess>
     <groupid>12b25eaf-d90f-477e-9a8c-945e8992b2a1</groupid>
   </stage>
   <stage stageid="263f9dde-ee33-4351-b081-1139f4455f4c" name="Email - POP3/SMTP::Save Attachments" type="Action">
     <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="45" y="390" w="90" h="30" />
+    <display x="45" y="375" w="90" h="30" />
     <inputs>
       <input type="text" name="MessageID" friendlyname="MessageID" narrative="The ID of the email message." expr="[Messages.MessageID]" />
       <input type="text" name="Folder" friendlyname="Folder" narrative="A Folder in which to save all the attachments." expr="[messagePaths.path]" />
     </inputs>
-    <onsuccess>e56ef98f-a3d3-4b5a-be7c-f097958b9812</onsuccess>
+    <onsuccess>3137a301-d9e9-4dcc-9798-7c4c60ad3c35</onsuccess>
     <resource object="Email - POP3/SMTP" action="Save Attachments" />
   </stage>
   <stage stageid="953a3229-cf63-40c7-947b-a03a5c6abd63" name="Atttachment Path" type="Data">
@@ -542,7 +542,7 @@
   </stage>
   <stage stageid="f5388e7f-d0ff-4488-8017-1c81bfb9897c" name="Loop through message paths" type="LoopEnd">
     <loginhibit onsuccess="true" />
-    <display x="15" y="270" />
+    <display x="15" y="150" />
     <onsuccess>9b8c37d2-8d8f-401e-84d7-93af25d53291</onsuccess>
     <groupid>85b92e21-64cd-4725-8ddb-0af5c149fb6d</groupid>
   </stage>
@@ -697,39 +697,6 @@
     <private />
     <alwaysinit />
   </stage>
-  <stage stageid="fb7f3db9-f13b-40ec-89c7-743336aeddbb" name="Success" type="Data">
-    <loginhibit onsuccess="true" />
-    <display x="-180" y="105" />
-    <datatype>flag</datatype>
-    <initialvalue>True</initialvalue>
-    <private />
-    <alwaysinit />
-  </stage>
-  <stage stageid="f99ae6f1-ee52-44e0-af9a-40a2fac91626" name="Processing Successfull?" type="Decision">
-    <display x="45" y="150" />
-    <decision expression="[Success]" />
-    <ontrue>2c5ceee8-3772-4558-94e9-0068f07cc7b8</ontrue>
-    <onfalse>17eab76d-7afe-48de-851a-e49b96991e5e</onfalse>
-  </stage>
-  <stage stageid="2c5ceee8-3772-4558-94e9-0068f07cc7b8" name="Email - POP3/SMTP::Delete Message" type="Action">
-    <loginhibit onsuccess="true" />
-    <display x="45" y="210" />
-    <inputs>
-      <input type="text" name="MessageID" friendlyname="MessageID" narrative="The ID of the message to delete." expr="[messagePaths.messageID]" />
-    </inputs>
-    <onsuccess>f5388e7f-d0ff-4488-8017-1c81bfb9897c</onsuccess>
-    <resource object="Email - POP3/SMTP" action="Delete Message" />
-  </stage>
-  <stage stageid="17eab76d-7afe-48de-851a-e49b96991e5e" name="Anchor1" type="Anchor">
-    <loginhibit onsuccess="true" />
-    <display x="135" y="150" w="10" h="10" />
-    <onsuccess>f33fb11a-e949-4e5d-9338-dea8e6c0b786</onsuccess>
-  </stage>
-  <stage stageid="f33fb11a-e949-4e5d-9338-dea8e6c0b786" name="Anchor2" type="Anchor">
-    <loginhibit onsuccess="true" />
-    <display x="135" y="270" w="10" h="10" />
-    <onsuccess>f5388e7f-d0ff-4488-8017-1c81bfb9897c</onsuccess>
-  </stage>
   <stage stageid="72469b9c-4648-4c88-9e3e-cee255f2ff96" name="PLZ" type="Data">
     <subsheetid>af0dfef4-7831-476b-b35e-3a00f1cb8260</subsheetid>
     <display x="-60" y="-105" />
@@ -751,7 +718,7 @@
 
 jede E-Mail die keinen Anhang hat kann theoretisch sofort gelöscht werden und auch die messageId &amp; pfad müssen nicht weiter gegeben werden
 </narrative>
-    <display x="195" y="405" w="180" h="120" />
+    <display x="225" y="405" w="180" h="120" />
   </stage>
   <stage stageid="5172e3c4-9e7d-4474-ae19-80eeb5e651e0" name="Check PLZ" type="SubSheetInfo">
     <subsheetid>90b7fe47-1747-4219-949a-19aa05a3ea33</subsheetid>
@@ -914,5 +881,15 @@ If the queue has a key field defined, an item added has key data longer than the
     </outputs>
     <onsuccess>0b6b9c4f-2f0d-4ed1-9449-2b6b68d9d1e8</onsuccess>
     <resource object="Blueprism.Automate.clsWorkQueuesActions" action="Add To Queue" />
+  </stage>
+  <stage stageid="3137a301-d9e9-4dcc-9798-7c4c60ad3c35" name="Email - POP3/SMTP::Delete Message" type="Action">
+    <subsheetid>42d03f80-8c69-4e62-92fb-f1903ca84b32</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="45" y="435" />
+    <inputs>
+      <input type="text" name="MessageID" friendlyname="MessageID" narrative="The ID of the message to delete." expr="[Messages.MessageID]" />
+    </inputs>
+    <onsuccess>e56ef98f-a3d3-4b5a-be7c-f097958b9812</onsuccess>
+    <resource object="Email - POP3/SMTP" action="Delete Message" />
   </stage>
 </process>

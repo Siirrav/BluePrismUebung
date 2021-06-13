@@ -1895,7 +1895,7 @@
     <name>Crawl Information</name>
     <view>
       <camerax>140</camerax>
-      <cameray>240</cameray>
+      <cameray>615</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -1903,7 +1903,7 @@
     <name>Get Results</name>
     <view>
       <camerax>48</camerax>
-      <cameray>585</cameray>
+      <cameray>228</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -2167,7 +2167,7 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="84cf4a35-61ea-4ed2-9f5e-b1fdafc52932" name="Branche" type="Data">
     <subsheetid>743b6443-5ce7-42c9-85c7-288a63c342aa</subsheetid>
     <loginhibit />
-    <display x="-210" y="-15" />
+    <display x="-210" y="-15" w="90" h="30" />
     <datatype>text</datatype>
     <initialvalue xml:space="preserve">Fachärzte für Allgemeinmedizin</initialvalue>
     <private />
@@ -2214,7 +2214,7 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="a839fcf0-44ce-4c2b-ac64-f6c7bbaefc88" name="End" type="End">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="180" y="495" />
+    <display x="240" y="690" />
     <outputs>
       <output type="text" name="Name" stage="Result.Name" />
       <output type="text" name="Street" stage="Result.Street" />
@@ -2294,32 +2294,12 @@ You will not be able to call this action from a business process, nor will it be
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
     <display x="75" y="105" />
-    <onsuccess>69535324-62be-48e1-b48b-7bad974d7dd2</onsuccess>
+    <onsuccess>5d410ed1-fe71-42b4-81a3-e72b439f8ed5</onsuccess>
     <step stage="Result.Name">
       <element id="25e99127-bff8-42fa-ac05-23e38b8f9e76">
         <elementparameter>
           <name>wXPath</name>
           <expression>"//DIV[@id="&amp;Chr(34)&amp;"entry_"&amp;[Iterator]&amp;Chr(34)&amp;"]//DIV[@class="&amp;Chr(34)&amp;"name"&amp;Chr(34)&amp;"]/*/SPAN[1]"</expression>
-          <datatype>text</datatype>
-          <comparisontype>Equal</comparisontype>
-        </elementparameter>
-      </element>
-      <action>
-        <id>WebGetText</id>
-        <arguments>
-          <argument>
-            <id>trackingid</id>
-            <value>
-            </value>
-          </argument>
-        </arguments>
-      </action>
-    </step>
-    <step stage="Result.PLZ">
-      <element id="88fcc0b4-e3bf-44a8-beac-d280f9442ec1">
-        <elementparameter>
-          <name>wXPath</name>
-          <expression>"//DIV[@id="&amp;Chr(34)&amp;"entry_"&amp;[Iterator]&amp;Chr(34)&amp;"]//*/SPAN[@itemprop="&amp;Chr(34)&amp;"postalCode"&amp;Chr(34)&amp;"]"</expression>
           <datatype>text</datatype>
           <comparisontype>Equal</comparisontype>
         </elementparameter>
@@ -2963,7 +2943,7 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="444f6a87-bed2-465a-b453-4004ffe07345" name="Read City" type="Read">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="180" y="420" />
+    <display x="240" y="615" />
     <onsuccess>a839fcf0-44ce-4c2b-ac64-f6c7bbaefc88</onsuccess>
     <step stage="Result.City">
       <element id="a5d8e321-fbd8-4230-b442-d9f5506e3b95">
@@ -2989,14 +2969,14 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="0958c7df-ebc4-448f-a288-24edd788144b" name="Time Out - Ort tag exists" type="WaitEnd">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="225" y="345" w="30" h="30" />
+    <display x="285" y="540" w="30" h="30" />
     <onsuccess>cb8fd342-691a-4227-b066-5044543b3271</onsuccess>
     <groupid>2e1d179a-1a95-4b5c-b1b7-2ff67fea322a</groupid>
   </stage>
   <stage stageid="fcfa7efe-98dc-4e0c-8cb0-872f34e0ed15" name="Ort tag exists" type="WaitStart">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="135" y="345" w="30" h="30" />
+    <display x="195" y="540" w="30" h="30" />
     <groupid>2e1d179a-1a95-4b5c-b1b7-2ff67fea322a</groupid>
     <choices>
       <choice reply="True">
@@ -3029,7 +3009,7 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="cb8fd342-691a-4227-b066-5044543b3271" name="Read Alternative Addr" type="Read">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="360" y="345" />
+    <display x="420" y="540" />
     <onsuccess>8847d9cc-a2a4-44d0-bc1e-661faf88699a</onsuccess>
     <step stage="Location">
       <element id="37a83eea-9f04-4f55-befe-cd615d746587">
@@ -3056,7 +3036,7 @@ You will not be able to call this action from a business process, nor will it be
   </stage>
   <stage stageid="e322d759-8e7a-4999-9a14-584351650be1" name="Location" type="Data">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
-    <display x="435" y="345" />
+    <display x="495" y="540" />
     <datatype>text</datatype>
     <initialvalue />
     <private />
@@ -3065,7 +3045,7 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="8847d9cc-a2a4-44d0-bc1e-661faf88699a" name="Get Location" type="Action">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="360" y="420" />
+    <display x="420" y="615" />
     <inputs>
       <input type="text" name="Regex Pattern" friendlyname="Regex Pattern" narrative="The regex pattern to apply" expr="[Regex]" />
       <input type="text" name="Target String" friendlyname="Target String" narrative="The target string to which apply the pattern and extract values" expr="[Location]" />
@@ -3080,7 +3060,7 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="24f25163-8833-4938-92d8-ceca3ff13280" name="Regex" type="Data">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="435" y="420" />
+    <display x="495" y="615" />
     <datatype>text</datatype>
     <initialvalue xml:space="preserve">,\s(?&lt;location&gt;[a-zA-Z\W]*)$</initialvalue>
     <private />
@@ -3089,7 +3069,7 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="2896a6ce-4b9b-4748-afe9-92e3857aea8f" name="Regex Match" type="Collection">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="510" y="420" />
+    <display x="570" y="615" />
     <datatype>collection</datatype>
     <private />
     <alwaysinit />
@@ -3107,14 +3087,14 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="49dc75b7-5477-47a5-ae8f-833a1d8a2dfd" name="Store Match in Result" type="Calculation">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="360" y="495" />
+    <display x="420" y="690" />
     <onsuccess>a839fcf0-44ce-4c2b-ac64-f6c7bbaefc88</onsuccess>
     <calculation expression="[Regex Match.Value]" stage="Result.City" />
   </stage>
   <stage stageid="201bfe3f-6d17-4edb-82e6-ec9fc1389d40" name="Read Street" type="Read">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="135" y="240" />
+    <display x="195" y="435" />
     <onsuccess>d5565509-6b50-4516-8bd8-262c6e9cef75</onsuccess>
     <step stage="Result.Street">
       <element id="d2320397-ad65-448b-a721-d60bcafbbd6a">
@@ -3140,14 +3120,14 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="4d3a17a8-16a1-41e7-8465-3c4db2fe319b" name="Time Out - Street tag exists" type="WaitEnd">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="195" y="165" w="30" h="30" />
+    <display x="255" y="360" w="30" h="30" />
     <onsuccess>d983a470-76a2-4ddd-8745-37e8a4798066</onsuccess>
     <groupid>4957e2ab-7256-49ed-83e6-60bbceef0f7b</groupid>
   </stage>
   <stage stageid="69535324-62be-48e1-b48b-7bad974d7dd2" name="Street tag exists" type="WaitStart">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="75" y="165" w="30" h="30" />
+    <display x="135" y="360" w="30" h="30" />
     <groupid>4957e2ab-7256-49ed-83e6-60bbceef0f7b</groupid>
     <choices>
       <choice reply="True">
@@ -3180,20 +3160,105 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="d983a470-76a2-4ddd-8745-37e8a4798066" name="Empty String to Result.Street" type="Calculation">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="285" y="165" />
+    <display x="345" y="360" />
     <onsuccess>2f1a67ca-10fb-4678-bc84-e98c26183a7f</onsuccess>
     <calculation expression="&quot;&quot;" stage="Result.Street" />
   </stage>
   <stage stageid="d5565509-6b50-4516-8bd8-262c6e9cef75" name="Anchor8" type="Anchor">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="135" y="285" w="10" h="10" />
+    <display x="195" y="480" w="10" h="10" />
     <onsuccess>fcfa7efe-98dc-4e0c-8cb0-872f34e0ed15</onsuccess>
   </stage>
   <stage stageid="2f1a67ca-10fb-4678-bc84-e98c26183a7f" name="Anchor9" type="Anchor">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="285" y="285" w="10" h="10" />
+    <display x="345" y="480" w="10" h="10" />
     <onsuccess>d5565509-6b50-4516-8bd8-262c6e9cef75</onsuccess>
+  </stage>
+  <stage stageid="5de8219e-a213-439f-97a2-dbde6e84ce20" name="Time Out - PLZ tag exists?" type="WaitEnd">
+    <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
+    <loginhibit />
+    <display x="195" y="180" w="30" h="30" />
+    <onsuccess>9e8b8f84-1008-4991-86e2-387ebf049ff7</onsuccess>
+    <groupid>34a8b8f0-a57e-4e40-a8c0-7d36f579b447</groupid>
+  </stage>
+  <stage stageid="5d410ed1-fe71-42b4-81a3-e72b439f8ed5" name="PLZ tag exists?" type="WaitStart">
+    <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
+    <loginhibit />
+    <display x="75" y="180" w="30" h="30" />
+    <groupid>34a8b8f0-a57e-4e40-a8c0-7d36f579b447</groupid>
+    <choices>
+      <choice reply="True">
+        <name>PLZ Check Exists</name>
+        <distance>60.4669342</distance>
+        <ontrue>932270d4-46df-469c-8b7c-fa0ecc6d8797</ontrue>
+        <element id="88fcc0b4-e3bf-44a8-beac-d280f9442ec1">
+          <elementparameter>
+            <name>wXPath</name>
+            <expression>"//DIV[@id="&amp;Chr(34)&amp;"entry_"&amp;[Iterator]&amp;Chr(34)&amp;"]//*/SPAN[@itemprop="&amp;Chr(34)&amp;"postalCode"&amp;Chr(34)&amp;"]"</expression>
+            <datatype>text</datatype>
+            <comparisontype>Equal</comparisontype>
+          </elementparameter>
+        </element>
+        <condition>
+          <id>WebCheckExists</id>
+          <arguments>
+            <argument>
+              <id>trackingid</id>
+              <value>
+              </value>
+            </argument>
+          </arguments>
+        </condition>
+        <comparetype>Equal</comparetype>
+      </choice>
+    </choices>
+    <timeout>5</timeout>
+  </stage>
+  <stage stageid="932270d4-46df-469c-8b7c-fa0ecc6d8797" name="Read PLZ" type="Read">
+    <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
+    <loginhibit />
+    <display x="135" y="240" />
+    <onsuccess>48169ab9-10bc-49ad-b457-60fa305fbac8</onsuccess>
+    <step stage="Result.PLZ">
+      <element id="88fcc0b4-e3bf-44a8-beac-d280f9442ec1">
+        <elementparameter>
+          <name>wXPath</name>
+          <expression>"//DIV[@id="&amp;Chr(34)&amp;"entry_"&amp;[Iterator]&amp;Chr(34)&amp;"]//*/SPAN[@itemprop="&amp;Chr(34)&amp;"postalCode"&amp;Chr(34)&amp;"]"</expression>
+          <datatype>text</datatype>
+          <comparisontype>Equal</comparisontype>
+        </elementparameter>
+      </element>
+      <action>
+        <id>WebGetText</id>
+        <arguments>
+          <argument>
+            <id>trackingid</id>
+            <value>
+            </value>
+          </argument>
+        </arguments>
+      </action>
+    </step>
+  </stage>
+  <stage stageid="9e8b8f84-1008-4991-86e2-387ebf049ff7" name="Empty String into PLZ" type="Calculation">
+    <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
+    <loginhibit />
+    <display x="285" y="180" />
+    <onsuccess>6fd16fa2-55b0-47f8-8464-83d1938940bb</onsuccess>
+    <calculation expression="&quot;&quot;" stage="Result.PLZ" />
+  </stage>
+  <stage stageid="6fd16fa2-55b0-47f8-8464-83d1938940bb" name="Anchor10" type="Anchor">
+    <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
+    <loginhibit />
+    <display x="285" y="300" w="10" h="10" />
+    <onsuccess>48169ab9-10bc-49ad-b457-60fa305fbac8</onsuccess>
+  </stage>
+  <stage stageid="48169ab9-10bc-49ad-b457-60fa305fbac8" name="Anchor11" type="Anchor">
+    <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
+    <loginhibit />
+    <display x="135" y="300" w="10" h="10" />
+    <onsuccess>69535324-62be-48e1-b48b-7bad974d7dd2</onsuccess>
   </stage>
 </process>
