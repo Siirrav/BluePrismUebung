@@ -1827,7 +1827,7 @@
       <parameters>
         <parameter>
           <name>Path</name>
-          <value>C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</value>
+          <value>C:\Program Files\Google\Chrome\Application\chrome.exe</value>
         </parameter>
         <parameter>
           <name>CommandLineParams</name>
@@ -1871,7 +1871,7 @@
     <name>Search</name>
     <view>
       <camerax>13</camerax>
-      <cameray>120</cameray>
+      <cameray>-6</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -1894,16 +1894,16 @@
   <subsheet subsheetid="82af9e28-79db-442c-8922-0fc8d0782d93" type="Normal" published="False">
     <name>Crawl Information</name>
     <view>
-      <camerax>140</camerax>
-      <cameray>615</cameray>
+      <camerax>50</camerax>
+      <cameray>16</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
   <subsheet subsheetid="6edacb97-3da9-48c8-8685-bfdcb1ac10d5" type="Normal" published="True">
     <name>Get Results</name>
     <view>
-      <camerax>48</camerax>
-      <cameray>228</cameray>
+      <camerax>27</camerax>
+      <cameray>73</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -2028,7 +2028,7 @@ You will not be able to call this action from a business process, nor will it be
     <loginhibit />
     <display x="-210" y="-30" />
     <datatype>number</datatype>
-    <initialvalue>2</initialvalue>
+    <initialvalue>1.5</initialvalue>
     <alwaysinit />
   </stage>
   <stage stageid="7fdda659-fe45-45b5-9e7f-ee415c2e00f4" name="Launch in Chrome" type="Navigate">
@@ -2209,6 +2209,9 @@ You will not be able to call this action from a business process, nor will it be
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
     <display x="15" y="-120" />
+    <inputs>
+      <input type="text" name="Branche" narrative="Branche of the company" stage="Branche" />
+    </inputs>
     <onsuccess>34916760-bee1-4e8a-847d-b5f5565b9662</onsuccess>
   </stage>
   <stage stageid="a839fcf0-44ce-4c2b-ac64-f6c7bbaefc88" name="End" type="End">
@@ -2220,6 +2223,7 @@ You will not be able to call this action from a business process, nor will it be
       <output type="text" name="Street" stage="Result.Street" />
       <output type="text" name="PLZ" stage="Result.PLZ" />
       <output type="text" name="City" stage="Result.City" />
+      <output type="text" name="Branche" stage="Result.Branche" />
     </outputs>
   </stage>
   <stage stageid="a2255a21-09ac-44e3-80ec-5b2d3e92ffd2" name="Show more" type="SubSheetInfo">
@@ -2293,7 +2297,7 @@ You will not be able to call this action from a business process, nor will it be
   <stage stageid="5c9f9cf0-2a98-4206-bbc9-5218360c7bfe" name="Read Company Information" type="Read">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit />
-    <display x="75" y="105" />
+    <display x="75" y="120" />
     <onsuccess>5d410ed1-fe71-42b4-81a3-e72b439f8ed5</onsuccess>
     <step stage="Result.Name">
       <element id="25e99127-bff8-42fa-ac05-23e38b8f9e76">
@@ -2328,16 +2332,17 @@ You will not be able to call this action from a business process, nor will it be
       <field name="Street" type="text" />
       <field name="City" type="text" />
       <field name="PLZ" type="text" />
+      <field name="Branche" type="text" />
     </collectioninfo>
   </stage>
   <stage stageid="ab7d0e72-4f08-45cb-b0a7-3a3c0facec6a" name="Collections::Add Row" type="Action">
     <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="75" y="15" />
+    <display x="75" y="0" />
     <inputs>
       <input type="text" name="Collection Name" friendlyname="Collection Name" narrative="The name of the collection to act upon" expr="&quot;Result&quot;" />
     </inputs>
-    <onsuccess>5c9f9cf0-2a98-4206-bbc9-5218360c7bfe</onsuccess>
+    <onsuccess>60c913de-1f59-4082-85c0-a18348acb3f0</onsuccess>
     <resource object="Blueprism.AutomateProcessCore.clsCollectionActions" action="Add Row" />
   </stage>
   <stage stageid="f6314155-7c97-4b4f-aaf3-d6af74810120" name="Get Results" type="SubSheetInfo">
@@ -2348,6 +2353,9 @@ You will not be able to call this action from a business process, nor will it be
     <subsheetid>6edacb97-3da9-48c8-8685-bfdcb1ac10d5</subsheetid>
     <loginhibit />
     <display x="-45" y="-150" />
+    <inputs>
+      <input type="text" name="Branche" narrative="Branche of company" stage="Branche" />
+    </inputs>
     <onsuccess>27637505-a6d9-4f56-8d20-b9c7e43ab3da</onsuccess>
   </stage>
   <stage stageid="b91911b2-fcbc-4c65-8d93-af3c3d224731" name="End" type="End">
@@ -2362,11 +2370,15 @@ You will not be able to call this action from a business process, nor will it be
     <subsheetid>6edacb97-3da9-48c8-8685-bfdcb1ac10d5</subsheetid>
     <loginhibit />
     <display x="105" y="585" />
+    <inputs>
+      <input type="text" name="Branche" friendlyname="Branche" narrative="Branche of the company" expr="[Branche]" />
+    </inputs>
     <outputs>
       <output type="text" name="Street" friendlyname="Street" stage="Results.Street" />
       <output type="text" name="PLZ" friendlyname="PLZ" stage="Results.PLZ" />
       <output type="text" name="City" friendlyname="City" stage="Results.City" />
       <output type="text" name="Name" friendlyname="Name" stage="Results.Name" />
+      <output type="text" name="Branche" friendlyname="Branche" stage="Results.Branche" />
     </outputs>
     <onsuccess>43e378e7-4b2f-4771-bafc-3853ca0cc70f</onsuccess>
     <processid>82af9e28-79db-442c-8922-0fc8d0782d93</processid>
@@ -2571,6 +2583,7 @@ You will not be able to call this action from a business process, nor will it be
       <field name="City" type="text" />
       <field name="PLZ" type="text" />
       <field name="Street" type="text" />
+      <field name="Branche" type="text" />
     </collectioninfo>
   </stage>
   <stage stageid="e080dd06-f7ad-450f-88bf-55a6a97a24b0" name="Time Out - Results Exist?" type="WaitEnd">
@@ -3260,5 +3273,28 @@ You will not be able to call this action from a business process, nor will it be
     <loginhibit />
     <display x="135" y="300" w="10" h="10" />
     <onsuccess>69535324-62be-48e1-b48b-7bad974d7dd2</onsuccess>
+  </stage>
+  <stage stageid="e894657e-ff36-48b9-b692-eb2bf49786f3" name="Branche" type="Data">
+    <subsheetid>6edacb97-3da9-48c8-8685-bfdcb1ac10d5</subsheetid>
+    <display x="30" y="-150" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="fa66b02b-6a6f-4c98-89c0-00f1ff2cc78e" name="Branche" type="Data">
+    <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
+    <display x="90" y="-120" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="60c913de-1f59-4082-85c0-a18348acb3f0" name="Save Branche into collection" type="Calculation">
+    <subsheetid>82af9e28-79db-442c-8922-0fc8d0782d93</subsheetid>
+    <loginhibit />
+    <display x="75" y="60" />
+    <onsuccess>5c9f9cf0-2a98-4206-bbc9-5218360c7bfe</onsuccess>
+    <calculation expression="[Branche]" stage="Result.Branche" />
   </stage>
 </process>

@@ -1,0 +1,52 @@
+﻿<process name="Corona-Hilfe" version="1.0" bpversion="6.10.1.35171" narrative="Informierung von gefilterten Unternehmen über Corona-Hilfe-Maßnahmen" byrefcollection="true" preferredid="9bf22891-0c3c-4b2e-9e1b-5b135ccc57b7" published="true">
+  <view>
+    <camerax>0</camerax>
+    <cameray>0</cameray>
+    <zoom version="2">1.25</zoom>
+  </view>
+  <preconditions />
+  <endpoint narrative="" />
+  <stage stageid="faa99ea1-301c-4d1f-9f5b-ad1bc76a7ccd" name="Start" type="Start">
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="collection" name="CompanysWithRequest" narrative="Unternehmen mit bereits gestelltem Antrag" stage="CompanysWithRequest" />
+    </inputs>
+    <onsuccess>ea065ff8-3d3d-40bd-a9da-c7f2d3cfe2ab</onsuccess>
+  </stage>
+  <stage stageid="98356c89-c36e-473a-8af1-c3837317a549" name="End" type="End">
+    <display x="15" y="210" />
+  </stage>
+  <stage stageid="c84a900a-5c15-46e1-8954-045f19373c11" name="Stage1" type="ProcessInfo">
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="9ca95e3b-8c14-4f56-9558-2136a4beca89" name="CompanysWithRequest" type="Collection">
+    <display x="90" y="30" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="ea065ff8-3d3d-40bd-a9da-c7f2d3cfe2ab" name="Eingabe: Antragliste erstellen" type="Process">
+    <loginhibit onsuccess="true" />
+    <narrative>Generierung der Queue alles zu überprüfenden Unternehmen</narrative>
+    <display x="15" y="-45" />
+    <onsuccess>f788707d-1e01-4f29-abf2-d0ffdd2396fa</onsuccess>
+    <processid>e6c0a04c-3ddf-4119-b065-a3e1781caeff</processid>
+  </stage>
+  <stage stageid="f788707d-1e01-4f29-abf2-d0ffdd2396fa" name="Überprüfung: Antragsabgleich" type="Process">
+    <loginhibit onsuccess="true" />
+    <narrative>Prüfe die herausgesuchten Unternehmen, ob diese bereits einen Antrag gestellt haben. Falls ja: ignorieren</narrative>
+    <display x="15" y="30" />
+    <inputs>
+      <input type="collection" name="CompanysWithRequest" friendlyname="CompanysWithRequest" narrative="Unternehmen, die bereits einen Antrag eingereicht haben" expr="[CompanysWithRequest]" />
+    </inputs>
+    <onsuccess>9b4235bc-c973-45b6-b95e-ec02c07308df</onsuccess>
+    <processid>dd2807f6-9126-4428-8363-0f77b2a1ad6c</processid>
+  </stage>
+  <stage stageid="9b4235bc-c973-45b6-b95e-ec02c07308df" name="Ausgabe: Dokumenterzeugung" type="Process">
+    <loginhibit onsuccess="true" />
+    <narrative>Erzeugen der Informationsschreiben und versenden der .zip-Datei aller Blätter an vorgegebene E-Mail</narrative>
+    <display x="15" y="105" />
+    <onsuccess>98356c89-c36e-473a-8af1-c3837317a549</onsuccess>
+    <processid>9034042e-7131-4a79-946d-d9e79127d946</processid>
+  </stage>
+</process>

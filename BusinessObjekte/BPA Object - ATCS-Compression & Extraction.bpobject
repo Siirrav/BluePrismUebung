@@ -1,0 +1,1419 @@
+﻿<process name="ATCS-Compression &amp; Extraction" version="1.0" bpversion="6.10.1.35171" narrative="" byrefcollection="true" type="object" runmode="Background" preferredid="b953edbf-b0e0-4d4c-9ee5-d723397f9e45">
+  <appdef>
+    <element name="Application Root">
+      <id>bcb24888-8991-402a-acc3-ab1015f27e99</id>
+      <type>Application</type>
+      <basetype>Application</basetype>
+      <datatype>unknown</datatype>
+      <diagnose>False</diagnose>
+    </element>
+  </appdef>
+  <view>
+    <camerax>-202</camerax>
+    <cameray>42</cameray>
+    <zoom version="2">1.25</zoom>
+  </view>
+  <preconditions>
+    <condition narrative="The following S/W must be installed before execution" />
+    <condition narrative="1. 7-Zip for create ZIP,TAR,WIM,,XZ,and 7z files" />
+  </preconditions>
+  <endpoint narrative="" />
+  <subsheet subsheetid="ada944c3-9a9e-40ba-b795-9f838b3795e1" type="CleanUp" published="True">
+    <name>Clean Up</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="07e27e88-83e8-40ea-bf25-2ed290ead7c8" type="Normal" published="True">
+    <name>Create Zip </name>
+    <view>
+      <camerax>70</camerax>
+      <cameray>-84</cameray>
+      <zoom version="2">1.5625</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="10310079-c744-4144-97f0-d98d1a3cacc7" type="Normal" published="True">
+    <name>CreateXZ</name>
+    <view>
+      <camerax>141</camerax>
+      <cameray>-126</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="1e664d5c-3bfc-4a50-aff1-bdda0f76cdda" type="Normal" published="True">
+    <name>Extract Compressed File</name>
+    <view>
+      <camerax>16</camerax>
+      <cameray>-84</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="d28c7c4f-aef6-402b-9589-4c88aee357dc" type="Normal" published="True">
+    <name>Create Bzip2</name>
+    <view>
+      <camerax>141</camerax>
+      <cameray>-126</cameray>
+      <zoom version="2">1.875</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="c69ee2dd-d514-44e7-9df2-e80b3972792c" type="Normal" published="True">
+    <name>Create GZip</name>
+    <view>
+      <camerax>141</camerax>
+      <cameray>-147</cameray>
+      <zoom version="2">1.875</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="bc9042c6-3e04-487a-93f1-7fea61f52413" type="Normal" published="True">
+    <name>CreateTar</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>-143</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="63594ef5-1c46-45a2-a098-cf4772b9a563" type="Normal" published="True">
+    <name>CreateWim</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="23ae9094-9d85-422d-a800-27777d4d1cea" type="Normal" published="True">
+    <name>Create 7z</name>
+    <view>
+      <camerax>291</camerax>
+      <cameray>-99</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <stage stageid="285cf092-2d2f-4251-9878-9ff307eec268" name="Start" type="Start">
+    <loginhibit />
+    <display x="15" y="-90" />
+    <onsuccess>d1038e88-40ed-440c-9530-855104a33603</onsuccess>
+  </stage>
+  <stage stageid="d1038e88-40ed-440c-9530-855104a33603" name="End" type="End">
+    <loginhibit />
+    <display x="15" y="90" />
+  </stage>
+  <stage stageid="c4eca8d7-a586-44c6-a2db-974f61e1c53a" name="Stage1" type="ProcessInfo">
+    <display x="-195" y="-105" w="150" h="90" />
+    <references>
+      <reference>System.dll</reference>
+      <reference>System.Data.dll</reference>
+      <reference>System.Xml.dll</reference>
+      <reference>System.Drawing.dll</reference>
+      <reference>System.IO.dll</reference>
+    </references>
+    <imports>
+      <import>System</import>
+      <import>System.Drawing</import>
+      <import>System.Data</import>
+      <import>System.IO</import>
+    </imports>
+    <language>csharp</language>
+    <globalcode><![CDATA[]]></globalcode>
+    <code><![CDATA[public static String checkLengthisValid(String input, String dest, String proocesspath)
+		{
+			if (input.Length < 1)
+			{
+				throw new Exception("Blank path for input path");
+			}
+			else if (dest.Length < 1)
+			{
+				throw new Exception("Blank path for destination path");
+			}
+			else if (proocesspath.Length < 1)
+			{
+				throw new Exception("Blank path for proccess path");
+			}
+			else
+			{
+				return "Success";
+			}
+		}
+
+		public bool Create7z(String inputpath, String destinationpath, String processPath, String compressedFileName)
+		{
+			inputpath = @"" + inputpath;
+			processPath = @"" + processPath;
+			destinationpath = @"" + destinationpath;
+
+			if (checkLengthisValid(inputpath, destinationpath, processPath).Equals("Success"))
+			{
+
+
+				FileInfo fi = new FileInfo(inputpath);
+				if (verifyFileAlreadyExists(inputpath, destinationpath, compressedFileName, ".7z"))
+				{
+					throw new Exception("Compressed file already exists");
+				}
+				if (!Directory.Exists(destinationpath))
+				{
+					throw new Exception("Invalid Path : " + destinationpath);
+				}
+				if ((Directory.Exists(inputpath)) || (File.Exists(inputpath)))
+				{
+				}
+				else
+				{
+					throw new Exception("Invalid Path : " + inputpath);
+				}
+				var arguments = "";
+				if (compressedFileName.Length > 0)
+				{
+					arguments = string.Format("a \"{0}\" \"{1}\"", destinationpath + @"\" + compressedFileName + ".7z", inputpath);
+				}
+				else
+				{
+					arguments = string.Format("a \"{0}\" \"{1}\"", destinationpath + @"\" + fi.Name + ".7z", inputpath);
+				}
+				var processStartInfo = new System.Diagnostics.ProcessStartInfo
+				{
+					ErrorDialog = false,
+					UseShellExecute = true,
+					Arguments = arguments,
+					FileName = processPath,
+					CreateNoWindow = false,
+					WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+				};
+				var process = System.Diagnostics.Process.Start(processStartInfo);
+				process?.WaitForExit();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+		}
+		public bool Createzip(String inputpath, String destinationpath, String processPath, String compressedFileName)
+		{
+
+			inputpath = @"" + inputpath;
+			processPath = @"" + processPath;
+			destinationpath = @"" + destinationpath;
+
+			if (checkLengthisValid(inputpath, destinationpath, processPath).Equals("Success"))
+			{
+				FileInfo fi = new FileInfo(inputpath);
+				if (verifyFileAlreadyExists(inputpath, destinationpath, compressedFileName, ".zip"))
+				{
+					throw new Exception("Compressed file already exists");
+				}
+
+				if (inputpath.Length < 1 || destinationpath.Length < 1)
+				{
+					throw new Exception("Blank Path : ");
+				}
+				if (!Directory.Exists(destinationpath))
+				{
+					throw new Exception("Invalid Path : " + destinationpath);
+				}
+				if ((Directory.Exists(inputpath)) || (File.Exists(inputpath)))
+				{
+				}
+				else
+				{
+					throw new Exception("Invalid Path : " + inputpath);
+				}
+				var arguments = "";
+
+				if (compressedFileName.Length > 0)
+				{
+					arguments = string.Format("a \"{0}\" \"{1}\"", destinationpath + @"\" + compressedFileName + ".zip", inputpath);
+
+				}
+				else
+				{
+					arguments = string.Format("a \"{0}\" \"{1}\"", destinationpath + @"\" + fi.Name + ".zip", inputpath);
+				}
+
+				var processStartInfo = new System.Diagnostics.ProcessStartInfo
+				{
+					ErrorDialog = false,
+					UseShellExecute = true,
+					Arguments = arguments,
+					FileName = processPath,
+					CreateNoWindow = false,
+					WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+				};
+				var process = System.Diagnostics.Process.Start(processStartInfo);
+				process?.WaitForExit();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+		}
+
+		public bool Createtar(String inputpath, String destinationpath, String processPath, String compressedFileName)
+		{
+			inputpath = @"" + inputpath;
+			processPath = @"" + processPath;
+			destinationpath = @"" + destinationpath;
+
+			if (checkLengthisValid(inputpath, destinationpath, processPath).Equals("Success"))
+			{
+				FileInfo fi = new FileInfo(inputpath);
+				if (verifyFileAlreadyExists(inputpath, destinationpath, compressedFileName, ".tar"))
+				{
+					throw new Exception("Compressed file already exists");
+				}
+				if (!Directory.Exists(destinationpath))
+				{
+					throw new Exception("Invalid Path : " + destinationpath);
+				}
+				if ((Directory.Exists(inputpath)) || (File.Exists(inputpath)))
+				{
+				}
+				else
+				{
+					throw new Exception("Invalid Path : " + inputpath);
+				}
+
+				var arguments = "";
+				if (compressedFileName.Length > 0)
+				{
+					arguments = string.Format("a \"{0}\" \"{1}\"", destinationpath + @"\" + compressedFileName + ".tar", inputpath);
+				}
+				else
+				{
+					arguments = string.Format("a \"{0}\" \"{1}\"", destinationpath + @"\" + fi.Name + ".tar", inputpath);
+				}
+				var processStartInfo = new System.Diagnostics.ProcessStartInfo
+				{
+					ErrorDialog = false,
+					UseShellExecute = true,
+					Arguments = arguments,
+					FileName = processPath,
+					CreateNoWindow = false,
+					WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+				};
+				var process = System.Diagnostics.Process.Start(processStartInfo);
+				process?.WaitForExit();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		public bool Createwim(String inputpath, String destinationpath, String processPath, String compressedFileName)
+		{
+			inputpath = @"" + inputpath;
+			processPath = @"" + processPath;
+			destinationpath = @"" + destinationpath;
+			if (checkLengthisValid(inputpath, destinationpath, processPath).Equals("Success"))
+			{
+				FileInfo fi = new FileInfo(inputpath);
+				if (verifyFileAlreadyExists(inputpath, destinationpath, compressedFileName, ".wim"))
+				{
+					throw new Exception("Compressed file already exists");
+				}
+				if (!Directory.Exists(destinationpath))
+				{
+					throw new Exception("Invalid Path : " + destinationpath);
+				}
+				if ((Directory.Exists(inputpath)) || (File.Exists(inputpath)))
+				{
+				}
+				else
+				{
+					throw new Exception("Invalid Path : " + inputpath);
+				}
+				var arguments = "";
+				if (compressedFileName.Length > 0)
+				{
+					arguments = string.Format("a \"{0}\" \"{1}\"", destinationpath + @"\" + compressedFileName + ".wim", inputpath);
+				}
+				else
+				{
+					arguments = string.Format("a \"{0}\" \"{1}\"", destinationpath + @"\" + fi.Name + ".wim", inputpath);
+				}
+				var processStartInfo = new System.Diagnostics.ProcessStartInfo
+				{
+					ErrorDialog = false,
+					UseShellExecute = true,
+					Arguments = arguments,
+					FileName = processPath,
+					CreateNoWindow = false,
+					WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+				};
+				var process = System.Diagnostics.Process.Start(processStartInfo);
+				process?.WaitForExit();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+		}
+		public bool CreateXZ(String inputpath, String destinationpath, String processPath, String compressedFileName)
+		{
+			processPath = @"" + processPath;
+			destinationpath = @"" + destinationpath;
+			inputpath = @"" + inputpath;
+			if (checkLengthisValid(inputpath, destinationpath, processPath).Equals("Success"))
+			{
+				if (verifyFileAlreadyExists(inputpath, destinationpath, compressedFileName, ".xz"))
+				{
+					throw new Exception("Compressed file already exists");
+				}
+				if (!Directory.Exists(destinationpath))
+				{
+					throw new Exception("Invalid Path : " + destinationpath);
+				}
+				if ((Directory.Exists(inputpath)) || (File.Exists(inputpath)))
+				{
+				}
+				else
+				{
+					throw new Exception("Invalid Path : " + inputpath);
+				}
+
+
+				if (File.Exists(inputpath))
+				{
+					processPath = @"" + processPath;
+					destinationpath = @"" + destinationpath;
+					FileInfo fi = new FileInfo(inputpath);
+					var arguments = "";
+					if (compressedFileName.Length > 0)
+					{
+						arguments = string.Format("a -tgzip \"{0}\" \"{1}\"", destinationpath + @"\" + compressedFileName + ".xz", inputpath);
+					}
+					else
+					{
+						arguments = string.Format("a -tgzip \"{0}\" \"{1}\"", destinationpath + @"\" + fi.Name + ".xz", inputpath);
+					}
+					var processStartInfo = new System.Diagnostics.ProcessStartInfo
+					{
+						ErrorDialog = false,
+						UseShellExecute = true,
+						Arguments = arguments,
+						FileName = processPath,
+						CreateNoWindow = false,
+						WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+					};
+					var process = System.Diagnostics.Process.Start(processStartInfo);
+					process?.WaitForExit();
+				}
+				else
+				{
+					throw new Exception("Invalid input path or 7zip extension 'xz' only work with files");
+				}
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+		}
+		public bool CreateBZIP2(String inputpath, String destinationpath, String processPath, String compressedFileName)
+		{
+			processPath = @"" + processPath;
+			destinationpath = @"" + destinationpath;
+			inputpath = @"" + inputpath;
+			if (checkLengthisValid(inputpath, destinationpath, processPath).Equals("Success"))
+			{
+				if (verifyFileAlreadyExists(inputpath, destinationpath, compressedFileName, ".bz2"))
+				{
+					throw new Exception("Compressed file already exists");
+				}
+				if (!Directory.Exists(destinationpath))
+				{
+					throw new Exception("Invalid Path : " + destinationpath);
+				}
+				if ((Directory.Exists(inputpath)) || (File.Exists(inputpath)))
+				{
+				}
+				else
+				{
+					throw new Exception("Invalid Path : " + inputpath);
+				}
+				if (File.Exists(inputpath))
+				{
+
+					FileInfo fi = new FileInfo(inputpath);
+					var arguments = "";
+					if (compressedFileName.Length > 0)
+					{
+						arguments = string.Format("a -tgzip \"{0}\" \"{1}\"", destinationpath + @"\" + compressedFileName + ".bz2", inputpath);
+					}
+					else
+					{
+						arguments = string.Format("a -tgzip \"{0}\" \"{1}\"", destinationpath + @"\" + fi.Name + ".bz2", inputpath);
+					}
+					var processStartInfo = new System.Diagnostics.ProcessStartInfo
+					{
+						ErrorDialog = false,
+						UseShellExecute = true,
+						Arguments = arguments,
+						FileName = processPath,
+						CreateNoWindow = false,
+						WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+					};
+					var process = System.Diagnostics.Process.Start(processStartInfo);
+					process?.WaitForExit();
+				}
+				else
+				{
+					throw new Exception("Invalid input path or 7zip extension 'bzip2' only work with files");
+				}
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+
+		}
+		public bool CreateGZIP(String inputpath, String destinationpath, String processPath, String compressedFileName)
+		{
+			processPath = @"" + processPath;
+			destinationpath = @"" + destinationpath;
+			inputpath = @"" + inputpath;
+
+			if (checkLengthisValid(inputpath, destinationpath, processPath).Equals("Success"))
+			{
+				if (verifyFileAlreadyExists(inputpath, destinationpath, compressedFileName, ".gz"))
+				{
+					throw new Exception("Compressed file already exists");
+				}
+				if (!Directory.Exists(destinationpath))
+				{
+					throw new Exception("Invalid Path : " + destinationpath);
+				}
+				if ((Directory.Exists(inputpath)) || (File.Exists(inputpath)))
+				{
+				}
+				else
+				{
+					throw new Exception("Invalid Path : " + inputpath);
+				}
+				processPath = @"" + processPath;
+				destinationpath = @"" + destinationpath;
+				inputpath = @"" + inputpath;
+				if (File.Exists(inputpath))
+				{
+
+					FileInfo fi = new FileInfo(inputpath);
+					var arguments = "";
+					if (compressedFileName.Length > 0)
+					{
+						arguments = string.Format("a -tgzip \"{0}\" \"{1}\"", destinationpath + @"\" + compressedFileName + ".gz", inputpath);
+					}
+					else
+					{
+						arguments = string.Format("a -tgzip \"{0}\" \"{1}\"", destinationpath + @"\" + fi.Name + ".gz", inputpath);
+					}
+					var processStartInfo = new System.Diagnostics.ProcessStartInfo
+					{
+						ErrorDialog = false,
+						UseShellExecute = true,
+						Arguments = arguments,
+						FileName = processPath,
+						CreateNoWindow = false,
+						WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+					};
+					var process = System.Diagnostics.Process.Start(processStartInfo);
+					process?.WaitForExit();
+				}
+				else
+				{
+					throw new Exception("Invalid input path or 7zip extension '.gz' only work with files");
+				}
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		public static void ExtractFile(String inputpath, String destinationpath, String processPath)
+		{
+			processPath = @"" + processPath;
+			destinationpath = @"" + destinationpath;
+			inputpath = @"" + inputpath;
+
+			if (checkLengthisValid(inputpath, destinationpath, processPath).Equals("Success"))
+			{
+			if (File.Exists(@"" + inputpath))
+			{
+				FileInfo fi = new FileInfo(inputpath);
+				String fileNameWithoutExtension=fi.Name.Replace(fi.Extension, "");
+				String filePathWithoutExtension=fi.FullName.Replace(fi.Extension, "");
+				DirectoryInfo di = new DirectoryInfo(destinationpath+@"\"+fileNameWithoutExtension);
+				if(di.Exists)
+				{
+					throw new Exception("Extracted folder already exists");
+				}
+				else if(File.Exists(destinationpath+@"\"+fileNameWithoutExtension))
+				{
+					throw new Exception("Extracted file already exists");
+				}	
+				else
+				{
+					
+					var processStartInfo = new System.Diagnostics.ProcessStartInfo
+					{
+						ErrorDialog = false,
+						UseShellExecute = true,
+						
+						Arguments = string.Format("x \"{0}\" -y -o\"{1}\"", inputpath, destinationpath),
+						FileName = processPath,
+						CreateNoWindow = false,
+
+
+						WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+					};
+
+					var process = System.Diagnostics.Process.Start(processStartInfo);
+					process?.WaitForExit();
+				}
+				
+			}
+			else
+			{
+				throw new FileNotFoundException("File does not exist : " + inputpath);
+			}
+		}
+
+
+		}
+		public bool verifyFileAlreadyExists(String inputpath, String destinationpath, String compressedFileName, String extn)
+		{
+			if (compressedFileName.Length > 0)
+			{
+				if (File.Exists(destinationpath + @"\" + compressedFileName + extn))
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+
+				FileInfo fi = new FileInfo(inputpath);
+				if (File.Exists(destinationpath + @"\" + fi.Name + extn))
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}]]></code>
+  </stage>
+  <stage stageid="a44e063c-bbbb-4da9-b2ed-df99ce666452" name="Clean Up" type="SubSheetInfo">
+    <subsheetid>ada944c3-9a9e-40ba-b795-9f838b3795e1</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="1c00763b-c422-43a1-a429-48ddc18a0b09" name="Start" type="Start">
+    <subsheetid>ada944c3-9a9e-40ba-b795-9f838b3795e1</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <onsuccess>2bb5b972-2e48-4333-98a4-1c2ec9360b98</onsuccess>
+  </stage>
+  <stage stageid="2bb5b972-2e48-4333-98a4-1c2ec9360b98" name="End" type="End">
+    <subsheetid>ada944c3-9a9e-40ba-b795-9f838b3795e1</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+  </stage>
+  <stage stageid="0514df7d-2b6e-45cf-9303-6938ef2e9ef5" name="Note1" type="Note">
+    <subsheetid>ada944c3-9a9e-40ba-b795-9f838b3795e1</subsheetid>
+    <narrative>Clean Up Page
+
+This is an optional page where you might choose to perform some finalisation (or "cleanup") tasks as your business object is closed down.
+
+The cleanup action will be called automatically immediately after closing your business object at the end of a business process.
+
+You will not be able to call this action from a business process, nor will it be called at any other time than before the disposal of the business object.</narrative>
+    <display x="-180" y="60" w="180" h="230" />
+  </stage>
+  <stage stageid="b0205c0e-4dc8-4e61-bcef-de26892da27a" name="Note2" type="Note">
+    <narrative>Initialise Page
+
+This is an optional page where you might choose to perform some initialisation tasks after your business object is loaded.
+
+The initialise action will be called automatically immediately after loading your business object.
+
+You will not be able to call this action from a business process, nor will it be called at any other time than after the creation of the object.</narrative>
+    <display x="-180" y="60" w="180" h="230" />
+  </stage>
+  <stage stageid="aa94a993-d66b-46b0-9370-044283344917" name="CreateTar" type="SubSheetInfo">
+    <subsheetid>bc9042c6-3e04-487a-93f1-7fea61f52413</subsheetid>
+    <narrative>Provides functionality to create TAR file of any file or folder .
+
+Params: 
+- DestinationPath-Text : location where compressed file has to be created
+-InputPath-Text: path of the input file or folder.
+-ProcessPath-Text : 7zip..exe path
+-CompressedFileName-Text: Optional
+
+Return :
+-Succes-Bool: True if TAR file is creatad successfully</narrative>
+    <display x="-195" y="-105" w="180" h="150" />
+  </stage>
+  <stage stageid="1fdc5b56-1788-440c-877e-fe41c9719cdd" name="Create Tar" type="Code">
+    <subsheetid>bc9042c6-3e04-487a-93f1-7fea61f52413</subsheetid>
+    <loginhibit />
+    <display x="15" y="-30" />
+    <inputs>
+      <input type="text" name="InputPath" expr="[InputPath]" />
+      <input type="text" name="DestinationPath" expr="[DestinationPath]" />
+      <input type="text" name="processpath" expr="[processPath]" />
+      <input type="text" name="FileName" expr="[CompressedFileName]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" stage="Success" />
+    </outputs>
+    <onsuccess>85119676-3d58-4506-876b-99fe169b58ef</onsuccess>
+    <code><![CDATA[Success=Createtar(InputPath,DestinationPath,processpath,FileName);]]></code>
+  </stage>
+  <stage stageid="211b98e7-1341-4c55-930e-1f33e3db8931" name="CreateWim" type="SubSheetInfo">
+    <subsheetid>63594ef5-1c46-45a2-a098-cf4772b9a563</subsheetid>
+    <narrative>Provides functionality to create WIM file of any file or folder .
+
+Params: 
+- DestinationPath-Text : location where compressed file has to be created
+-InputPath-Text: path of the input file or folder.
+-ProcessPath-Text : 7zip..exe path
+-CompressedFileName-Text: Optional
+
+Return :
+-Succes-Bool: True if  WIM file is creatad successfully</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="916cc073-6b89-4c73-8f7f-3b8815b16b8c" name="Create Wim" type="Code">
+    <subsheetid>63594ef5-1c46-45a2-a098-cf4772b9a563</subsheetid>
+    <loginhibit />
+    <display x="15" y="-15" />
+    <inputs>
+      <input type="text" name="InputPath" expr="[InputPath]" />
+      <input type="text" name="DestinationPath" expr="[DestinationPath]" />
+      <input type="text" name="processpath" expr="[processPath]" />
+      <input type="text" name="FileName" expr="[CompressedFileName]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" stage="Success" />
+    </outputs>
+    <onsuccess>1c779ea5-102d-469f-a9c6-eec84e067631</onsuccess>
+    <code><![CDATA[Success=Createwim(InputPath,DestinationPath,processpath,FileName);]]></code>
+  </stage>
+  <stage stageid="9a81f4be-31cc-4ca9-9530-a5cf25574749" name="Create 7z" type="SubSheetInfo">
+    <subsheetid>23ae9094-9d85-422d-a800-27777d4d1cea</subsheetid>
+    <narrative>Provides functionality to create 7z file of any file or folder .
+
+Params: 
+- DestinationPath-Text : location where compressed file has to be created
+-InputPath-Text: path of the input file or folder.
+-ProcessPath-Text : 7zip..exe path
+-CompressedFileName-Text: Optional
+Return :
+-Succes-Bool: True if 7z file is creatad successfully</narrative>
+    <display x="-195" y="-105" w="150" h="180" />
+  </stage>
+  <stage stageid="ad333244-977b-447f-9f51-3a3a3e34c43c" name="Extract Compressed File" type="SubSheetInfo">
+    <subsheetid>1e664d5c-3bfc-4a50-aff1-bdda0f76cdda</subsheetid>
+    <narrative>Provides functionality to decompress compressed files
+
+Params: 
+- DestinationPath-Text : location where compressed file has to be extracted or decompress
+-InputPath-Text: path of the icompressed nput file .
+-ProcessPath-Text : 7zip..exe path
+
+Return :
+-Succes-Bool: True if  compressed file is extracted successfully</narrative>
+    <display x="-390" y="-180" w="240" h="210" />
+  </stage>
+  <stage stageid="8b42d302-a987-413d-baed-8cb9fc0b5761" name="Start" type="Start">
+    <subsheetid>1e664d5c-3bfc-4a50-aff1-bdda0f76cdda</subsheetid>
+    <loginhibit />
+    <display x="-60" y="-135" />
+    <inputs>
+      <input type="text" name="Process path" narrative="File path of 7z.exe." stage="processPath" />
+      <input type="text" name="InputPatth" narrative="File path of compressed file." stage="InputPath" />
+      <input type="text" name="TargetFolder" narrative="The location where compressed file has to be exracted." stage="TargetFolder" />
+    </inputs>
+    <onsuccess>4461962e-54c2-4c0c-8ca0-b0cab1ece0db</onsuccess>
+  </stage>
+  <stage stageid="4461962e-54c2-4c0c-8ca0-b0cab1ece0db" name="Extract File" type="Code">
+    <subsheetid>1e664d5c-3bfc-4a50-aff1-bdda0f76cdda</subsheetid>
+    <loginhibit />
+    <display x="-60" y="-45" />
+    <inputs>
+      <input type="text" name="InputPath" expr="[InputPath]" />
+      <input type="text" name="TargetFolder" expr="[TargetFolder]" />
+      <input type="text" name="processpath" expr="[processPath]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" stage="Success" />
+    </outputs>
+    <onsuccess>31c10532-555f-46cb-836b-01e6284495cb</onsuccess>
+    <code><![CDATA[ExtractFile(InputPath,TargetFolder,processpath);
+	Success=true;]]></code>
+  </stage>
+  <stage stageid="c2a39e72-dbb9-4ed4-a3d5-bfa2e5eab656" name="CreateXZ" type="SubSheetInfo">
+    <subsheetid>10310079-c744-4144-97f0-d98d1a3cacc7</subsheetid>
+    <narrative>Provides functionality to create XZ file of any file. It only works with files
+
+Params: 
+- DestinationPath-Text : location where compressed file has to be created
+-InputPath-Text: path of the input file or folder.
+-ProcessPath-Text : 7zip..exe path
+-CompressedFileName-Text: Optional
+
+Return :
+-Succes-Bool: True if XZ file is creatad successfully</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="4c149610-e4e4-48af-80ce-2ddf73da0209" name="Create XZ" type="Code">
+    <subsheetid>10310079-c744-4144-97f0-d98d1a3cacc7</subsheetid>
+    <loginhibit />
+    <display x="30" y="-60" />
+    <inputs>
+      <input type="text" name="InputPath" expr="[InputPath]" />
+      <input type="text" name="DestinationPath" expr="[DestinationPath]" />
+      <input type="text" name="processpath" expr="[processPath]" />
+      <input type="text" name="FileName" expr="[CompressedFileName]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" stage="Success" />
+    </outputs>
+    <onsuccess>0a9564bc-991e-4ad1-80ac-c077e2a7f18d</onsuccess>
+    <code><![CDATA[Success=CreateXZ(InputPath,DestinationPath,processpath,FileName);
+	]]></code>
+  </stage>
+  <stage stageid="261f1785-774c-4855-a8ae-ea1a4a485001" name="Success" type="Data">
+    <subsheetid>10310079-c744-4144-97f0-d98d1a3cacc7</subsheetid>
+    <display x="300" y="-90" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="1a84cc34-ea9f-42c5-82b7-bfa44c5416a7" name="Create Zip " type="SubSheetInfo">
+    <subsheetid>07e27e88-83e8-40ea-bf25-2ed290ead7c8</subsheetid>
+    <narrative>Provides functionality to create zip file of any file or folder .
+
+Params: 
+- DestinationPath-Text : location where compressed file has to be created
+-InputPath-Text: path of the input file or folder.
+-ProcessPath-Text : 7zip..exe path
+-CompressedFileName-Text: Optional
+
+Return :
+-Succes-Bool: True if zip file is creatad successfully</narrative>
+    <display x="-390" y="-165" w="180" h="150" />
+  </stage>
+  <stage stageid="c4b50336-27ee-405c-b651-4903bf317513" name="Create Zip using 7 zip" type="Code">
+    <subsheetid>07e27e88-83e8-40ea-bf25-2ed290ead7c8</subsheetid>
+    <loginhibit />
+    <display x="-60" y="-45" />
+    <inputs>
+      <input type="text" name="InputPath" expr="[InputPath]" />
+      <input type="text" name="DestinationPath" expr="[DestinationPath]" />
+      <input type="text" name="processpath" expr="[processPath]" />
+      <input type="text" name="CompressedFileName" expr="[CompressedFileName]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" stage="Success" />
+    </outputs>
+    <onsuccess>080267b7-8b11-4598-b496-5fe7a8548379</onsuccess>
+    <code><![CDATA[Success=Createzip(InputPath,DestinationPath,processpath,CompressedFileName);]]></code>
+  </stage>
+  <stage stageid="03179685-40f8-4dad-9067-1c519ab432ef" name="Output" type="Block">
+    <subsheetid>10310079-c744-4144-97f0-d98d1a3cacc7</subsheetid>
+    <loginhibit />
+    <display x="225" y="-135" w="180" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="99CC00" />
+  </stage>
+  <stage stageid="7c257446-fed5-4940-83a5-49f8fedcd046" name="Success" type="Data">
+    <subsheetid>07e27e88-83e8-40ea-bf25-2ed290ead7c8</subsheetid>
+    <display x="315" y="15" w="240" h="30" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="235c523c-2928-421f-9fd4-73c5775bface" name="Input" type="Block">
+    <subsheetid>07e27e88-83e8-40ea-bf25-2ed290ead7c8</subsheetid>
+    <loginhibit />
+    <display x="150" y="-225" w="390" h="165" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="2d8b1ae5-1a4e-473c-9055-07e06a3a85c9" name="Output" type="Block">
+    <subsheetid>07e27e88-83e8-40ea-bf25-2ed290ead7c8</subsheetid>
+    <loginhibit />
+    <display x="150" y="-30" w="390" h="105" />
+    <font family="Segoe UI" size="10" style="Regular" color="99CC00" />
+  </stage>
+  <stage stageid="2fae17c7-0b53-4ee7-8294-425db2a00644" name="Success" type="Data">
+    <subsheetid>bc9042c6-3e04-487a-93f1-7fea61f52413</subsheetid>
+    <display x="210" y="-60" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="d87a5118-d47b-456f-b013-e3461b470cdb" name="Output" type="Block">
+    <subsheetid>bc9042c6-3e04-487a-93f1-7fea61f52413</subsheetid>
+    <loginhibit />
+    <display x="135" y="-105" w="180" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="99CC00" />
+  </stage>
+  <stage stageid="faab884d-56bc-4024-bb4c-258c55a1b2b9" name="Success" type="Data">
+    <subsheetid>63594ef5-1c46-45a2-a098-cf4772b9a563</subsheetid>
+    <display x="210" y="-30" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="a3216db4-9328-492e-aa5c-c6a3cf7330d7" name="Output" type="Block">
+    <subsheetid>63594ef5-1c46-45a2-a098-cf4772b9a563</subsheetid>
+    <loginhibit />
+    <display x="135" y="-75" w="180" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="99CC00" />
+  </stage>
+  <stage stageid="94ff9bd7-06a3-4610-ae50-ed23dcced688" name="Success" type="Data">
+    <subsheetid>23ae9094-9d85-422d-a800-27777d4d1cea</subsheetid>
+    <display x="375" y="-30" w="150" h="30" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="12698f1f-bdc3-48ce-93e9-015fea7d5c60" name="Output" type="Block">
+    <subsheetid>23ae9094-9d85-422d-a800-27777d4d1cea</subsheetid>
+    <loginhibit />
+    <display x="285" y="-75" w="180" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="99CC00" />
+  </stage>
+  <stage stageid="cc7a9d1c-c13e-4231-9b6c-051973ac0b33" name="InputPath" type="Data">
+    <subsheetid>1e664d5c-3bfc-4a50-aff1-bdda0f76cdda</subsheetid>
+    <loginhibit />
+    <display x="255" y="-165" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Downloads\ACE Supporting Files\Quotes.zip</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="3628d796-eb53-48b1-bb48-752fdcb21a2c" name="Success" type="Data">
+    <subsheetid>1e664d5c-3bfc-4a50-aff1-bdda0f76cdda</subsheetid>
+    <display x="195" y="-15" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="a55500f7-aa19-4dba-8445-5c7967340442" name="Input" type="Block">
+    <subsheetid>1e664d5c-3bfc-4a50-aff1-bdda0f76cdda</subsheetid>
+    <loginhibit />
+    <display x="120" y="-195" w="180" h="105" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="79fb36be-8717-4a92-bc59-6ffb618d9e57" name="Output" type="Block">
+    <subsheetid>1e664d5c-3bfc-4a50-aff1-bdda0f76cdda</subsheetid>
+    <loginhibit />
+    <display x="120" y="-60" w="180" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="99CC00" />
+  </stage>
+  <stage stageid="8bebdec5-fe4d-4aa7-9c75-64b71a7cc9d8" name="Start" type="Start">
+    <subsheetid>07e27e88-83e8-40ea-bf25-2ed290ead7c8</subsheetid>
+    <loginhibit />
+    <display x="-60" y="-120" />
+    <inputs>
+      <input type="text" name="InputPath" narrative="Path of the input file or folder." stage="InputPath" />
+      <input type="text" name="DestinationPath" narrative="Locaction where compressed file has to be created." stage="DestinationPath" />
+      <input type="text" name="ProcessPath" narrative="File path of 7z.exe." stage="processPath" />
+      <input type="text" name="CompressedFileName" narrative="Optional file name for compressed file." stage="CompressedFileName" />
+    </inputs>
+    <onsuccess>c4b50336-27ee-405c-b651-4903bf317513</onsuccess>
+  </stage>
+  <stage stageid="080267b7-8b11-4598-b496-5fe7a8548379" name="End" type="End">
+    <subsheetid>07e27e88-83e8-40ea-bf25-2ed290ead7c8</subsheetid>
+    <loginhibit />
+    <display x="-60" y="45" />
+    <outputs>
+      <output type="flag" name="Sucess" narrative="Return true if execution is successful" stage="Success" />
+    </outputs>
+  </stage>
+  <stage stageid="2e2596ea-9d50-4c27-a9b1-8a935b3bee01" name="Input" type="Block">
+    <subsheetid>10310079-c744-4144-97f0-d98d1a3cacc7</subsheetid>
+    <loginhibit />
+    <display x="120" y="-315" w="390" h="165" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="77d4cca6-150f-45b6-b5ad-ccad82e1c596" name="CompressedFileName" type="Data">
+    <subsheetid>10310079-c744-4144-97f0-d98d1a3cacc7</subsheetid>
+    <display x="225" y="-240" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="60fc9c38-0466-4ae8-8fe8-0bbd19ac89f9" name="DestinationPath" type="Data">
+    <subsheetid>63594ef5-1c46-45a2-a098-cf4772b9a563</subsheetid>
+    <loginhibit />
+    <display x="360" y="-195" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Desktop\test</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="1772764d-3ec2-4354-9eb1-5dc96ad7744a" name="InputPath" type="Data">
+    <subsheetid>63594ef5-1c46-45a2-a098-cf4772b9a563</subsheetid>
+    <loginhibit />
+    <display x="360" y="-240" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Desktop\test\BlueprismTrainingFoundationCertifiate_PrashantRajut.pdf</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="febf6013-3d31-48dc-ab72-23e7bf662bdc" name="Input" type="Block">
+    <subsheetid>63594ef5-1c46-45a2-a098-cf4772b9a563</subsheetid>
+    <loginhibit />
+    <display x="60" y="-270" w="390" h="165" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="a80f0fd9-9db8-47d8-aab4-1bfa9ea66e53" name="CompressedFileName" type="Data">
+    <subsheetid>63594ef5-1c46-45a2-a098-cf4772b9a563</subsheetid>
+    <display x="165" y="-195" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">doc.1.0.12</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="6fa30747-1f15-4723-be91-9d9c418f588e" name="Input" type="Block">
+    <subsheetid>23ae9094-9d85-422d-a800-27777d4d1cea</subsheetid>
+    <loginhibit />
+    <display x="195" y="-285" w="390" h="165" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="b4cb48b3-7ed3-4eb0-bb88-4add13c67802" name="Input" type="Block">
+    <subsheetid>bc9042c6-3e04-487a-93f1-7fea61f52413</subsheetid>
+    <loginhibit />
+    <display x="75" y="-330" w="390" h="165" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="c0a41354-a157-4c28-8448-68b6b56bfc9f" name="Create Bzip2" type="SubSheetInfo">
+    <subsheetid>d28c7c4f-aef6-402b-9589-4c88aee357dc</subsheetid>
+    <narrative>Provides functionality to create Bzip2  file of any file. It only works with files
+
+Params: 
+- DestinationPath-Text : location where compressed file has to be created
+-InputPath-Text: path of the input file or folder.
+-ProcessPath-Text : 7zip..exe path
+-CompressedFileName-Text: Optional
+
+Return :
+-Succes-Bool: True if   Bzip2  file is creatad successfully</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="23523b60-2303-4258-9d1d-59da1a79060e" name="Create BZIP2" type="Code">
+    <subsheetid>d28c7c4f-aef6-402b-9589-4c88aee357dc</subsheetid>
+    <loginhibit />
+    <display x="30" y="-60" />
+    <inputs>
+      <input type="text" name="InputPath" expr="[InputPath]" />
+      <input type="text" name="DestinationPath" expr="[DestinationPath]" />
+      <input type="text" name="processpath" expr="[processPath]" />
+      <input type="text" name="FileName" expr="[CompressedFileName]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" stage="Success" />
+    </outputs>
+    <onsuccess>9ec2719d-e3ee-4419-a330-7beb75027f30</onsuccess>
+    <code><![CDATA[Success=CreateBZIP2(InputPath,DestinationPath,processpath,FileName);]]></code>
+  </stage>
+  <stage stageid="a56edba2-db2c-4122-ae46-b46abc251928" name="Success" type="Data">
+    <subsheetid>d28c7c4f-aef6-402b-9589-4c88aee357dc</subsheetid>
+    <display x="300" y="-90" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="eb33ff5b-4055-4ab7-8369-561ca3e85da5" name="Output" type="Block">
+    <subsheetid>d28c7c4f-aef6-402b-9589-4c88aee357dc</subsheetid>
+    <loginhibit />
+    <display x="225" y="-135" w="180" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="99CC00" />
+  </stage>
+  <stage stageid="361deb2e-f7eb-4f07-be70-d52998a656a4" name="DestinationPath" type="Data">
+    <subsheetid>d28c7c4f-aef6-402b-9589-4c88aee357dc</subsheetid>
+    <loginhibit />
+    <display x="420" y="-240" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Desktop\test\</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="29c54fca-1a7a-4617-afba-64e7a9ca6355" name="InputPath" type="Data">
+    <subsheetid>d28c7c4f-aef6-402b-9589-4c88aee357dc</subsheetid>
+    <loginhibit />
+    <display x="420" y="-285" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Desktop\test\BlueprismTrainingFoundationCertifiate_PrashantRajut.pdf</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="01228e4a-9f44-48ec-82aa-fb9cd5f6b5fb" name="Input" type="Block">
+    <subsheetid>d28c7c4f-aef6-402b-9589-4c88aee357dc</subsheetid>
+    <loginhibit />
+    <display x="120" y="-315" w="390" h="165" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="e7b9178b-aadb-4b8d-a7f6-e8a0ed54a671" name="CompressedFileName" type="Data">
+    <subsheetid>d28c7c4f-aef6-402b-9589-4c88aee357dc</subsheetid>
+    <display x="225" y="-240" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">as.hgf</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="969be8bf-67c2-4597-aad0-238da3884ccc" name="Create GZip" type="SubSheetInfo">
+    <subsheetid>c69ee2dd-d514-44e7-9df2-e80b3972792c</subsheetid>
+    <narrative>Provides functionality to create GZip  file of any file. It only works with files
+
+Params: 
+- DestinationPath-Text : location where compressed file has to be created
+-InputPath-Text: path of the input file or folder.
+-ProcessPath-Text : 7zip..exe path
+-CompressedFileName-Text: Optional
+
+Return :
+-Succes-Bool: True if  GZip file is creatad successfully</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="ad3a35ee-6fd5-4cb9-b5ad-71b4f864f8bf" name="Create GZIP" type="Code">
+    <subsheetid>c69ee2dd-d514-44e7-9df2-e80b3972792c</subsheetid>
+    <loginhibit />
+    <display x="30" y="-90" />
+    <inputs>
+      <input type="text" name="InputPath" expr="[InputPath]" />
+      <input type="text" name="DestinationPath" expr="[DestinationPath]" />
+      <input type="text" name="processpath" expr="[processPath]" />
+      <input type="text" name="FileName" expr="[CompressedFileName]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" stage="Success" />
+    </outputs>
+    <onsuccess>63a75dfb-cdce-4237-af78-6b4cd29f4383</onsuccess>
+    <code><![CDATA[Success=CreateGZIP(InputPath,DestinationPath,processpath,FileName);]]></code>
+  </stage>
+  <stage stageid="ffc4e48b-c994-460d-b56c-cb497b219b78" name="Success" type="Data">
+    <subsheetid>c69ee2dd-d514-44e7-9df2-e80b3972792c</subsheetid>
+    <display x="300" y="-90" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="c1059cea-87fc-4be9-88bd-2804d8edaf96" name="Output" type="Block">
+    <subsheetid>c69ee2dd-d514-44e7-9df2-e80b3972792c</subsheetid>
+    <loginhibit />
+    <display x="225" y="-135" w="180" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="99CC00" />
+  </stage>
+  <stage stageid="4fc08d14-7e22-4157-9d51-bc2171154b91" name="Input" type="Block">
+    <subsheetid>c69ee2dd-d514-44e7-9df2-e80b3972792c</subsheetid>
+    <loginhibit />
+    <display x="120" y="-315" w="390" h="165" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="684c39bb-a98e-428b-85f6-4273a594aa59" name="CompressedFileName" type="Data">
+    <subsheetid>c69ee2dd-d514-44e7-9df2-e80b3972792c</subsheetid>
+    <display x="225" y="-240" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="0a9564bc-991e-4ad1-80ac-c077e2a7f18d" name="End" type="End">
+    <subsheetid>10310079-c744-4144-97f0-d98d1a3cacc7</subsheetid>
+    <loginhibit />
+    <display x="30" y="45" />
+    <outputs>
+      <output type="flag" name="Sucess" narrative="Return true if execution is successful" stage="Success" />
+    </outputs>
+  </stage>
+  <stage stageid="9ec2719d-e3ee-4419-a330-7beb75027f30" name="End" type="End">
+    <subsheetid>d28c7c4f-aef6-402b-9589-4c88aee357dc</subsheetid>
+    <loginhibit />
+    <display x="30" y="0" />
+    <outputs>
+      <output type="flag" name="Sucess" narrative="Return true if execution is successful" stage="Success" />
+    </outputs>
+  </stage>
+  <stage stageid="63a75dfb-cdce-4237-af78-6b4cd29f4383" name="End" type="End">
+    <subsheetid>c69ee2dd-d514-44e7-9df2-e80b3972792c</subsheetid>
+    <loginhibit />
+    <display x="30" y="-45" />
+    <outputs>
+      <output type="flag" name="Sucess" narrative="Return true if execution is successful" stage="Success" />
+    </outputs>
+  </stage>
+  <stage stageid="85119676-3d58-4506-876b-99fe169b58ef" name="End" type="End">
+    <subsheetid>bc9042c6-3e04-487a-93f1-7fea61f52413</subsheetid>
+    <loginhibit />
+    <display x="15" y="60" />
+    <outputs>
+      <output type="flag" name="Sucess" narrative="Return true if execution is successful" stage="Success" />
+    </outputs>
+  </stage>
+  <stage stageid="1c779ea5-102d-469f-a9c6-eec84e067631" name="End" type="End">
+    <subsheetid>63594ef5-1c46-45a2-a098-cf4772b9a563</subsheetid>
+    <loginhibit />
+    <display x="15" y="105" />
+    <outputs>
+      <output type="flag" name="Sucess" narrative="Return true if execution is successful" stage="Success" />
+    </outputs>
+  </stage>
+  <stage stageid="02ba23b2-71bb-431b-9646-7f4525040d14" name="End" type="End">
+    <subsheetid>23ae9094-9d85-422d-a800-27777d4d1cea</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+    <outputs>
+      <output type="flag" name="Sucess" narrative="Return true if execution is successful" stage="Success" />
+    </outputs>
+  </stage>
+  <stage stageid="31c10532-555f-46cb-836b-01e6284495cb" name="End" type="End">
+    <subsheetid>1e664d5c-3bfc-4a50-aff1-bdda0f76cdda</subsheetid>
+    <loginhibit />
+    <display x="-60" y="45" />
+    <outputs>
+      <output type="flag" name="Sucess" narrative="Return true if the executin is successful" stage="Success" />
+    </outputs>
+  </stage>
+  <stage stageid="cc3e413c-9472-46e4-8b9a-cce3ccb97331" name="Start" type="Start">
+    <subsheetid>10310079-c744-4144-97f0-d98d1a3cacc7</subsheetid>
+    <loginhibit />
+    <display x="30" y="-180" />
+    <inputs>
+      <input type="text" name="InputPath" narrative="Path of the input file or folder." stage="InputPath" />
+      <input type="text" name="DestinationPath" narrative="Locaction where compressed file has to be created." stage="DestinationPath" />
+      <input type="text" name="ProcessPath" narrative="File path of 7z.exe." stage="processPath" />
+      <input type="text" name="CompressedFileName" narrative="Optional file name for compressed file." stage="CompressedFileName" />
+    </inputs>
+    <onsuccess>4c149610-e4e4-48af-80ce-2ddf73da0209</onsuccess>
+  </stage>
+  <stage stageid="d5d4e711-ec30-4685-8d68-3a1461d7ace2" name="Start" type="Start">
+    <subsheetid>d28c7c4f-aef6-402b-9589-4c88aee357dc</subsheetid>
+    <loginhibit />
+    <display x="30" y="-135" />
+    <inputs>
+      <input type="text" name="InputPath" narrative="Path of the input file or folder." stage="InputPath" />
+      <input type="text" name="DestinationPath" narrative="Locaction where compressed file has to be created." stage="DestinationPath" />
+      <input type="text" name="ProcessPath" narrative="File path of 7z.exe." stage="processPath" />
+      <input type="text" name="CompressedFileName" narrative="Optional file name for compressed file." stage="CompressedFileName" />
+    </inputs>
+    <onsuccess>23523b60-2303-4258-9d1d-59da1a79060e</onsuccess>
+  </stage>
+  <stage stageid="3f73a917-1bac-4af9-9a71-d83dd139911b" name="Start" type="Start">
+    <subsheetid>c69ee2dd-d514-44e7-9df2-e80b3972792c</subsheetid>
+    <loginhibit />
+    <display x="30" y="-165" />
+    <inputs>
+      <input type="text" name="InputPath" narrative="Path of the input file or folder." stage="InputPath" />
+      <input type="text" name="DestinationPath" narrative="Locaction where compressed file has to be created." stage="DestinationPath" />
+      <input type="text" name="ProcessPath" narrative="File path of 7z.exe." stage="processPath" />
+      <input type="text" name="CompressedFileName" narrative="Optional file name for compressed file." stage="CompressedFileName" />
+    </inputs>
+    <onsuccess>ad3a35ee-6fd5-4cb9-b5ad-71b4f864f8bf</onsuccess>
+  </stage>
+  <stage stageid="558807aa-9aa4-4750-af29-e2434a0b4dc9" name="Start" type="Start">
+    <subsheetid>bc9042c6-3e04-487a-93f1-7fea61f52413</subsheetid>
+    <loginhibit />
+    <display x="15" y="-165" />
+    <inputs>
+      <input type="text" name="InputPath" narrative="Path of the input file or folder." stage="InputPath" />
+      <input type="text" name="DestinationPath" narrative="Locaction where compressed file has to be created." stage="DestinationPath" />
+      <input type="text" name="ProcessPath" narrative="File path of 7z.exe." stage="processPath" />
+      <input type="text" name="CompressedFileName" narrative="Optional file name for compressed file." stage="CompressedFileName" />
+    </inputs>
+    <onsuccess>1fdc5b56-1788-440c-877e-fe41c9719cdd</onsuccess>
+  </stage>
+  <stage stageid="46ea0edb-92f4-4936-b10b-c5aa05800856" name="Start" type="Start">
+    <subsheetid>63594ef5-1c46-45a2-a098-cf4772b9a563</subsheetid>
+    <loginhibit />
+    <display x="15" y="-120" />
+    <inputs>
+      <input type="text" name="InputPath" narrative="Path of the input file or folder." stage="InputPath" />
+      <input type="text" name="DestinationPath" narrative="Locaction where compressed file has to be created." stage="DestinationPath" />
+      <input type="text" name="ProcessPath" narrative="File path of 7z.exe." stage="processPath" />
+      <input type="text" name="CompressedFileName" narrative="Optional file name for compressed file." stage="CompressedFileName" />
+    </inputs>
+    <onsuccess>916cc073-6b89-4c73-8f7f-3b8815b16b8c</onsuccess>
+  </stage>
+  <stage stageid="35dcc55c-80cf-41c7-8c4b-2322819941c0" name="Start" type="Start">
+    <subsheetid>23ae9094-9d85-422d-a800-27777d4d1cea</subsheetid>
+    <loginhibit />
+    <display x="15" y="-135" />
+    <inputs>
+      <input type="text" name="InputPath" narrative="Path of the input file or folder." stage="InputPath" />
+      <input type="text" name="DestinationPath" narrative="Locaction where compressed file has to be created." stage="DestinationPath" />
+      <input type="text" name="ProcessPath" narrative="File path of 7z.exe." stage="processPath" />
+      <input type="text" name="CompressedFileName" narrative="Optional file name for compressed file." stage="CompressedFileName" />
+    </inputs>
+    <onsuccess>9ff85b37-26f5-4350-bc42-75fccf7f1e48</onsuccess>
+  </stage>
+  <stage stageid="eee36666-eb28-4f14-8016-b0b12c4d9d85" name="processPath" type="Data">
+    <display x="195" y="-75" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Program Files\7-Zip\7z.exe</initialvalue>
+  </stage>
+  <stage stageid="6e0e802a-462e-4abb-87b7-5c207e3176bc" name="DestinationPath" type="Data">
+    <subsheetid>bc9042c6-3e04-487a-93f1-7fea61f52413</subsheetid>
+    <loginhibit />
+    <display x="375" y="-240" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Desktop\test</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="c46b7623-b233-446b-a3f6-8b02395ebce7" name="InputPath" type="Data">
+    <subsheetid>bc9042c6-3e04-487a-93f1-7fea61f52413</subsheetid>
+    <loginhibit />
+    <display x="375" y="-285" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Desktop\test\New folder</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="7c199de7-32d4-4062-94c0-67ea274bc96d" name="CompressedFileName" type="Data">
+    <subsheetid>bc9042c6-3e04-487a-93f1-7fea61f52413</subsheetid>
+    <display x="180" y="-240" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">fil.1</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="7deaf1e6-5183-479e-9bad-b33d17efc365" name="DestinationPath" type="Data">
+    <subsheetid>23ae9094-9d85-422d-a800-27777d4d1cea</subsheetid>
+    <loginhibit />
+    <display x="480" y="-195" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="101e0b0b-05dd-4640-b41e-48218e137093" name="InputPath" type="Data">
+    <subsheetid>23ae9094-9d85-422d-a800-27777d4d1cea</subsheetid>
+    <loginhibit />
+    <display x="480" y="-240" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+  </stage>
+  <stage stageid="f3cad4c1-83f9-4d99-b806-b0f6c1009859" name="CompressedFileName" type="Data">
+    <subsheetid>23ae9094-9d85-422d-a800-27777d4d1cea</subsheetid>
+    <display x="285" y="-195" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="a9ddc3ad-d6b0-4583-9a7b-4bcde383ca2e" name="DestinationPath" type="Data">
+    <subsheetid>07e27e88-83e8-40ea-bf25-2ed290ead7c8</subsheetid>
+    <loginhibit />
+    <display x="435" y="-135" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\ravel.siirde\Desktop\Uni</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="ae4d079b-db39-4d8f-9929-8c417131a0a9" name="InputPath" type="Data">
+    <subsheetid>07e27e88-83e8-40ea-bf25-2ed290ead7c8</subsheetid>
+    <loginhibit />
+    <display x="435" y="-180" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\ravel.siirde\Desktop\Uni\Alicia\Tino</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="ebf206df-0569-4a1c-b1aa-e4de60ee1980" name="CompressedFileName" type="Data">
+    <subsheetid>07e27e88-83e8-40ea-bf25-2ed290ead7c8</subsheetid>
+    <display x="240" y="-135" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="c4889bc0-2883-4c67-8e14-56f4daecfb1b" name="DestinationPath" type="Data">
+    <subsheetid>10310079-c744-4144-97f0-d98d1a3cacc7</subsheetid>
+    <loginhibit />
+    <display x="420" y="-225" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Desktop\test</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="89d2db23-0e39-41cc-a246-1a2d91569a71" name="InputPath" type="Data">
+    <subsheetid>10310079-c744-4144-97f0-d98d1a3cacc7</subsheetid>
+    <loginhibit />
+    <display x="420" y="-270" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Desktop\test\BlueprismTrainingFoundationCertifiate_PrashantRajut.pdf</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="02803b40-2e75-4e45-b54f-de6a440d87d2" name="DestinationPath" type="Data">
+    <subsheetid>c69ee2dd-d514-44e7-9df2-e80b3972792c</subsheetid>
+    <loginhibit />
+    <display x="405" y="-225" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Desktop\test\</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="6d7558fd-2f31-48b1-94a7-d2bde4e42152" name="InputPath" type="Data">
+    <subsheetid>c69ee2dd-d514-44e7-9df2-e80b3972792c</subsheetid>
+    <loginhibit />
+    <display x="405" y="-270" w="180" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Desktop\test\BlueprismTrainingFoundationCertifiate_PrashantRajut.pdf</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="9b381e5a-0112-4a82-8b04-9b42fe359915" name="TargetFolder" type="Data">
+    <subsheetid>1e664d5c-3bfc-4a50-aff1-bdda0f76cdda</subsheetid>
+    <display x="225" y="-120" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\prashant.rajput\Downloads\ACE Supporting Files</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="9ff85b37-26f5-4350-bc42-75fccf7f1e48" name="Generate 7z from files" type="Code">
+    <subsheetid>23ae9094-9d85-422d-a800-27777d4d1cea</subsheetid>
+    <loginhibit />
+    <display x="15" y="-15" />
+    <inputs>
+      <input type="text" name="InputPath" expr="[InputPath]" />
+      <input type="text" name="DestinationPath" expr="[DestinationPath]" />
+      <input type="text" name="processpath" expr="[processPath]" />
+      <input type="text" name="CompressedFileName" expr="[CompressedFileName]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" stage="Success" />
+    </outputs>
+    <onsuccess>02ba23b2-71bb-431b-9646-7f4525040d14</onsuccess>
+    <code><![CDATA[Success=Create7z(InputPath,DestinationPath,processpath,CompressedFileName);]]></code>
+  </stage>
+</process>

@@ -7,6 +7,7 @@ Externe Business Objekte werden unter utils/ bereitgestellt. Quellen:
 - https://github.com/blue-prism/pop3-smtp-utility
 - https://github.com/blue-prism/file-management-utility
 - https://github.com/blue-prism/collection-manipulation
+- https://github.com/blue-prism/strings-utility.git
 
 #Dokumentation
 

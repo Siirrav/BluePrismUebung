@@ -1,7 +1,7 @@
-﻿<process name="Auftragsliste Erstellen" version="1.0" bpversion="6.10.1.35171" narrative="Erstellung der Auftragsliste auf Basis der in der CSV enthaltenenen Einträge." byrefcollection="true" preferredid="e6c0a04c-3ddf-4119-b065-a3e1781caeff" published="true">
+﻿<process name="Auftragsliste Erstellen" version="1.0" bpversion="6.10.1.35171" narrative="Erstellung der Auftragsliste auf Basis der in der CSV enthaltenenen Einträge." byrefcollection="true" preferredid="e6c0a04c-3ddf-4119-b065-a3e1781caeff">
   <view>
     <camerax>0</camerax>
-    <cameray>213</cameray>
+    <cameray>-102</cameray>
     <zoom version="2">1.25</zoom>
   </view>
   <preconditions />
@@ -10,15 +10,15 @@
     <name>Crawl Telefonbuch</name>
     <view>
       <camerax>0</camerax>
-      <cameray>48</cameray>
+      <cameray>27</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
   <subsheet subsheetid="9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5" type="Normal" published="False">
     <name>Read from CSV</name>
     <view>
-      <camerax>-59</camerax>
-      <cameray>87</cameray>
+      <camerax>-26</camerax>
+      <cameray>111</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -34,7 +34,7 @@
     <name>Query input</name>
     <view>
       <camerax>1</camerax>
-      <cameray>210</cameray>
+      <cameray>-105</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -42,15 +42,23 @@
     <name>Process message</name>
     <view>
       <camerax>0</camerax>
-      <cameray>123</cameray>
+      <cameray>60</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
   <subsheet subsheetid="b8e2f3f5-7789-4671-aa91-4f95d4b6e254" type="Normal" published="False">
     <name>Results to Queue</name>
     <view>
-      <camerax>0</camerax>
-      <cameray>60</cameray>
+      <camerax>140</camerax>
+      <cameray>7</cameray>
+      <zoom version="2">1.875</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="02a41d29-509c-4652-8b65-22dfbecc809f" type="Normal" published="False">
+    <name>Generate Company ID</name>
+    <view>
+      <camerax>27</camerax>
+      <cameray>63</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -322,7 +330,7 @@
     <loginhibit onsuccess="true" />
     <display x="240" y="-75" />
     <datatype>text</datatype>
-    <initialvalue xml:space="preserve">C:\BluePrism\attachements</initialvalue>
+    <initialvalue xml:space="preserve">C:\BluePrism\attachements\</initialvalue>
     <alwaysinit />
   </stage>
   <stage stageid="549d2ec1-07b9-4160-bc31-f8777687cb43" name="Global Vars" type="Note">
@@ -478,7 +486,7 @@
   </stage>
   <stage stageid="6325bc4a-d460-488c-8b06-12c6e4c2f7d1" name="End" type="End">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
-    <display x="-15" y="285" />
+    <display x="-15" y="300" />
   </stage>
   <stage stageid="06667a16-e250-4071-87b6-6c2affe6a2eb" name="CSV path" type="Data">
     <subsheetid>9e3ea9e1-b5ac-4bd0-8007-48b4704f84e5</subsheetid>
@@ -596,7 +604,7 @@
   <stage stageid="480a2b49-054a-4fcb-a1ce-47de0e56239e" name="For each query job" type="LoopEnd">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="30" y="150" />
+    <display x="30" y="165" />
     <onsuccess>5806a351-8a1c-4370-9f4c-62ea8180f682</onsuccess>
     <groupid>6141c4fe-ff84-4411-8b3c-0d0fbf584e98</groupid>
   </stage>
@@ -629,6 +637,9 @@
     <subsheetid>af0dfef4-7831-476b-b35e-3a00f1cb8260</subsheetid>
     <loginhibit onsuccess="true" />
     <display x="15" y="75" w="90" h="30" />
+    <inputs>
+      <input type="text" name="Branche" friendlyname="Branche" narrative="Branche of company" expr="[Branche]" />
+    </inputs>
     <outputs>
       <output type="collection" name="ResultSet" friendlyname="ResultSet" stage="ResultSet" />
     </outputs>
@@ -672,27 +683,27 @@
     <subsheetid>b8e2f3f5-7789-4671-aa91-4f95d4b6e254</subsheetid>
     <display x="15" y="-105" />
     <inputs>
-      <input type="collection" name="Data" stage="Data" />
+      <input type="collection" name="Data" stage="Results" />
     </inputs>
-    <onsuccess>3e2f7868-970d-4743-a3ea-c107e0501213</onsuccess>
+    <onsuccess>dee9040b-2915-47ea-a8f3-2fd8c8faf683</onsuccess>
   </stage>
   <stage stageid="0b6b9c4f-2f0d-4ed1-9449-2b6b68d9d1e8" name="End" type="End">
     <subsheetid>b8e2f3f5-7789-4671-aa91-4f95d4b6e254</subsheetid>
-    <display x="15" y="270" />
+    <display x="15" y="165" />
   </stage>
   <stage stageid="5806a351-8a1c-4370-9f4c-62ea8180f682" name="Results to Queue" type="SubSheet">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="-15" y="210" />
+    <display x="-15" y="240" />
     <inputs>
       <input type="collection" name="Data" friendlyname="Data" expr="[ResultsTotal]" />
     </inputs>
     <onsuccess>6325bc4a-d460-488c-8b06-12c6e4c2f7d1</onsuccess>
     <processid>b8e2f3f5-7789-4671-aa91-4f95d4b6e254</processid>
   </stage>
-  <stage stageid="e6baf913-1ca9-45cf-a5ff-979c5c03483c" name="Data" type="Collection">
+  <stage stageid="e6baf913-1ca9-45cf-a5ff-979c5c03483c" name="Results" type="Collection">
     <subsheetid>b8e2f3f5-7789-4671-aa91-4f95d4b6e254</subsheetid>
-    <display x="90" y="-105" />
+    <display x="-60" y="-15" />
     <datatype>collection</datatype>
     <private />
     <alwaysinit />
@@ -843,7 +854,7 @@ jede E-Mail die keinen Anhang hat kann theoretisch sofort gelöscht werden und a
   <stage stageid="954bcdd9-0022-4b0f-b7f0-764ad18adcb0" name="Append Results to Total" type="Action">
     <subsheetid>d7090e43-7c8b-40b4-8712-e4540ba4fcbf</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="30" y="90" />
+    <display x="30" y="105" />
     <inputs>
       <input type="collection" name="Main Collection" friendlyname="Main Collection" narrative="The collection to append to." expr="[ResultsTotal]" />
       <input type="collection" name="Collection to Append" friendlyname="Collection to Append" narrative="The collection to append." expr="[ResultSet]" />
@@ -854,7 +865,7 @@ jede E-Mail die keinen Anhang hat kann theoretisch sofort gelöscht werden und a
     <onsuccess>480a2b49-054a-4fcb-a1ce-47de0e56239e</onsuccess>
     <resource object="Utility - Collection Manipulation" action="Append Rows to Collection" />
   </stage>
-  <stage stageid="3e2f7868-970d-4743-a3ea-c107e0501213" name="Add ResultsTotal to queue" type="Action">
+  <stage stageid="3e2f7868-970d-4743-a3ea-c107e0501213" name="Add Companys to queue" type="Action">
     <subsheetid>b8e2f3f5-7789-4671-aa91-4f95d4b6e254</subsheetid>
     <loginhibit onsuccess="true" />
     <narrative>The Data collection contains the items to be added to the queue. The collection may contain single or multiple rows, with each representing an item to be added.
@@ -866,8 +877,8 @@ If Defer Until is specified, the items will not be available to be worked until 
 If the queue has a key field defined, an item added has key data longer than the maximum permitted 255 characters, an error will occur</narrative>
     <display x="15" y="75" />
     <inputs>
-      <input type="text" name="Queue Name" friendlyname="Queue Name" narrative="The name of the queue to add items to" expr="&quot;Queue1&quot;" />
-      <input type="collection" name="Data" friendlyname="Data" narrative="A collection containing the data, one row for each item to be added" expr="[ResultsTotal]" />
+      <input type="text" name="Queue Name" friendlyname="Queue Name" narrative="The name of the queue to add items to" expr="&quot;PotentialCompanys&quot;" />
+      <input type="collection" name="Data" friendlyname="Data" narrative="A collection containing the data, one row for each item to be added" expr="[Companys]" />
       <input type="datetime" name="Defer Until" friendlyname="Defer Until" narrative="Optionally, the date/time the new item(s) should be deferred until" expr="" />
       <input type="number" name="Priority" friendlyname="Priority" narrative="Optionally, the priority for the new item(s). Lower numbers represent higher priorities. The default is 0." expr="" />
       <input type="text" name="Tags" friendlyname="Tags" narrative="Optionally, a semi-colon-separated set of tags to apply to the queue item(s)" expr="" />
@@ -891,5 +902,125 @@ If the queue has a key field defined, an item added has key data longer than the
     </inputs>
     <onsuccess>e56ef98f-a3d3-4b5a-be7c-f097958b9812</onsuccess>
     <resource object="Email - POP3/SMTP" action="Delete Message" />
+  </stage>
+  <stage stageid="9aa7b474-c177-4476-b946-28dfe636bfed" name="Generate Company ID" type="SubSheetInfo">
+    <subsheetid>02a41d29-509c-4652-8b65-22dfbecc809f</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="bca8afb2-00cf-4bc4-9c17-10818b2fbeea" name="Start" type="Start">
+    <subsheetid>02a41d29-509c-4652-8b65-22dfbecc809f</subsheetid>
+    <display x="15" y="-60" />
+    <inputs>
+      <input type="collection" name="Results" narrative="Results of Crawling" stage="Results" />
+    </inputs>
+    <onsuccess>3abb9331-71ac-49a6-81dc-98a31c034d86</onsuccess>
+  </stage>
+  <stage stageid="2277c6b9-aacc-41ea-9af2-7c60165a6ab1" name="End" type="End">
+    <subsheetid>02a41d29-509c-4652-8b65-22dfbecc809f</subsheetid>
+    <display x="15" y="300" />
+    <outputs>
+      <output type="collection" name="Companys" narrative="Companys With ID ready for next steps" stage="Companys" />
+    </outputs>
+  </stage>
+  <stage stageid="dee9040b-2915-47ea-a8f3-2fd8c8faf683" name="Generate Company ID" type="SubSheet">
+    <subsheetid>b8e2f3f5-7789-4671-aa91-4f95d4b6e254</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="-15" />
+    <inputs>
+      <input type="collection" name="Results" friendlyname="Results" narrative="Results of Crawling" expr="[Results]" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="Companys" friendlyname="Companys" narrative="Companys With ID ready for next steps" stage="Companys" />
+    </outputs>
+    <onsuccess>3e2f7868-970d-4743-a3ea-c107e0501213</onsuccess>
+    <processid>02a41d29-509c-4652-8b65-22dfbecc809f</processid>
+  </stage>
+  <stage stageid="87aa6593-9216-42e2-9ed6-9dcecb241e85" name="Results" type="Collection">
+    <subsheetid>02a41d29-509c-4652-8b65-22dfbecc809f</subsheetid>
+    <display x="90" y="-60" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="7dd44a89-0a4a-4fb2-b0ad-b5b7f49a5668" name="Companys" type="Collection">
+    <subsheetid>b8e2f3f5-7789-4671-aa91-4f95d4b6e254</subsheetid>
+    <display x="90" y="-15" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="5da31c0b-2719-44a5-9a7f-9e78197626ac" name="Companys" type="Collection">
+    <subsheetid>02a41d29-509c-4652-8b65-22dfbecc809f</subsheetid>
+    <display x="90" y="300" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Company ID" type="text" description="Unique Company ID" />
+      <field name="Name" type="text" description="Name of company" />
+      <field name="StreetAndNumber" type="text" description="Adress of company" />
+      <field name="PLZ" type="text" description="Location of Company" />
+      <field name="City" type="text" description="City where company is" />
+      <field name="Branche" type="text" description="Branche of company" />
+    </collectioninfo>
+  </stage>
+  <stage stageid="3abb9331-71ac-49a6-81dc-98a31c034d86" name="Loop through results" type="LoopStart">
+    <subsheetid>02a41d29-509c-4652-8b65-22dfbecc809f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <narrative>For every company in results is a ID generated and ut in new collection</narrative>
+    <display x="15" y="0" />
+    <onsuccess>36d7268d-2646-4336-865d-c229291f1154</onsuccess>
+    <groupid>5116b433-7282-49a1-af2e-177c311c74d3</groupid>
+    <looptype>ForEach</looptype>
+    <loopdata>Results</loopdata>
+  </stage>
+  <stage stageid="fbab209f-015b-46ad-a4e8-f4ba56623d79" name="Loop through results" type="LoopEnd">
+    <subsheetid>02a41d29-509c-4652-8b65-22dfbecc809f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="15" y="240" />
+    <onsuccess>2277c6b9-aacc-41ea-9af2-7c60165a6ab1</onsuccess>
+    <groupid>5116b433-7282-49a1-af2e-177c311c74d3</groupid>
+  </stage>
+  <stage stageid="36d7268d-2646-4336-865d-c229291f1154" name="Generate Company ID" type="Calculation">
+    <subsheetid>02a41d29-509c-4652-8b65-22dfbecc809f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <narrative>Generade unique company ID for simple filtering</narrative>
+    <display x="15" y="60" />
+    <onsuccess>b2734d3a-9f92-44ba-aa7a-66b02433677f</onsuccess>
+    <calculation expression="Trim(Left([Results.Branche],3)) &amp; &#xA;&quot;-&quot; &amp; &#xA;Trim([Results.PLZ]) &amp; &#xA;&quot;-&quot; &amp;&#xA;Trim(Left([Results.Name],2)) &amp; &#xA;Trim(Right([Results.Name],2)) &amp; &#xA;Trim(Left([Results.Street],2)) &amp; &#xA;Trim(Right([Results.Street],2))" stage="Company ID" />
+  </stage>
+  <stage stageid="0e34d089-079e-4a39-9d45-e1b6dc2ebc94" name="Company ID" type="Data">
+    <subsheetid>02a41d29-509c-4652-8b65-22dfbecc809f</subsheetid>
+    <display x="90" y="60" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="b2734d3a-9f92-44ba-aa7a-66b02433677f" name="AddToCompanyCollection" type="Action">
+    <subsheetid>02a41d29-509c-4652-8b65-22dfbecc809f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <narrative>Add the Company ID and the data in new collection for processing.</narrative>
+    <display x="15" y="120" />
+    <inputs>
+      <input type="text" name="Collection Name" friendlyname="Collection Name" narrative="The name of the collection to act upon" expr="&quot;Companys&quot;" />
+    </inputs>
+    <onsuccess>0148ae6c-87c7-4d5d-b4f8-c9310392643c</onsuccess>
+    <resource object="Blueprism.AutomateProcessCore.clsCollectionActions" action="Add Row" />
+  </stage>
+  <stage stageid="0148ae6c-87c7-4d5d-b4f8-c9310392643c" name="Append Data to Collection" type="MultipleCalculation">
+    <subsheetid>02a41d29-509c-4652-8b65-22dfbecc809f</subsheetid>
+    <loginhibit onsuccess="true" />
+    <narrative>Append the information of the current company fully in new collection</narrative>
+    <display x="15" y="180" />
+    <onsuccess>fbab209f-015b-46ad-a4e8-f4ba56623d79</onsuccess>
+    <steps>
+      <calculation expression="[Company ID]" stage="Companys.Company ID" />
+      <calculation expression="[Results.Name]" stage="Companys.Name" />
+      <calculation expression="[Results.Street]" stage="Companys.StreetAndNumber" />
+      <calculation expression="[Results.PLZ]" stage="Companys.PLZ" />
+      <calculation expression="[Results.City]" stage="Companys.City" />
+      <calculation expression="[Results.Branche]" stage="Companys.Branche" />
+    </steps>
   </stage>
 </process>

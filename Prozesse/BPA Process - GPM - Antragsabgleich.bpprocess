@@ -1,16 +1,16 @@
-﻿<process name="GPM - Antragsabgleich" version="1.0" bpversion="6.10.1.35171" narrative="Potenzielle Unternehmen werden mit einer bereits vorliegenden Antragsliste abgeglichen, um Unternehmen, die bereits einen Antrag gestellt haben, nicht erneut anzuschreiben." byrefcollection="true" preferredid="dd2807f6-9126-4428-8363-0f77b2a1ad6c" published="true">
+﻿<process name="GPM - Antragsabgleich" version="1.0" bpversion="6.10.1.35171" narrative="Potenzielle Unternehmen werden mit einer bereits vorliegenden Antragsliste abgeglichen, um Unternehmen, die bereits einen Antrag gestellt haben, nicht erneut anzuschreiben." byrefcollection="true" preferredid="dd2807f6-9126-4428-8363-0f77b2a1ad6c">
   <view>
-    <camerax>27</camerax>
-    <cameray>-21</cameray>
-    <zoom version="2">2.8125</zoom>
+    <camerax>-65</camerax>
+    <cameray>-15</cameray>
+    <zoom version="2">1.25</zoom>
   </view>
   <preconditions />
   <endpoint narrative="" />
   <subsheet subsheetid="0d20e369-5e7a-49e1-9eff-774905f7943f" type="Normal" published="False">
     <name>CheckList</name>
     <view>
-      <camerax>164</camerax>
-      <cameray>63</cameray>
+      <camerax>15</camerax>
+      <cameray>75</cameray>
       <zoom version="2">1.875</zoom>
     </view>
   </subsheet>
@@ -201,12 +201,12 @@ If the queue has a key field defined, an item added has key data longer than the
     </collectioninfo>
     <initialvalue>
       <row>
-        <field name="Company ID" type="text" value="11111" />
-        <field name="Name" type="text" value="Photoland" />
-        <field name="StreetAndNumber" type="text" value="Kleine Straße 1" />
-        <field name="PLZ" type="text" value="54321" />
-        <field name="City" type="text" value="Unterhausen" />
-        <field name="Branche" type="text" value="Photostudio" />
+        <field name="Company ID" type="text" value="Fri-04315-MereKr2" />
+        <field name="Name" type="text" value="Meckel &amp; Friseure" />
+        <field name="StreetAndNumber" type="text" value="Krönerstr. 2" />
+        <field name="PLZ" type="text" value="04315 " />
+        <field name="City" type="text" value="Leipzig" />
+        <field name="Branche" type="text" value="Friseure" />
       </row>
     </initialvalue>
   </stage>
