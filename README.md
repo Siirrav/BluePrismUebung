@@ -115,4 +115,9 @@ Blue Prism unterstützt keine gute Zusammenarbeit via einer Versionierungskontro
 #### 3.5.5
 #### 3.5.6
 
-## 4 Referenzprozess und Modellierung
+## 4 Auswirkungen auf den Referenzprozess
+### 4.1 Prozessveränderung
+
+### 4.2 Wertbeitrag
+### 4.3 Strategische Bedeutung
+
