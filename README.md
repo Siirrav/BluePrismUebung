@@ -82,13 +82,13 @@ Resultat
 #### 3.3.2	Verarbeitung
 Ziel der Verarbeitung war die korrekte Erkennung der Unternehmen, die bereits einen konkreten Antrag auf Finanzhilfe gestellt haben, um ein erneutes Informationsschreiben zu vermeiden. Dazu wurde festgelegt, dass eine Queue mit den zu untersuchenden Unternehmen im vorhergehenden Sub-Prozess befüllt wird. Die Unternehmen, die benachrichtigt werden sollen, werden wiederum in eine zweite Queue eingefügt.
 
-![Bilder/Process.png](Process.png)
+![Process.png](Bilder/Process.png)
 
 Da die Aufgabenstellung nicht die Suche nach den Unternehmen mit Antrag umfasste, wurde davon ausgegangen, dass eine entsprechende Collection bereits besteht und diese (ggf.) in den Prozess übergeben wird.
 Zunächst wird aus der Queue aller Unternehmen das nächste verfügbare Element herausgenommen. Sollte keines mehr vorhanden sein, endet der Prozess augenblicklich. Falls ein Element gefunden werden konnte, wird eine Überprüfung durchgeführt. Mit dem Utility "Collection Manipulation" (https://github.com/blue-prism/collection-manipulation) war eine Suche der aktuellen 
 "Company ID" in der Collection "ComapnysWithRequest" in der Spalte "Company ID" durchgeführt.
 
-![Bilder/CheckCollection.png](CheckCollection.png)
+![CheckCollection.png](Bilder/CheckCollection.png)
 
 Ist das entsprechende Unternehmen gefunden worden, wird das Flag "Requested" auf ```true``` gesetzt. Anschließend wird dieses Flag überprüft. Sollte das Unternehmen gefunden worden sein, wird das Objekt in der Queue mit einer Exception abgeschlossen und das Nächste wird bearbeitet. Andernfalls wird das Element in die Queue "CompanysWithoutRequest" kopiert und in der aktuellen Queue als "Completed" markiert.
 
@@ -120,7 +120,7 @@ Blue Prism unterstützt keine gute Zusammenarbeit via einer Versionierungskontro
 ### 4.1 Prozessveränderung
 Die im Bankmodell enthaltenen Referenzprozesse „Finanzieren“ und „Vertrieb“ stellen zwar weiterhin die Grundlage für den Case „Recherche zur Ermittlung von Berechtigten für Finanzhilfen“ dar, sie müssen allerdings aufgrund Anzahl der potentiellen Berechtigten und der damit notwendigen Automatisierung der einzelnen Prozessschritte in ihren wesentlichen Teilen angepasst werden. Die Corona-Hilfen werden von den Betroffenen in der Regel dringend benötigt, was die Automatisierung auch aus der Kundenperspektive notwendig macht. Durch die Bereitstellung der Finanzierungshilfen durch die KfW sowie die umfangreiche Risikoübernahme durch die KfW wird der Referenzprozess „Finanzieren“ zusätzlich verändert.
 
-![Bilder/refrenzprozess.png](Angepasster Referenzprozess für Corona-Hilfen.png)
+![Angepasster Referenzprozess für Corona-Hilfen](Bilder/refrenzprozess.png)
 
 Der angepasste Prozess ist in Abbildung 1 „Angepasster Referenzprozess für Corona-Hilfen“ dargestellt. Bereits die Auftragserteilung weicht vom klassischen Finanzierungsprozess ab, denn hier wird der Auftrag nicht durch den Kunden selbst, sondern der zuständige Mitarbeiter der Fachabteilung für Corona-Hilfe innerhalb der Commerzbank beauftragt die als CoBee bezeichnete Robotics-Unterstützung das Potential für Corona-Hilfen im Kundenbestand zu ermitteln. Diese führt den Auftrag durch die Abfrage des bestandsführenden Systems nach Kunden bestimmter Branchen in den definierten Postleitzahlbereichen sowie den Abgleich mit der Liste der bereits gestellten Anträge auf Corona-Hilfe durch. Sofern ein Kunde gefunden wird, der die Voraussetzungen für einen entsprechenden Antrag erfüllen könnte, wird ein personalisiertes Anschreiben erstellt und einen Bericht erzeugt. Beides wird an den zuständigen Mitarbeiter, der den Auftrag ausgelöst hat, übermittelt. Die Automatisierung dieser Prozessschritte ist Fokus der Gruppe I. Um den Prozess jedoch vollends zu modellieren und in den Kontext des Bankmodells integrieren zu können, müssen auch nachfolgende Prozessschritte berücksichtigt werden.
 
