@@ -92,8 +92,70 @@ Lösung (technisch beschrieben)
     - csv auslesen
     - sicherstellen das plz korrekt
     - iterieren über einträge
-* Crawl Telefonbuch
-    - Business Objekt
+
+### 3.3.1.3 Das Telefonbuch - Business Object
+Für jeden Eintrag bestehend aus Branche und PLZ wird anschließend die Webseite www.dastelefonbuch.de nach entsprechenden Unternehmen durchsucht. Für die Interaktion zwischen Blue Prism und der Webseite wurde ein Business Object angelegt, das als _Browser-based Application_ konfiguriert ist. Als Browser wurde Google Chrome gewählt, da dieser mit den integrierten Entwickler-Werkzeugen ein effizientes Debugging bei der Definiton von HTML-Elementen für das _Application-Model_ ermöglicht. 
+#### i) Application-Model
+Das Application-Model besteht aus zwei primären Elementen, der "Startseite" und den Ergebnissen ("Results"). 
+
+Die Startseite ist die Webseite, die bei Aufruf der URL www.dastelefonbuch.de zurückgegeben wird. Innerhalb dieses Elements sind als Kind-Elemente die zwei Suchfelder "Branche" und "PLZ" definiert, sowie der Button "Finden". Die drei Kind-Elemente werden statisch durch ihren _Web Path_ referenziert, da nicht davon auszugehen ist, das sich das primäre Interface der Startseite häufig ändert.
+
+Die Seite mit den Suchergebnissen besteht zum einen aus einem Element namens "Entry" das die Felder mit den gesuchten Information als Unterelemente definiert und zum anderen aus Elementen die zur Unterstützung des Web-Crawlings benötigt werden. Das "Entry"-Element hat fünf Unterelemente:
+
+* Name
+* Straße
+* PLZ
+* Ort
+* Stadteil
+
+Da für eine Anfrage idR. mehrere Ergenisse zurückgibt, werden diese jeweils über mittels einer dynamischen XPath-Query identifiziert. Das bedeutet, dass der jeweilige Ausdruck zur Laufzeit des Prozesses zusammengesetzt wird, was innerhalb des Prozesses "Crawl-Information" unten näher beschrieben ist.
+Zur Unterstützung des Crawlings definierte Elemente sind:
+
+* Total Results - die Anzahl an zurückgegeben Ergebnissen pro Anfrage.
+* Keine Treffer Nachricht - Benachrichtigung die erscheint wenn keine Ergebnisse für die gesuchte PLZ gefunden wurden und stattdessen Ergebnisse für benachbarte PLZ zurückgegeben werden.
+* Footer - Das Footer Element am unteren Ende der Webseite (benötigt für Scrolling).
+* Weitere Treffer Button - Button zum nachladen von weiteren Suchergebnissen.
+
+#### ii) Prozesse
+Das Business Objekt hat sechs published Actions, die aus dem Prozess heraus aufgerufen werden können:
+1. __Launch__: Startet den Chrome Browser und ruft die Webseite von _Das Telefonbuch_ auf. 
+    - Input Parameter: keine 
+    - Output Parameter: keine
+    - Voraussetzung: keine
+    - Finaler Zustand: Chrome Browser ist gestartet und befindet sich auf der Startseite von _www.dastelefonbuch.de_. 
+    
+2. __Search__: Führt eine Suche mit den übergebenen Parametern aus.
+    - Input Parameter: Branche (text), PLZ (text)
+    - Output Parameter: keine
+    - Voraussetzungen: Die Anwendung ist gestartet und befindet sich auf der Startseite.
+    - Finaler Zustand: Die Anwendung ist auf der "Results" Seite. 
+
+3. __Get Results__: Iteriert über die Ergebnisse der Seite und ermittelt jeweils Namen, Straße, Ort, PLZ und Branche.
+    - Input Parameter: Branche (Text).
+    - Output Parameter: Results (Collection mit Einträgen bestehend aus Name (Text), City(Text), PLZ (Text), Street (Text), Branche (Text)).
+    - Voraussetzungen: Die Anwendung ist auf der "Results"-Seite.
+    - Finaler Zustand: Die Anwendung ist auf der "Results"-Seite.
+
+    Die Aktion __Get Results__ iteriert über die Anzahl an Treffern die laut des __Total Results__ Elements verfügbar sind. In Fällen in denen kein Ergebnis für die Input Parameter gefunden wird, gibt das Telefonbuch Ergebnisse für einen größeren Suchradius zurück. Diese Situation wird erkannt, wenn das __Keine Treffer Nachricht__-Element existiert und eine leere Collection wird zurückgegeben.
+
+    Da die Webseite nicht alle Einträge auf einmal sondern beim Scrollen dynamisch lädt wird nach jedem 10 Eintrag der interne _Show more_ Prozess gestartet. Dieser navigiert zum __Footer__ der Webseite und prüft, ob der __Weitere Treffer Button__ existiert und drückt diesen gegebenenfalls.
+
+    Zum Auslesen der Daten wird der interne _Crawl  Information_ Prozess ausgelößt. Dieser erstellt eine neue Row für die Collection und liest die Entry-Elemente des Application-Models aus. Um die zum jeweiligen Eintrag gehörenden Felder zu identifizieren werden dynamische XPath-Abfragen verwendet, welche den Iterator Wert in die id des jeweiligen HTML-Elements einfügen. Das folgende Beispiel ließt den Namen eines Eintrags aus:
+
+        "//DIV[@id="&Chr(34)&"entry_"&[Iterator]&Chr(34)&"]//DIV[@class="&Chr(34)&"name"&Chr(34)&"]/*/SPAN[1]"
+    In seltenen Fällen sind Einträge nicht vollständig und verfügen nicht über alle Felder. Daher wird vor jeder Anfrage die Existenz des Elements geprüft und diese entweder übersprungen oder ersetzt. So wird in den Fällen in denen kein __Ort__ Element existiert der __Stadtteil__ mittel der Methode __Extract Regex Match__ ermittelt. 
+
+4. __Close__:
+    - Input Parameter: keine
+    - Output Parameter: keine
+    - Voraussetzungen: Chrome Browser ist geöffnet.
+    - Finaler Zustand: Chrome Browser ist geschlossen.
+
+
+
+
+
+
     - Ergebnisse zusammenfügen
 * Übergabe der Result collection to Queue
     - generate eindeutige company ID
