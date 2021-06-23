@@ -75,9 +75,31 @@ Die parallele Entwicklung an Eingabe, Verarbeitung und Ausgabe ist bei dem geste
 #### 3.3.1	Eingabe
 Der erste Prozessschritt besteht im wesentlichen aus zweit Abschnitten. Zunächst müssen die per E-Mail versendeten Input-Datensätze mit Branche und Postleitzahl (PLZ) entgegen genommen werden und innerhalb BluePrisms als Collection abgelegt werden. Im Anschluss wird für jeden Datensatz das Telefonbuch durchsucht um eine Lister aller zu bearbeitenden Unternehmen und deren Andressen zu erhalten. Diese werden dann für den nächsten Prozessschritt in eine Queue übergeben.
 
+Prozess 
+* Input 
+    - csv 
+    - email
+
+* Output in Queue
+  - Struktur des Outputs beschreiben
+
 Lösung (technisch beschrieben)
+* Prerequisites / Abhänigkeiten
+    - pop3, string, collection, filemngmt, lokaler pfad für csv dateien
+* Main prozess
+* Email empfangen und auslesen; speichern der Anhänge
+* Process Message
+    - csv auslesen
+    - sicherstellen das plz korrekt
+    - iterieren über einträge
+* Crawl Telefonbuch
+    - Business Objekt
+    - Ergebnisse zusammenfügen
+* Übergabe der Result collection to Queue
+    - generate eindeutige company ID
 
 Resultat
+Struktur des Outputs kurz beschreiben 
 
 #### 3.3.2	Verarbeitung
 Ziel der Verarbeitung war die korrekte Erkennung der Unternehmen, die bereits einen konkreten Antrag auf Finanzhilfe gestellt haben, um ein erneutes Informationsschreiben zu vermeiden. Dazu wurde festgelegt, dass eine Queue mit den zu untersuchenden Unternehmen im vorhergehenden Sub-Prozess befüllt wird. Die Unternehmen, die benachrichtigt werden sollen, werden wiederum in eine zweite Queue eingefügt.
