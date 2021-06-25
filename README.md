@@ -208,10 +208,12 @@ Im Ergebnis werden nun die Elemente aus der Queue "PotentialCompanys" nacheinand
 
 #### 3.3.3	Ausgabe
 Aufgabenstellung
-
 Lösung (technisch beschrieben)
-
 Resultat
+
+Der Abschluss des Ausgabeteils besteht aus zwei Prozessen. Nach dem das Schreiben individualisiert wurde, müssen diese Daten mittels einer vorgegebenen Software (7z) komprimiert werden. Darüber hinaus leitet CoBee die Daten in einer E-Mail an den Auftraggeber weiter. Für den vorliegenden Prozess „Dateikomprimierung“ stellt CoBee eine Verbindung zum 7z-Programm über das Objekt „ATCS - Compression and Extraction“ her. Für die Anbindung des Objekts der Dateikomprimierung wurden die lokalen Input-Daten Prozesspfad, Eingangspfad und Zielpfad benötigt. Mittels diesen stellt das Objekt die Verbindung zu dem 7z-Programm her. Nach einem erfolgreichen Durchlauf des Subprozesses wird die komprimierte 7z-Datei, welche die individualisierten Schreiben enthält, unter dem Zielpfad gespeichert.
+
+Wie bereits im ersten Teilprozess „Eingabe“ wird erneut eine Verbindung zum Google Mail Postfach über das POP-Protokoll aufgebaut. Dafür werden die gleichen Zugangsdaten, wie beim Empfang der E-Mails verwendet. Die 7z-Datei wird über einen lokalen Pfad iteriert und an die E-Mail angehangen. Wenn der Prozess erfolgreich durchgeführt wurde, findet der Auftraggeber eine E-Mail mit dem entsprechenden Anhang in seinem Postfach
 
 ### 3.4	Zusammenführung
 Kommt noch...
