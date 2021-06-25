@@ -44,6 +44,11 @@ Folgende Tätigkeiten sind für die Bearbeitung des Datenabgleichs durch Florian
 -	Abgleich des Queue-Elements mit der vorgegebenen Collection
 -	Auswahl des Elementes, falls es nicht in der Collection vorkommt
 -	Erstellung einer neuen Queue für die zu informierenden Unternehmen
+-   Zusammenführung der Teilprozesse in einen Gesamtprozess
+    - Kompatibilität zwischen den Prozessen
+    - Debugging
+    - Refactor
+    - Test
 
 Um den identifizierten zu informierenden Unternehmen ein adäquates Anschreiben zu generieren, übernahmen Oleg Chapaykin und Ravel Siirde die Aufgaben der Ausgabe:
 
@@ -199,7 +204,7 @@ Der Abschluss des Ausgabeteils besteht aus zwei Prozessen. Nach dem das Schreibe
 Wie bereits im ersten Teilprozess „Eingabe“ wird erneut eine Verbindung zum Google Mail Postfach über das POP-Protokoll aufgebaut. Dafür werden die gleichen Zugangsdaten, wie beim Empfang der E-Mails verwendet. Die 7z-Datei wird über einen lokalen Pfad iteriert und an die E-Mail angehangen. Wenn der Prozess erfolgreich durchgeführt wurde, findet der Auftraggeber eine E-Mail mit dem entsprechenden Anhang in seinem Postfach
 
 ### 3.4	Zusammenführung
-Kommt noch...
+Die Erstellung des gesamten Prozesses innerhalb einer Arbeitsgruppe erforderte die Erstellung von Subprozessen und die anschließende zusammenführung in einen Gesamtprozess. Die Umsetzung gestaltete sich dabei prinzipiell sehr einfach, da zunächst ein neuer Prozess erstellt und dann die Subprozesse aufgerufen wurden. Lediglich die Ergänzung der Eingabecollection von Unternehmen mit Antrag musste ergänzt werden. Interessanter gestalteten sich hier die Schnittstellen zwischen den Subprozessen. Die Ausgabe des ersten Prozesses musste mit den Eingaben und Abhängigkeiten des zweiten Prozesses übereinstimmen. Gleiches galt auch zwischen dem zweiten und dem dritten Prozess.
 
 ### 3.5	Fragen und Probleme
 Während des Projektes sind sowohl bei der Vorbereitung als auch bei der Bearbeitung einige Probleme aufgetreten und Fragen aufgekommen, die im Folgenden gesammelt und erläutert werden. Sollte eine Lösung oder Beantwortung vorhanden sein, wird diese jeweils hier mit aufgeführt.
@@ -208,14 +213,20 @@ Während des Projektes sind sowohl bei der Vorbereitung als auch bei der Bearbei
 Blue Prism unterstützt keine gute Zusammenarbeit via einer Versionierungskontrolle wie z.B. Git, da die Dateien, die die Software im Rahmen der Entwicklung erstellt, im System gespeichert und nicht sinnvoll auszuwerten sind. Dadurch entstand die Frage nach der bestmöglichen Zusammenarbeit innerhalb eines Teams mit Blue Prism. Die Lösung hier ist die unabhängige Entwicklung in eigenständigen Prozessen, die am Ende innerhalb eines Master-Prozesses aufgerufen werden.
 
 #### 3.5.2 Company ID
-#### 3.5.3
+Die Generierung der eindeutigen ID erzeugte die Frage nach dem Zeitpunkt der Erstellung. Der Vorteil der Verwendung der ID war vor allem beim Abgleich zu den Unternehmen, die bereits einen Antrag auf Corona-Hilfe gestellt haben, du erkennen. Statt des Abgleichs zwischen Name, Adresse, PLZ, Ort, musste lediglich eine ID verglichen werden. So fiel die Entscheidung zur Generierung der ID auf die Suche nach dem Unternehmen im Telefonbuch.
+
+#### 3.5.3 Definierung von Schnittstellen
+Die unabhängige Arbeit der Teammitglieder in den Teilbereichen erforderte die Übergabe bzw. Bereitstellung von Daten. Bei der Zusammenführung der Teilprozesse wurde bemerkt, dass einige Schnittstellen unzureichend definiert waren, sodass zunächst eine Kompatibilität hergestellt werden musste, um die Prozesse harmonisch in Verbindung zu bringen. 
+
 #### 3.5.4
 #### 3.5.5
 #### 3.5.6
 
 ## 4 Auswirkungen auf den Referenzprozess
+
+
 ### 4.1 Prozessveränderung
-Die im Bankmodell enthaltenen Referenzprozesse „Finanzieren“ und „Vertrieb“ stellen zwar weiterhin die Grundlage für den Case „Recherche zur Ermittlung von Berechtigten für Finanzhilfen“ dar, sie müssen allerdings aufgrund Anzahl der potentiellen Berechtigten und der damit notwendigen Automatisierung der einzelnen Prozessschritte in ihren wesentlichen Teilen angepasst werden. Die Corona-Hilfen werden von den Betroffenen in der Regel dringend benötigt, was die Automatisierung auch aus der Kundenperspektive notwendig macht. Durch die Bereitstellung der Finanzierungshilfen durch die KfW sowie die umfangreiche Risikoübernahme durch die KfW wird der Referenzprozess „Finanzieren“ zusätzlich verändert.
+Die im Bankmodell enthaltenen Referenzprozesse „Finanzieren“ und „Vertrieb“ stellen zwar weiterhin die Grundlage für den Case „Recherche zur Ermittlung von Berechtigten für Finanzhilfen“ dar, sie müssen allerdings aufgrund Anzahl der potenziellen Berechtigten und der damit notwendigen Automatisierung der einzelnen Prozessschritte in ihren wesentlichen Teilen angepasst werden. Die Corona-Hilfen werden von den Betroffenen in der Regel dringend benötigt, was die Automatisierung auch aus der Kundenperspektive notwendig macht. Durch die Bereitstellung der Finanzierungshilfen durch die KfW sowie die umfangreiche Risikoübernahme durch die KfW wird der Referenzprozess „Finanzieren“ zusätzlich verändert.
 
 ![Angepasster Referenzprozess für Corona-Hilfen](Bilder/referenzprozess.png)
 
