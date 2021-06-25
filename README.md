@@ -34,6 +34,11 @@ Folgende Tätigkeiten sind für die Bearbeitung des Datenabgleichs durch Florian
 -	Abgleich des Queue-Elements mit der vorgegebenen Collection
 -	Auswahl des Elementes, falls es nicht in der Collection vorkommt
 -	Erstellung einer neuen Queue für die zu informierenden Unternehmen
+-   Zusammenführung der Teilprozesse in einen Gesamtprozess
+    - Kompatibilität zwischen den Prozessen
+    - Debugging
+    - Refactor
+    - Test
 
 Um den identifizierten zu informierenden Unternehmen ein adäquates Anschreiben zu generieren, übernahmen Oleg Chapaykin und Ravel Siirde die Aufgaben der Ausgabe:
 
@@ -180,16 +185,19 @@ Ist das entsprechende Unternehmen gefunden worden, wird das Flag "Requested" auf
 Im Ergebnis werden nun die Elemente aus der Queue "PotentialCompanys" nacheinander in der Collection gesucht und bei Nichtexistenz in die nachfolgende Queue "CompanysWithoutRequest" kopiert. Diese Lösung bietet den Vorteil, dass dieser Prozess gesondert auf mehreren Maschinen gestartet werden kann, um die vielen Unternehmen in der Queue parallel zu bearbeiten. Durch das Queue-Handling von BluePrism ist ausgeschlossen, dass bereits bearbeitete unternehmen erneut geprüft werden, da diese entweder als "Completed" oder als "Exception" markiert wurden. Aktuell bearbeitete Elemente sind blockiert und können ebenfalls nicht von einer zweiten Maschine bearbeitet werden. Dies erlaubt eine maximale Parallelisierung und eine extreme Zeitersparnis. Da die überprüften Unternehmen ebenfalls wieder in einer Queue zwischengespeichert werden, ist eine weitere Parallelisierung im Anschluss möglich.   
 
 #### 3.3.3	Ausgabe
-Aufgabenstellung
-Lösung (technisch beschrieben)
-Resultat
+Die Collection aus der Queue „CompanysWithoutRequest“ wird für die Personalisierung der Anschreiben übernommen. Dadurch werden die Platzhalter im Anschreiben durch den Namen und die Adresse der Kunden ersetzt. Das Versanddatum wird auf „heute“ gesetzt. Anschließend wird jedes personalisierte Anschreiben als PDF in einen definierten Ordner hinterlegt, um ihm nächsten Subprozess verarbeitet zu werden.
 
 Der Abschluss des Ausgabeteils besteht aus zwei Prozessen. Nach dem das Schreiben individualisiert wurde, müssen diese Daten mittels einer vorgegebenen Software (7z) komprimiert werden. Darüber hinaus leitet CoBee die Daten in einer E-Mail an den Auftraggeber weiter. Für den vorliegenden Prozess „Dateikomprimierung“ stellt CoBee eine Verbindung zum 7z-Programm über das Objekt „ATCS - Compression and Extraction“ her. Für die Anbindung des Objekts der Dateikomprimierung wurden die lokalen Input-Daten Prozesspfad, Eingangspfad und Zielpfad benötigt. Mittels diesen stellt das Objekt die Verbindung zu dem 7z-Programm her. Nach einem erfolgreichen Durchlauf des Subprozesses wird die komprimierte 7z-Datei, welche die individualisierten Schreiben enthält, unter dem Zielpfad gespeichert.
 
 Wie bereits im ersten Teilprozess „Eingabe“ wird erneut eine Verbindung zum Google Mail Postfach über das POP-Protokoll aufgebaut. Dafür werden die gleichen Zugangsdaten, wie beim Empfang der E-Mails verwendet. Die 7z-Datei wird über einen lokalen Pfad iteriert und an die E-Mail angehangen. Wenn der Prozess erfolgreich durchgeführt wurde, findet der Auftraggeber eine E-Mail mit dem entsprechenden Anhang in seinem Postfach
 
+Der Abschluss des Ausgabeteils besteht aus zwei Prozessen. Nach dem das Schreiben individualisiert wurde, müssen diese Daten mittels einer vorgegebenen Software (7z) komprimiert werden. Darüber hinaus leitet CoBee die Daten in einer E-Mail an den Auftraggeber weiter. Für den vorliegenden Prozess „Dateikomprimierung“ stellt CoBee eine Verbindung zum 7z-Programm über das Objekt „ATCS - Compression and Extraction“ her. Für die Anbindung des Objekts der Dateikomprimierung wurden die lokalen Input-Daten Prozesspfad, Eingangspfad und Zielpfad benötigt. Mittels diesen stellt das Objekt die Verbindung zu dem 7z-Programm her. Nach einem erfolgreichen Durchlauf des Subprozesses wird die komprimierte 7z-Datei, welche die individualisierten Schreiben enthält, unter dem Zielpfad gespeichert.
+
+Wie bereits im ersten Teilprozess „Eingabe“ wird erneut eine Verbindung zum Google Mail Postfach über das POP-Protokoll aufgebaut. Dafür werden die gleichen Zugangsdaten, wie beim Empfang der E-Mails verwendet. Die 7z-Datei wird über einen lokalen Pfad iteriert und an die E-Mail angehangen. Wenn der Prozess erfolgreich durchgeführt wurde, findet der Auftraggeber eine E-Mail mit dem entsprechenden Anhang in seinem Postfach.
+
+
 ### 3.4	Zusammenführung
-Kommt noch...
+Die Erstellung des gesamten Prozesses innerhalb einer Arbeitsgruppe erforderte die Erstellung von Subprozessen und die anschließende zusammenführung in einen Gesamtprozess. Die Umsetzung gestaltete sich dabei prinzipiell sehr einfach, da zunächst ein neuer Prozess erstellt und dann die Subprozesse aufgerufen wurden. Lediglich die Ergänzung der Eingabecollection von Unternehmen mit Antrag musste ergänzt werden. Interessanter gestalteten sich hier die Schnittstellen zwischen den Subprozessen. Die Ausgabe des ersten Prozesses musste mit den Eingaben und Abhängigkeiten des zweiten Prozesses übereinstimmen. Gleiches galt auch zwischen dem zweiten und dem dritten Prozess.
 
 ### 3.5	Fragen und Probleme
 Während des Projektes sind sowohl bei der Vorbereitung als auch bei der Bearbeitung einige Probleme aufgetreten und Fragen aufgekommen, die im Folgenden gesammelt und erläutert werden. Sollte eine Lösung oder Beantwortung vorhanden sein, wird diese jeweils hier mit aufgeführt.
@@ -198,11 +206,17 @@ Während des Projektes sind sowohl bei der Vorbereitung als auch bei der Bearbei
 Blue Prism unterstützt keine gute Zusammenarbeit via einer Versionierungskontrolle wie z.B. Git, da die Dateien, die die Software im Rahmen der Entwicklung erstellt, im System gespeichert und nicht sinnvoll auszuwerten sind. Dadurch entstand die Frage nach der bestmöglichen Zusammenarbeit innerhalb eines Teams mit Blue Prism. Die Lösung hier ist die unabhängige Entwicklung in eigenständigen Prozessen, die am Ende innerhalb eines Master-Prozesses aufgerufen werden.
 
 #### 3.5.2 Company ID
-#### 3.5.3
+
+Die Generierung der eindeutigen ID erzeugte die Frage nach dem Zeitpunkt der Erstellung. Der Vorteil der Verwendung der ID war vor allem beim Abgleich zu den Unternehmen, die bereits einen Antrag auf Corona-Hilfe gestellt haben, du erkennen. Statt des Abgleichs zwischen Name, Adresse, PLZ, Ort, musste lediglich eine ID verglichen werden. So fiel die Entscheidung zur Generierung der ID auf die Suche nach dem Unternehmen im Telefonbuch.
+
+#### 3.5.3 Definierung von Schnittstellen
+Die unabhängige Arbeit der Teammitglieder in den Teilbereichen erforderte die Übergabe bzw. Bereitstellung von Daten. Bei der Zusammenführung der Teilprozesse wurde bemerkt, dass einige Schnittstellen unzureichend definiert waren, sodass zunächst eine Kompatibilität hergestellt werden musste, um die Prozesse harmonisch in Verbindung zu bringen. 
 
 ## 4 Auswirkungen auf den Referenzprozess
+
+
 ### 4.1 Prozessveränderung
-Die im Bankmodell enthaltenen Referenzprozesse „Finanzieren“ und „Vertrieb“ stellen zwar weiterhin die Grundlage für den Case „Recherche zur Ermittlung von Berechtigten für Finanzhilfen“ dar, sie müssen allerdings aufgrund Anzahl der potentiellen Berechtigten und der damit notwendigen Automatisierung der einzelnen Prozessschritte in ihren wesentlichen Teilen angepasst werden. Die Corona-Hilfen werden von den Betroffenen in der Regel dringend benötigt, was die Automatisierung auch aus der Kundenperspektive notwendig macht. Durch die Bereitstellung der Finanzierungshilfen durch die KfW sowie die umfangreiche Risikoübernahme durch die KfW wird der Referenzprozess „Finanzieren“ zusätzlich verändert.
+Die im Bankmodell enthaltenen Referenzprozesse „Finanzieren“ und „Vertrieb“ stellen zwar weiterhin die Grundlage für den Case „Recherche zur Ermittlung von Berechtigten für Finanzhilfen“ dar, sie müssen allerdings aufgrund Anzahl der potenziellen Berechtigten und der damit notwendigen Automatisierung der einzelnen Prozessschritte in ihren wesentlichen Teilen angepasst werden. Die Corona-Hilfen werden von den Betroffenen in der Regel dringend benötigt, was die Automatisierung auch aus der Kundenperspektive notwendig macht. Durch die Bereitstellung der Finanzierungshilfen durch die KfW sowie die umfangreiche Risikoübernahme durch die KfW wird der Referenzprozess „Finanzieren“ zusätzlich verändert.
 
 ![Angepasster Referenzprozess für Corona-Hilfen](Bilder/referenzprozess.png)
 
@@ -227,4 +241,6 @@ Jeder der Schritte wurde je 15 Mal von zwei Testpersonen ausgeführt. Die benöt
 Um die gesamte Zeit, die die Commerzbank für die Ermittlung der potentiellen Berechtigten für die Corona-Hilfen müsste die eingesparte Zeit mit der Anzahl der betroffenen Kunden der Commerzbank multipliziert werden. Leider veröffentlicht die Commerzbank keine Zahlen zu der Anzahl betreuten Firmenkunden. Laut IfM Bonn gab es im Jahr 2018 3,47 Millionen kleine und mittlere Unternehmen (KMU). Die Commerzbank ist zwar die zweitgrößte Bank in Deutschland, jedoch ist der Bankenmarkt in Deutschland stark fragmentiert und die Commerzbank als Großbank nicht auf KMU spezialisiert, weswegen wir höchstens von einem Marktanteil von 2% ausgehen. Somit hätte die Commerzbank 69.400 potenzielle Berechtigte. Wir nehmen ferner an, dass rd. 30% dieser Kunden bereits proaktiv einen Antrag gestellt haben. Somit müssten die automatisierten Tätigkeiten 48.580 Mal wiederholt werden. Folglich werden rd. 1.255 Arbeitsstunden eingespart. Somit beträgt der monetäre Wert der Investition in die erstellte CoBee 14.081,10 EUR.
 
 ### 4.3 Strategische Bedeutung
+Über den aktuellen UseCase hinaus können die einzelnen Bausteine der erstellten Anwendung aufgrund des abstrakten Charakters wiederverwendet werden. Unter anderem kann im Kundenbestandsystem auch nach anderen Merkmalen gesucht werden, um ebenfalls die Potentiale zu ermitteln. Abgleich mit den bereits gestellten Anträgen ist in jedem Vorgang sinnvoll, um dem Kunden eine unnötige Ansprache zu ersparen. 
 
+Durch den Einsatz der CoBee schafft die Commerzbank die Grundlage für weitere Prozessautomatisierung, die auch dem geplanten Stellenabbau zu Gute kommen wird. Dabei werden von den CoBees (noch) keine vollumfänglichen Entscheidungen getroffen. Diese werden allerdings dem Kundenberater und dem Kunden durch aktive Übermittelung von Entscheidungsinformationen erleichtert.

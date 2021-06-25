@@ -1,2 +1,5 @@
 /utils/*
 /Video-Zips/*.mp4
+
+#IntelliJ
+/.idea
