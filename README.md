@@ -1,15 +1,4 @@
-# BluePrismUebung
-Repo für den Austausch der exportierten Speicherstände inkl. Dokumentation
-
-
-# Dependencies
-Externe Business Objekte werden unter utils/ bereitgestellt. Quellen:
-- https://github.com/blue-prism/pop3-smtp-utility
-- https://github.com/blue-prism/file-management-utility
-- https://github.com/blue-prism/collection-manipulation
-- https://github.com/blue-prism/strings-utility.git
-
-#Dokumentation
+# Dokumentation Prozess Finanzhilfe - Gruppe 3 
 
 ## 1	Beschreibung und Problemstellung
 Im Rahmen der Veranstaltung „Geschäftsprozessmanagement 2“ stellte die Partnerfirma ComTS eine Automatisierungsaufgabe, um die gelernten theoretischen Inhalte des Moduls zu verfestigen. In dieser Aufgabe sollte eine Gruppe aus ca. fünf Studierenden gemeinsam einen Prozess innerhalb der Software „Blue Prism“ automatisieren, diesen technisch und formal dokumentieren und eine Präsentation vorbereiten.
@@ -17,12 +6,13 @@ Im Rahmen der Veranstaltung „Geschäftsprozessmanagement 2“ stellte die Part
 ## 1.1	Case-Beschreibung
 Der Case „Recherche zur Ermittlung von Berechtigten für Finanzhilfen“ beschreibt die automatische Suche von potenziellen Unternehmen, welche eine Corona-Hilfe an Anspruch nehmen können, und die Vorbereitung von Informationsbriefen. Für den Prozess wird eine Mail mit einem Anhang bereitgestellt. Im Anhang befindet sich eine CSV-Tabelle, deren Inhalt aus Kombinationen von Branchen und Postleitzahlen bildet. Anhand dieser Postleitzahlen sollen automatisch die entsprechenden Unternehmen aus https://www.dastelefonbuch.de/ herausgesucht und zwischengespeichert werden. Um zu verhindern, dass Unternehmen, die bereits einen Antrag auf Finanzhilfe gestellt haben, erneut angeschrieben werden, wird ein Abgleich der zwischengespeicherten Unternehmen mit einer Liste von Kundendaten abgeglichen. Die bereinigte Liste mit den zu informierenden Unternehmen wird im letzten Schritt weiterverarbeitet, in dem eine Word-Vorlage mit den relevanten Informationen befüllt wird. Diese Dateien werden in einer .zip-Datei an eine festgelegte E-Mail-Adresse gesendet. Damit ist der Prozess abgeschlossen.
 
-## 1.2	Problemstellung
-Die wesentlichen Herausforderungen bei der Umsetzung waren die Analyse der Internetseite sowie die Befüllung der Word-Vorlage.
-
-Zur Recherche im Internet war es erforderlich, ein Business Object zu erzeugen und …
-
-Die Generierung der Informationsschreiben erforderte …
+## 1.2   Dependencies
+Externe Business Objekte werden unter utils/ bereitgestellt. Quellen:
+- https://github.com/blue-prism/pop3-smtp-utility
+- https://github.com/blue-prism/file-management-utility
+- https://github.com/blue-prism/collection-manipulation
+- https://github.com/blue-prism/strings-utility.git
+- https://digitalexchange.blueprism.com/dx/entry/113833/solution/atcs---compression-and-extraction?_ga=2.164223996.275969242.1622196232-1643744417.1621856680 
 
 ## 2	Aufgabenverteilung und Projektorganisation
 Das Projekt wurde von den Studierenden selbstständig in drei wesentliche Bestandteile gegliedert: Eingabe, Verarbeitung, Ausgabe. Die Dokumentation des Projektes wurde untereinander in die entsprechenden Kompetenzbereiche aufgeteilt, um die präziseste fachliche Beschreibung zu gewährleisten.
@@ -116,7 +106,7 @@ Inputs: messagePath und messageID
     
 Damit ist der Eingabe-Prozess beendet und der Verarbeitung-Prozess kann mit den Daten in der Queue starten.
 
-### Das Telefonbuch - Business Object
+#### Das Telefonbuch - Business Object
 Für jeden Eintrag bestehend aus Branche und PLZ wird anschließend die Webseite www.dastelefonbuch.de nach entsprechenden Unternehmen durchsucht. Für die Interaktion zwischen Blue Prism und der Webseite wurde ein Business Object angelegt, das als _Browser-based Application_ konfiguriert ist. Als Browser wurde Google Chrome gewählt, da dieser mit den integrierten Entwickler-Werkzeugen ein effizientes Debugging bei der Definiton von HTML-Elementen für das _Application-Model_ ermöglicht. 
 #### i) Application-Model
 Das Application-Model besteht aus zwei primären Elementen, der "Startseite" und den Ergebnissen ("Results"). 
@@ -209,9 +199,6 @@ Blue Prism unterstützt keine gute Zusammenarbeit via einer Versionierungskontro
 
 #### 3.5.2 Company ID
 #### 3.5.3
-#### 3.5.4
-#### 3.5.5
-#### 3.5.6
 
 ## 4 Auswirkungen auf den Referenzprozess
 ### 4.1 Prozessveränderung
