@@ -74,32 +74,45 @@ Die parallele Entwicklung an Eingabe, Verarbeitung und Ausgabe ist bei dem geste
 
 #### 3.3.1	Eingabe
 Der erste Prozessschritt besteht im wesentlichen aus zweit Abschnitten. Zunächst müssen die per E-Mail versendeten Input-Datensätze mit Branche und Postleitzahl (PLZ) entgegen genommen werden und innerhalb BluePrisms als Collection abgelegt werden. Im Anschluss wird für jeden Datensatz das Telefonbuch durchsucht um eine Lister aller zu bearbeitenden Unternehmen und deren Andressen zu erhalten. Diese werden dann für den nächsten Prozessschritt in eine Queue übergeben.
+  
+Als Input für den Prozess wird eine E-Mail von einem Mitarbeiter an blueprism.cobitest@gmail.com gesendet. Im Anhang müssen sich eine oder mehrere CSV-Dateien befinden. Damit die Daten später korrekt ausgelesen werden können, ist es wichtig, dass die Datei eine bestimmte Struktur hat. So repräsentiert die erste Spalte die Postleitzahl, während in der zweiten Spalte die Branche steht.
 
-Prozess 
-* Input 
-    - csv 
-    - email
+Nachdem der komplette Eingabe Prozess durchgelaufen ist, werden die gefundenen Unternehmen in die Queue übergeben. Jeder Eintrag, der in die Queue gegeben wird, hat die selbe Struktur. Er besteht aus einer einzigartigen Company ID, dem Name, der Straße und Hausnummer,Postleitzahl,Stadt und Branche.
 
-* Output in Queue
-  - Struktur des Outputs beschreiben
+Damit der Prozess flüssig läuft, müssen mehrere externe Objekte (Pop3/SMTP, strings, file management und collection manipulation) heruntergeladen und in Blue Prism importiert werden. Des Weiteren muss auf der Main Page ein lokaler Pfad festgelegt werden, auf dem die CSV-Dateien gespeichert werden.
 
-Lösung (technisch beschrieben)
-* Prerequisites / Abhänigkeiten
-    - pop3, string, collection, filemngmt, lokaler pfad für csv dateien
-* Main prozess
-* Email empfangen und auslesen; speichern der Anhänge
-* Process Message
-    - csv auslesen
-    - sicherstellen das plz korrekt
-    - iterieren über einträge
-* Crawl Telefonbuch
-    - Business Objekt
-    - Ergebnisse zusammenfügen
-* Übergabe der Result collection to Queue
-    - generate eindeutige company ID
+Main Page:
+Die Main Page dient als Prozesshülle für die beiden wichtigen Subprozesse Query input und Process message. Process message wird dabei in einer Schleife für jede message ausgeführt.
 
-Resultat
-Struktur des Outputs kurz beschreiben 
+Query Input:
+- Konfiguration mit Hilfe des Pop3/SMTP business object und Auflistung der messages in einer collection
+- für jede message:
+    - Generierung der messageID und Erstellung eines subfolders unter dem vorher angegebenen lokalen Pfad
+    - Speichern des Anhangs in diesem subfolder und danach löschen der E-Mail (Pop3/SMTP)
+
+Process message:
+
+Inputs: messagePath und messageID
+1. Read from CSV
+    Input: CSV Path
+    - mit dem file management business object werden die Dateien des subfolders in eine collection importiert
+    - für jede Datei in dieser collection:
+            - file management bo: die CSV-Datei als Text in die Input Data collection importieren
+            - über jede Zeile der Input Data collection iterieren und die Postleitzahl kontrollieren. Je nach Formattierung kann es passieren, dass die Nullen am Anfang der PLZ weggelassen werden, was zu Problemen bei der Suche führt. Daher wird in diesem Schritt kontrolliert, ob die PLZ 5 Ziffern hat und wenn nicht, werden an den Anfang entsprechend viele Nullen angehängt.
+            - anhängen der Zeilen an die collection Jobs
+    Output: Query Jobs collection mit den Werten aus der Jobs collection
+    
+2. iterieren über die Query Jobs collection und damit über jedes PLZ/Branchen Paar
+    - der Crawl Telefonbuch Prozess wird aufgerufen und der Output davon an die collection ResultsTotal angehängt
+
+3. Results to Queue
+    Input: ResultsTotal collection als Data
+    - Generierung der CompanyID: für jede Firma wird aus der Branche, der PLZ, dem Name und der Straße eine eindeutige CompanyID generiert
+    - die Companys collection wird in die Queue übergeben
+    
+Damit ist der Eingabe-Prozess beendet und der Verarbeitung-Prozess kann mit den Daten in der Queue starten.
+
+
 
 #### 3.3.2	Verarbeitung
 Ziel der Verarbeitung war die korrekte Erkennung der Unternehmen, die bereits einen konkreten Antrag auf Finanzhilfe gestellt haben, um ein erneutes Informationsschreiben zu vermeiden. Dazu wurde festgelegt, dass eine Queue mit den zu untersuchenden Unternehmen im vorhergehenden Sub-Prozess befüllt wird. Die Unternehmen, die benachrichtigt werden sollen, werden wiederum in eine zweite Queue eingefügt.
