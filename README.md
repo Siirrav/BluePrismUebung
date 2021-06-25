@@ -44,6 +44,11 @@ Folgende Tätigkeiten sind für die Bearbeitung des Datenabgleichs durch Florian
 -	Abgleich des Queue-Elements mit der vorgegebenen Collection
 -	Auswahl des Elementes, falls es nicht in der Collection vorkommt
 -	Erstellung einer neuen Queue für die zu informierenden Unternehmen
+-   Zusammenführung der Teilprozesse in einen Gesamtprozess
+    - Kompatibilität zwischen den Prozessen
+    - Debugging
+    - Refactor
+    - Test
 
 Um den identifizierten zu informierenden Unternehmen ein adäquates Anschreiben zu generieren, übernahmen Oleg Chapaykin und Ravel Siirde die Aufgaben der Ausgabe:
 
